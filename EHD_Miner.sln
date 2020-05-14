@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EHD_Miner", "EHD_Miner.csproj", "{72F440E2-EA6B-4F38-92BF-3F23E28B010D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{72F440E2-EA6B-4F38-92BF-3F23E28B010D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72F440E2-EA6B-4F38-92BF-3F23E28B010D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72F440E2-EA6B-4F38-92BF-3F23E28B010D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72F440E2-EA6B-4F38-92BF-3F23E28B010D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24C6AB64-F837-4F0C-BC8B-51F323025ECE}
+	EndGlobalSection
+EndGlobal
