@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Net;
 using System.Management;
+using System.Net;
 using System.Runtime.InteropServices;
 
 
 namespace EHD_Miner
 {
-    class AddressHelper
+    internal class AddressHelper
     {
         [DllImport("Iphlpapi.dll")]
-        private static extern int SendARP(Int32 dest, Int32 host, ref Int64 mac, ref Int32 length);
+        private static extern int SendARP(int dest, int host, ref long mac, ref int length);
         [DllImport("Ws2_32.dll")]
-        private static extern Int32 Inet_addr(string ip);
+        private static extern int Inet_addr(string ip);
 
         //获取本机的IP
 
@@ -35,7 +35,9 @@ namespace EHD_Miner
             foreach (ManagementObject mo in queryCollection)
             {
                 if (mo["IPEnabled"].ToString() == "True")
+                {
                     mac = mo["MacAddress"].ToString();
+                }
             }
             return (mac);
         }
@@ -58,15 +60,15 @@ namespace EHD_Miner
 
         public string GetRemoteMac(string localIP, string remoteIP)
         {
-            Int32 ldest = Inet_addr(remoteIP); //目的ip 
+            int ldest = Inet_addr(remoteIP); //目的ip 
 
-            Int32 lhost = Inet_addr(localIP); //本地ip
+            int lhost = Inet_addr(localIP); //本地ip
 
 
             try
             {
-                Int64 macinfo = new Int64();
-                Int32 len = 6;
+                long macinfo = new long();
+                int len = 6;
                 int res = SendARP(ldest, 0, ref macinfo, ref len);
                 return Convert.ToString(macinfo, 16);
             }

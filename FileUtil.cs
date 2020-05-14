@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace EHD_Miner
 {
-    class FileUtil
+    internal class FileUtil
     {
         /// <summary>
         /// 从资源文件中抽取资源文件

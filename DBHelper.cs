@@ -5,9 +5,9 @@ using System.Windows.Forms;
 
 namespace EHD_Miner
 {
-    class DBHelper
+    internal class DBHelper
     {
-        private readonly static string connStr = "Data Source=" + Application.StartupPath + "\\database.sqlite";
+        private static readonly string connStr = "Data Source=" + Application.StartupPath + "\\database.sqlite";
 
         //获取 connection 对象
         public static IDbConnection CreateConnection()

@@ -149,7 +149,7 @@ namespace EHD_Miner
         private void ToolStripMenuItem4_Click(object sender, EventArgs e)
         {
             InitForm();
-            RunProcess("cmd.exe","taskkill /F /IM poc.exe");
+            RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
             toolStripStatusLabel2.Text = "停止成功";
             labelMsg.Text = toolStripStatusLabel2.Text;
         }
@@ -206,7 +206,7 @@ namespace EHD_Miner
             }
         }
 
-        private string RunProcess(string program ,string command)
+        private string RunProcess(string program, string command)
         {
             //实例一个Process类，启动一个独立进程
             Process p = new Process();
@@ -234,14 +234,14 @@ namespace EHD_Miner
             return p.StandardOutput.ReadToEnd();
         }
 
-        readonly string AppData = "AppData";
-        readonly string Roaming = "Roaming";
-        readonly string Poc = "Poc";
-        readonly string keystore = "keystore";
-        readonly string plotdata = "plotdata";
-        readonly string description = "description.xml";
-        readonly string database = "database.sqlite";
-        readonly string poc = "poc.exe";
+        private readonly string AppData = "AppData";
+        private readonly string Roaming = "Roaming";
+        private readonly string Poc = "Poc";
+        private readonly string keystore = "keystore";
+        private readonly string plotdata = "plotdata";
+        private readonly string description = "description.xml";
+        private readonly string database = "database.sqlite";
+        private readonly string poc = "poc.exe";
 
         private void InitDirectoryAndFile()
         {
@@ -249,15 +249,15 @@ namespace EHD_Miner
             {
                 Directory.CreateDirectory(Application.StartupPath + "\\" + AppData);
             }
-            if (!Directory.Exists(Application.StartupPath + "\\" + AppData +"\\"+ Roaming))
+            if (!Directory.Exists(Application.StartupPath + "\\" + AppData + "\\" + Roaming))
             {
                 Directory.CreateDirectory(Application.StartupPath + "\\" + AppData + "\\" + Roaming);
             }
-            if (!Directory.Exists(Application.StartupPath + "\\" + AppData + "\\" + Roaming+"\\"+ Poc))
+            if (!Directory.Exists(Application.StartupPath + "\\" + AppData + "\\" + Roaming + "\\" + Poc))
             {
                 Directory.CreateDirectory(Application.StartupPath + "\\" + AppData + "\\" + Roaming + "\\" + Poc);
             }
-            if (!Directory.Exists(Application.StartupPath + "\\" + AppData + "\\" + Roaming + "\\" + Poc+"\\"+ keystore))
+            if (!Directory.Exists(Application.StartupPath + "\\" + AppData + "\\" + Roaming + "\\" + Poc + "\\" + keystore))
             {
                 Directory.CreateDirectory(Application.StartupPath + "\\" + AppData + "\\" + Roaming + "\\" + Poc + "\\" + keystore);
             }
@@ -265,7 +265,7 @@ namespace EHD_Miner
             {
                 Directory.CreateDirectory(Application.StartupPath + "\\" + AppData + "\\" + Roaming + "\\" + Poc + "\\" + plotdata);
             }
-            if (!File.Exists(Application.StartupPath + "\\" + AppData + "\\" + Roaming + "\\" + Poc+"\\"+ description))
+            if (!File.Exists(Application.StartupPath + "\\" + AppData + "\\" + Roaming + "\\" + Poc + "\\" + description))
             {
                 FileUtil.ExtractResFile("EHD_Miner.Resources." + description, Application.StartupPath + "\\" + AppData + "\\" + Roaming + "\\" + Poc + "\\" + description);
             }
@@ -284,7 +284,7 @@ namespace EHD_Miner
             toolStripStatusLabel2.Text = "初始化结构成功";
         }
 
-        private void InitDatabase()  
+        private void InitDatabase()
         {
             string[] flieList = Directory.GetFiles(Application.StartupPath + "\\" + AppData + "\\" + Roaming + "\\" + Poc + "\\" + keystore);
             if (flieList.Length == 0)
@@ -329,14 +329,14 @@ namespace EHD_Miner
         {
             string utcTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH-mm-ss.fffffff00Z");
             JObject jo = JsonConvert.DeserializeObject<JObject>(textBox1.Text);
-            if(jo == null)
+            if (jo == null)
             {
                 return;
             }
             string address = jo["address"].ToString();
             string fileName = "UTC--" + utcTime + "--" + address;
             string[] flieList = Directory.GetFiles(Application.StartupPath + "\\" + AppData + "\\" + Roaming + "\\" + Poc + "\\" + keystore);
-            if(flieList.Length == 0)
+            if (flieList.Length == 0)
             {
                 FileStream fs = new FileStream(Application.StartupPath + "\\" + AppData + "\\" + Roaming + "\\" + Poc + "\\" + keystore + "\\" + fileName, FileMode.Create, FileAccess.Write);
                 StreamWriter sw = new StreamWriter(fs);
@@ -361,7 +361,7 @@ namespace EHD_Miner
 
         private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
-            ScanDevices(sender as BackgroundWorker,e);
+            ScanDevices(sender as BackgroundWorker, e);
         }
 
         private void BackgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
