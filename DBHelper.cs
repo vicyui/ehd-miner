@@ -1,6 +1,6 @@
-﻿using Microsoft.Data.Sqlite;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
+using System.Data.SQLite;
 using System.Windows.Forms;
 
 namespace EHD_Miner
@@ -12,7 +12,7 @@ namespace EHD_Miner
         //获取 connection 对象
         public static IDbConnection CreateConnection()
         {
-            IDbConnection conn = new SqliteConnection(connStr);//MySqlConnection //SqlConnection
+            IDbConnection conn = new SQLiteConnection(connStr);//MySqlConnection //SqlConnection
             conn.Open();
             return conn;
         }

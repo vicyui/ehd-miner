@@ -33,22 +33,21 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
-            this.labelTips = new System.Windows.Forms.Label();
             this.btnKSDir = new System.Windows.Forms.Button();
             this.btnSaveKS = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.labelMsg = new System.Windows.Forms.Label();
-            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -59,11 +58,11 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem6,
             this.toolStripMenuItem2,
-            this.toolStripMenuItem1,
             this.toolStripMenuItem3,
-            this.toolStripMenuItem4,
             this.toolStripMenuItem5,
-            this.toolStripMenuItem7});
+            this.toolStripMenuItem7,
+            this.toolStripMenuItem4,
+            this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 25);
@@ -84,13 +83,6 @@
             this.toolStripMenuItem2.Text = "2.安装挖矿系统";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.ToolStripMenuItem2_Click);
             // 
-            // toolStripMenuItem1
-            // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(97, 21);
-            this.toolStripMenuItem1.Text = "3.扫描P盘目录";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
-            // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
@@ -98,19 +90,35 @@
             this.toolStripMenuItem3.Text = "启动挖矿";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.ToolStripMenuItem3_Click);
             // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(68, 21);
-            this.toolStripMenuItem4.Text = "停止挖矿";
-            this.toolStripMenuItem4.Click += new System.EventHandler(this.ToolStripMenuItem4_Click);
-            // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
             this.toolStripMenuItem5.Size = new System.Drawing.Size(119, 21);
             this.toolStripMenuItem5.Text = "查看本机MAC和IP";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.ToolStripMenuItem5_Click);
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(68, 21);
+            this.toolStripMenuItem7.Text = "修复分叉";
+            this.toolStripMenuItem7.Click += new System.EventHandler(this.ToolStripMenuItem7_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(68, 21);
+            this.toolStripMenuItem4.Text = "添加节点";
+            this.toolStripMenuItem4.Click += new System.EventHandler(this.ToolStripMenuItem4_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Enabled = false;
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(87, 21);
+            this.toolStripMenuItem1.Text = "扫描P盘目录";
+            this.toolStripMenuItem1.Visible = false;
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
             // 
             // statusStrip1
             // 
@@ -150,7 +158,6 @@
             // panel1
             // 
             this.panel1.AutoSize = true;
-            this.panel1.Controls.Add(this.labelTips);
             this.panel1.Controls.Add(this.btnKSDir);
             this.panel1.Controls.Add(this.btnSaveKS);
             this.panel1.Controls.Add(this.textBox1);
@@ -161,17 +168,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(800, 399);
             this.panel1.TabIndex = 9;
-            // 
-            // labelTips
-            // 
-            this.labelTips.AutoSize = true;
-            this.labelTips.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelTips.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.labelTips.Location = new System.Drawing.Point(13, 44);
-            this.labelTips.Name = "labelTips";
-            this.labelTips.Size = new System.Drawing.Size(42, 14);
-            this.labelTips.TabIndex = 4;
-            this.labelTips.Text = "label";
             // 
             // btnKSDir
             // 
@@ -213,19 +209,13 @@
             this.labelMsg.TabIndex = 0;
             this.labelMsg.Text = "label";
             // 
-            // toolStripMenuItem7
-            // 
-            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(78, 21);
-            this.toolStripMenuItem7.Text = "⭐修复分叉";
-            this.toolStripMenuItem7.Click += new System.EventHandler(this.ToolStripMenuItem7_Click);
-            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);
@@ -234,7 +224,9 @@
             this.MaximizeBox = false;
             this.Name = "mainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "EHD";
+            this.Text = "EHDMiner";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -265,9 +257,8 @@
         private System.Windows.Forms.Button btnSaveKS;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnKSDir;
-        private System.Windows.Forms.Label labelTips;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
     }
 }
 
