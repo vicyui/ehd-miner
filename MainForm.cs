@@ -127,11 +127,11 @@ namespace EHDMiner
             DeleteEthDir();
             p = new Process();
             p.StartInfo.FileName = Application.StartupPath + "/bin/poc.exe";
-            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (runArgs.Length > 0 && runArgs[0] == "showPoc")
+            p.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            /*if (runArgs.Length > 0 && runArgs[0] == "showPoc")
             {
                 p.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-            }
+            }*/
             p.StartInfo.Arguments = " --datadir=\"" + Application.StartupPath + "\\AppData\\Roaming\\Poc\" --mine --gcmode archive --syncmode=full --networkid 10911 --rpc --rpcaddr \"0.0.0.0\" --rpcport=\"8545\" --rpcapi \"web3,peers,net,account,personal,eth,minedev,txpool\"";
             p.Start();
             processId = p.Id;
