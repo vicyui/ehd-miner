@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
 
-namespace EHD_Miner
+namespace EHDMiner
 {
     public partial class mainForm : Form
     {
@@ -24,9 +24,17 @@ namespace EHD_Miner
         private readonly string keystoreDir = Application.StartupPath + "\\AppData\\Roaming\\Poc\\keystore";
         private readonly string plotdataDir = Application.StartupPath + "\\AppData\\Roaming\\Poc\\plotdata";
         private readonly string ethDir = Application.StartupPath + "\\AppData\\Roaming\\Poc\\eth";
-        public mainForm()
+        private string language = string.Empty;
+        private ComponentResourceManager resource;
+        private int processId;
+        private Process p;
+        string[] args;
+        public mainForm(string[] args)
         {
             InitializeComponent();
+            language = "zh";
+            resource = LanguageHelper.SetLang(language, this, typeof(mainForm), resource);
+            args = args;
         }
 
         public List<string> GetDeviceID()
@@ -39,41 +47,13 @@ namespace EHD_Miner
 
                 switch (int.Parse(mo["DriveType"].ToString()))
                 {
-                    case (int)DriveType.Removable:   //可以移动磁盘     
-                        {
-                            //MessageBox.Show("可以移动磁盘");
-                            //deviceIDs.Add(mo["DeviceID"].ToString());
-                            break;
-                        }
                     case (int)DriveType.Fixed:   //本地磁盘     
                         {
-                            //MessageBox.Show("本地磁盘");
                             deviceIDs.Add(mo["DeviceID"].ToString());
-                            break;
-                        }
-                    case (int)DriveType.CDRom:   //CD   rom   drives     
-                        {
-                            //MessageBox.Show("CD   rom   drives ");
-                            break;
-                        }
-                    case (int)DriveType.Network:   //网络驱动   
-                        {
-                            //MessageBox.Show("网络驱动器 ");
-                            break;
-                        }
-                    case (int)DriveType.Ram:
-                        {
-                            //MessageBox.Show("驱动器是一个 RAM 磁盘 ");
-                            break;
-                        }
-                    case (int)DriveType.NoRootDirectory:
-                        {
-                            //MessageBox.Show("驱动器没有根目录 ");
                             break;
                         }
                     default:   //defalut   to   folder     
                         {
-                            //MessageBox.Show("驱动器类型未知 ");
                             break;
                         }
                 }
@@ -121,14 +101,18 @@ namespace EHD_Miner
         {
             toolStripStatusLabel1.Text = DateTime.Now.ToString();
             KeystoreCheck();
+            MineStatus();
         }
 
         private void ToolStripMenuItem2_Click(object sender, EventArgs e)
         {
             InitForm();
             InitDatabase();
-            toolStripStatusLabel2.Text = "挖矿系统安装成功";
-            labelMsg.Text = toolStripStatusLabel2.Text;
+            toolStripStatusLabel2.Text = resource.GetString("tsslStatusSucess");
+            labelMsg.Text = resource.GetString("installSuccessTips") + "\r"+ resource.GetString("startMineTips");
+            tsmiStart.Enabled = true;
+            tsmiInstall.Visible = false;
+            tsmiImportKeystore.Visible = false;
         }
 
         [DllImport("User32.dll ", EntryPoint = "SetParent")]
@@ -141,16 +125,22 @@ namespace EHD_Miner
             InitForm();
             RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
             DeleteEthDir();
-            Process p = new Process();
+            p = new Process();
             p.StartInfo.FileName = Application.StartupPath + "/bin/poc.exe";
             p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            if (args.Length > 0 && args[0] == "showPoc")
+            {
+                p.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            }
             p.StartInfo.Arguments = " --datadir=\"" + Application.StartupPath + "\\AppData\\Roaming\\Poc\" --mine --gcmode archive --syncmode=full --networkid 10911 --rpc --rpcaddr \"0.0.0.0\" --rpcport=\"8545\" --rpcapi \"web3,peers,net,account,personal,eth,minedev,txpool\"";
             p.Start();
+            processId = p.Id;
             Thread.Sleep(100);//加上，100如果效果没有就继续加大
             SetParent(p.MainWindowHandle, panel1.Handle); //panel1.Handle为要显示外部程序的容器
             ShowWindow(p.MainWindowHandle, 3);
-            toolStripStatusLabel2.Text = "启动成功";
-            MineStatus();
+            toolStripStatusLabel2.Text = resource.GetString("tsslStatusStart");
+            tsmiStart.Enabled = false;
+            labelMsg.Text = resource.GetString("installTips");
 
             FileSystemWatcher watcher = new FileSystemWatcher
             {
@@ -158,20 +148,27 @@ namespace EHD_Miner
                 IncludeSubdirectories = true,
                 NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size
             };
-            watcher.Changed += new FileSystemEventHandler(OnChanged);
+            //watcher.Changed += new FileSystemEventHandler(OnChanged);
+            watcher.Created += new FileSystemEventHandler(OnChanged);
             watcher.EnableRaisingEvents = true;
         }
 
         private void MineStatus()
         {
-            long mineDirLength = FileUtil.DictoryLength(plotdataDir);
-            if (mineDirLength == 17179869184 || mineDirLength == 8589934592)
+            p = Process.GetProcessById(processId);
+            if (p != null && p.ProcessName == "poc")
             {
-                labelMsg.Text = "挖矿中...";
-            }
-            else
-            {
-                labelMsg.Text = "P盘中...";
+                long mineDirLength = FileUtil.DictoryLength(plotdataDir);
+                if (mineDirLength == 17179869184 || mineDirLength == 8589934592)
+                {
+                    labelMsg.Text = resource.GetString("statusMining") + resource.GetString("installTips");
+                    toolStripStatusLabel2.Text = resource.GetString("statusMining");
+                }
+                else
+                {
+                    labelMsg.Text = resource.GetString("statusChainSync") + resource.GetString("installTips");
+                    toolStripStatusLabel2.Text = resource.GetString("statusChainSync");
+                }
             }
         }
 
@@ -185,7 +182,7 @@ namespace EHD_Miner
 
         private void SetLogText(FileSystemEventArgs e)
         {
-            toolStripStatusLabel2.Text = "区块同步中...";
+            toolStripStatusLabel2.Text = resource.GetString("statusChainSync");
         }
 
         private delegate void setLogTextDelegate(FileSystemEventArgs e);
@@ -198,23 +195,31 @@ namespace EHD_Miner
         [Obsolete]
         private void ToolStripMenuItem5_Click(object sender, EventArgs e)
         {
-            InitForm();
             AddressHelper helper = new AddressHelper();
-            labelMsg.Text += "本机IP  : " + helper.GetLocalIP() + "\r";
-            labelMsg.Text += "本机MAC : " + helper.GetLocalMac()+ "\r";
+            string minerInfo = resource.GetString("localIp") + helper.GetLocalIP();
+            minerInfo += "\r" + resource.GetString("localMac") + helper.GetLocalMac();
             string address = string.Empty;
             fileList = Directory.GetFiles(keystoreDir);
-            if(fileList.Length > 0)
+            if (fileList.Length > 0)
             {
                 address = "0x" + Path.GetFileName(fileList[0]).Substring(37);
+                minerInfo += "\r" + resource.GetString("walletAddress") + address;
             }
-            labelMsg.Text += "钱包地址 : " + address;
+            if (address.Length > 0)
+            {
+                minerInfo += "\r" + resource.GetString("minerName") + "EHD-miner-" + address.Substring(38);
+            }
+            DialogResult dr = MessageBox.Show(minerInfo, resource.GetString("copyTips") + "\r" + resource.GetString("tsmiShowInfo.Text"), MessageBoxButtons.OK);
+            if(dr == DialogResult.OK)
+            {
+                Clipboard.SetDataObject(minerInfo);
+            }
         }
 
         private void ToolStripMenuItem6_Click(object sender, EventArgs e)
         {
             InitForm();
-            labelMsg.Text = "请输入EHD钱包keystore文件内容";
+            labelMsg.Text = resource.GetString("ksImportTips");
             textBox1.Show();
             btnSaveKS.Show();
             btnKSDir.Show();
@@ -234,7 +239,6 @@ namespace EHD_Miner
             btnSaveKS.Hide();
             btnKSDir.Hide();
             toolStripProgressBar1.Visible = false;
-            KeystoreCheck();
         }
 
         private void KeystoreCheck()
@@ -242,15 +246,8 @@ namespace EHD_Miner
             if (!Directory.Exists(keystoreDir) 
             || Directory.GetFiles(keystoreDir).Length == 0)
             {
-                toolStripMenuItem1.Enabled = false;
-                toolStripMenuItem2.Enabled = false;
-                toolStripMenuItem3.Enabled = false;
-            }
-            else
-            {
-                toolStripMenuItem1.Enabled = true;
-                toolStripMenuItem2.Enabled = true;
-                toolStripMenuItem3.Enabled = true;
+                tsmiInstall.Enabled = false;
+                tsmiStart.Enabled = false;
             }
         }
 
@@ -298,11 +295,11 @@ namespace EHD_Miner
             }
             if (!File.Exists(Application.StartupPath + "\\AppData\\Roaming\\Poc\\" + description))
             {
-                FileUtil.ExtractResFile("EHD_Miner.Resources." + description, Application.StartupPath + "\\AppData\\Roaming\\Poc\\" + description);
+                FileUtil.ExtractResFile("EHDMiner.Resources." + description, Application.StartupPath + "\\AppData\\Roaming\\Poc\\" + description);
             }
             if (!File.Exists(Application.StartupPath + "\\" + database))
             {
-                FileUtil.ExtractResFile("EHD_Miner.Resources." + database, Application.StartupPath + "\\" + database);
+                FileUtil.ExtractResFile("EHDMiner.Resources." + database, Application.StartupPath + "\\" + database);
             }
             if (!Directory.Exists(Application.StartupPath + "\\bin"))
             {
@@ -310,7 +307,7 @@ namespace EHD_Miner
             }
             if (!File.Exists(Application.StartupPath + "\\bin\\" + poc))
             {
-                FileUtil.ExtractResFile("EHD_Miner.Resources." + poc, Application.StartupPath + "\\bin\\" + poc);
+                FileUtil.ExtractResFile("EHDMiner.Resources." + poc, Application.StartupPath + "\\bin\\" + poc);
             }
         }
 
@@ -319,7 +316,7 @@ namespace EHD_Miner
             fileList = Directory.GetFiles(keystoreDir);
             if (fileList.Length == 0)
             {
-                toolStripStatusLabel2.Text = "未找到keystore";
+                toolStripStatusLabel2.Text = resource.GetString("ksUnfind");
                 return;
             }
             string keystoreName = Path.GetFileName(fileList[0]);
@@ -371,7 +368,7 @@ namespace EHD_Miner
             }
             if (jo == null)
             {
-                MessageBox.Show("非法的keystore", "错误", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show(resource.GetString("errorks"), resource.GetString("error"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             string fileName = "UTC--" + utcTime + "--" + address;
@@ -385,19 +382,27 @@ namespace EHD_Miner
                 sw.WriteLine(textBox1.Text);//开始写入值
                 sw.Close();
                 fs.Close();
-                toolStripStatusLabel2.Text = "keystore导入成功";
+
+                toolStripStatusLabel2.Text = resource.GetString("ksImportSucess");
+                labelMsg.Text = toolStripStatusLabel2.Text;
                 textBox1.Text = string.Empty;
+                textBox1.Hide();
+                btnSaveKS.Hide();
+                btnKSDir.Hide();
+
                 string sql = "select count(1) from t_user where F_Username = @Username;";
                 int result = Convert.ToInt32(DBHelper.ExecuteScalar(sql, new Dictionary<string, object> { { "Username", "0x" + address } }));
                 if (result == 1)
                 {
-                    toolStripMenuItem6.Visible = false;
-                    toolStripMenuItem2.Visible = false;
-                    btnSaveKS.Visible = false;
-                    btnKSDir.Visible = false;
-                    textBox1.Visible = false;
-                    labelMsg.Text = "恭喜!您的挖矿环境已经准备就绪,请点击启动挖矿";
-                    toolStripStatusLabel2.Text = "准备就绪";
+                    tsmiStart.Enabled = true;
+                    tsmiImportKeystore.Visible = false;
+                    tsmiInstall.Visible = false;
+                    labelMsg.Text = resource.GetString("startMineTips");
+                    toolStripStatusLabel2.Text = resource.GetString("tsslStatusSucess");
+                }
+                else
+                {
+                    tsmiInstall.Enabled = true;
                 }
             }
         }
@@ -414,13 +419,13 @@ namespace EHD_Miner
 
         private void BackgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            toolStripStatusLabel2.Text = "扫描磁盘中";
+            toolStripStatusLabel2.Text = resource.GetString("tsslStatusScaning");
             toolStripProgressBar1.Value = e.ProgressPercentage;
         }
 
         private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            toolStripStatusLabel2.Text = "磁盘扫描完成";
+            toolStripStatusLabel2.Text = resource.GetString("tsslStatusScaned");
             labelMsg.Text = toolStripStatusLabel2.Text;
         }
 
@@ -438,12 +443,16 @@ namespace EHD_Miner
 
         private void ToolStripMenuItem7_Click(object sender, EventArgs e)
         {
-            DialogResult flag = MessageBox.Show("确定要修复分叉吗?", "警告", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+            DialogResult flag = MessageBox.Show(resource.GetString("repairForkWarn"), resource.GetString("warn"), MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
             if (flag == DialogResult.OK)
             {
+                RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
+                Thread.Sleep(3000);
                 DeleteEthDir();
-                toolStripStatusLabel2.Text = "修复成功";
+                toolStripStatusLabel2.Text = resource.GetString("repairForkSuccess");
                 labelMsg.Text = toolStripStatusLabel2.Text;
+                tsmiStart.Enabled = true;
             }
         }
 
@@ -457,11 +466,12 @@ namespace EHD_Miner
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show("确认退出吗？", "退出询问",
+            DialogResult result = MessageBox.Show(resource.GetString("quitTips"), resource.GetString("tips"),
                 MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Question);
             if (result == DialogResult.OK)
             {
+                notifyIcon1.Dispose();
                 ClearKeystore();
                 Dispose();
                 e.Cancel = false;
@@ -484,7 +494,31 @@ namespace EHD_Miner
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
+            notifyIcon1.Dispose();
             Dispose();
+        }
+
+        private void NotifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if(WindowState == FormWindowState.Normal)
+            {
+                WindowState = FormWindowState.Minimized;
+            }else
+            {
+                WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void TsmiLangEN_Click(object sender, EventArgs e)
+        {
+            language = "en";
+            LanguageHelper.SetLang(language, this, typeof(mainForm), resource);
+        }
+
+        private void TsmiLangCN_Click(object sender, EventArgs e)
+        {
+            language = "zh";
+            LanguageHelper.SetLang(language, this, typeof(mainForm), resource);
         }
     }
 }

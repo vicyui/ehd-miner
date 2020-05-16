@@ -1,4 +1,4 @@
-﻿namespace EHD_Miner
+﻿namespace EHDMiner
 {
     partial class mainForm
     {
@@ -31,13 +31,17 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiImportKeystore = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiInstall = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiStart = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiShowInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAdvanced = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiAddPeer = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiRepairFork = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiScan = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiLanguage = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiLangCN = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiLangEN = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -48,6 +52,7 @@
             this.btnSaveKS = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.labelMsg = new System.Windows.Forms.Label();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -56,69 +61,85 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem6,
-            this.toolStripMenuItem2,
-            this.toolStripMenuItem3,
-            this.toolStripMenuItem5,
-            this.toolStripMenuItem7,
-            this.toolStripMenuItem4,
-            this.toolStripMenuItem1});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.tsmiImportKeystore,
+            this.tsmiInstall,
+            this.tsmiStart,
+            this.tsmiShowInfo,
+            this.tsmiAdvanced,
+            this.tsmiLanguage});
+            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 25);
-            this.menuStrip1.TabIndex = 6;
-            this.menuStrip1.Text = "menuStrip1";
             // 
-            // toolStripMenuItem6
+            // tsmiImportKeystore
             // 
-            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(128, 21);
-            this.toolStripMenuItem6.Text = "1.导入keystore文件";
-            this.toolStripMenuItem6.Click += new System.EventHandler(this.ToolStripMenuItem6_Click);
+            this.tsmiImportKeystore.Name = "tsmiImportKeystore";
+            resources.ApplyResources(this.tsmiImportKeystore, "tsmiImportKeystore");
+            this.tsmiImportKeystore.Click += new System.EventHandler(this.ToolStripMenuItem6_Click);
             // 
-            // toolStripMenuItem2
+            // tsmiInstall
             // 
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(102, 21);
-            this.toolStripMenuItem2.Text = "2.安装挖矿系统";
-            this.toolStripMenuItem2.Click += new System.EventHandler(this.ToolStripMenuItem2_Click);
+            resources.ApplyResources(this.tsmiInstall, "tsmiInstall");
+            this.tsmiInstall.Name = "tsmiInstall";
+            this.tsmiInstall.Click += new System.EventHandler(this.ToolStripMenuItem2_Click);
             // 
-            // toolStripMenuItem3
+            // tsmiStart
             // 
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(68, 21);
-            this.toolStripMenuItem3.Text = "启动挖矿";
-            this.toolStripMenuItem3.Click += new System.EventHandler(this.ToolStripMenuItem3_Click);
+            resources.ApplyResources(this.tsmiStart, "tsmiStart");
+            this.tsmiStart.Name = "tsmiStart";
+            this.tsmiStart.Click += new System.EventHandler(this.ToolStripMenuItem3_Click);
             // 
-            // toolStripMenuItem5
+            // tsmiShowInfo
             // 
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(119, 21);
-            this.toolStripMenuItem5.Text = "查看本机MAC和IP";
-            this.toolStripMenuItem5.Click += new System.EventHandler(this.ToolStripMenuItem5_Click);
+            this.tsmiShowInfo.Name = "tsmiShowInfo";
+            resources.ApplyResources(this.tsmiShowInfo, "tsmiShowInfo");
+            this.tsmiShowInfo.Click += new System.EventHandler(this.ToolStripMenuItem5_Click);
             // 
-            // toolStripMenuItem7
+            // tsmiAdvanced
             // 
-            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
-            this.toolStripMenuItem7.Size = new System.Drawing.Size(68, 21);
-            this.toolStripMenuItem7.Text = "修复分叉";
-            this.toolStripMenuItem7.Click += new System.EventHandler(this.ToolStripMenuItem7_Click);
+            this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiAddPeer,
+            this.tsmiRepairFork,
+            this.tsmiScan});
+            this.tsmiAdvanced.Name = "tsmiAdvanced";
+            resources.ApplyResources(this.tsmiAdvanced, "tsmiAdvanced");
             // 
-            // toolStripMenuItem4
+            // tsmiAddPeer
             // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(68, 21);
-            this.toolStripMenuItem4.Text = "添加节点";
-            this.toolStripMenuItem4.Click += new System.EventHandler(this.ToolStripMenuItem4_Click);
+            this.tsmiAddPeer.Name = "tsmiAddPeer";
+            resources.ApplyResources(this.tsmiAddPeer, "tsmiAddPeer");
+            this.tsmiAddPeer.Click += new System.EventHandler(this.ToolStripMenuItem4_Click);
             // 
-            // toolStripMenuItem1
+            // tsmiRepairFork
             // 
-            this.toolStripMenuItem1.Enabled = false;
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(87, 21);
-            this.toolStripMenuItem1.Text = "扫描P盘目录";
-            this.toolStripMenuItem1.Visible = false;
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
+            this.tsmiRepairFork.Name = "tsmiRepairFork";
+            resources.ApplyResources(this.tsmiRepairFork, "tsmiRepairFork");
+            this.tsmiRepairFork.Click += new System.EventHandler(this.ToolStripMenuItem7_Click);
+            // 
+            // tsmiScan
+            // 
+            this.tsmiScan.Name = "tsmiScan";
+            resources.ApplyResources(this.tsmiScan, "tsmiScan");
+            this.tsmiScan.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
+            // 
+            // tsmiLanguage
+            // 
+            this.tsmiLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiLangCN,
+            this.tsmiLangEN});
+            this.tsmiLanguage.Name = "tsmiLanguage";
+            resources.ApplyResources(this.tsmiLanguage, "tsmiLanguage");
+            // 
+            // tsmiLangCN
+            // 
+            this.tsmiLangCN.Name = "tsmiLangCN";
+            resources.ApplyResources(this.tsmiLangCN, "tsmiLangCN");
+            this.tsmiLangCN.Click += new System.EventHandler(this.TsmiLangCN_Click);
+            // 
+            // tsmiLangEN
+            // 
+            this.tsmiLangEN.Name = "tsmiLangEN";
+            resources.ApplyResources(this.tsmiLangEN, "tsmiLangEN");
+            this.tsmiLangEN.Click += new System.EventHandler(this.TsmiLangEN_Click);
             // 
             // statusStrip1
             // 
@@ -126,28 +147,24 @@
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2,
             this.toolStripProgressBar1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 424);
+            resources.ApplyResources(this.statusStrip1, "statusStrip1");
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(800, 26);
-            this.statusStrip1.TabIndex = 7;
-            this.statusStrip1.Text = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(37, 21);
-            this.toolStripStatusLabel1.Text = "time";
+            resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
             // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(0, 21);
+            resources.ApplyResources(this.toolStripStatusLabel2, "toolStripStatusLabel2");
             // 
             // toolStripProgressBar1
             // 
             this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 20);
+            resources.ApplyResources(this.toolStripProgressBar1, "toolStripProgressBar1");
             // 
             // timer1
             // 
@@ -157,74 +174,56 @@
             // 
             // panel1
             // 
-            this.panel1.AutoSize = true;
+            resources.ApplyResources(this.panel1, "panel1");
             this.panel1.Controls.Add(this.btnKSDir);
             this.panel1.Controls.Add(this.btnSaveKS);
             this.panel1.Controls.Add(this.textBox1);
             this.panel1.Controls.Add(this.labelMsg);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 25);
-            this.panel1.Margin = new System.Windows.Forms.Padding(0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 399);
-            this.panel1.TabIndex = 9;
             // 
             // btnKSDir
             // 
             this.btnKSDir.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnKSDir.Location = new System.Drawing.Point(262, 345);
+            resources.ApplyResources(this.btnKSDir, "btnKSDir");
             this.btnKSDir.Name = "btnKSDir";
-            this.btnKSDir.Size = new System.Drawing.Size(240, 30);
-            this.btnKSDir.TabIndex = 3;
-            this.btnKSDir.Text = "打开keystore目录";
             this.btnKSDir.UseVisualStyleBackColor = true;
             this.btnKSDir.Click += new System.EventHandler(this.BtnKSDir_Click);
             // 
             // btnSaveKS
             // 
             this.btnSaveKS.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnSaveKS.Location = new System.Drawing.Point(16, 345);
+            resources.ApplyResources(this.btnSaveKS, "btnSaveKS");
             this.btnSaveKS.Name = "btnSaveKS";
-            this.btnSaveKS.Size = new System.Drawing.Size(240, 30);
-            this.btnSaveKS.TabIndex = 2;
-            this.btnSaveKS.Text = "导入keystore至挖矿应用";
             this.btnSaveKS.UseVisualStyleBackColor = true;
             this.btnSaveKS.Click += new System.EventHandler(this.BtnSaveKS_Click);
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(16, 79);
-            this.textBox1.Multiline = true;
+            resources.ApplyResources(this.textBox1, "textBox1");
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(776, 249);
-            this.textBox1.TabIndex = 1;
             // 
             // labelMsg
             // 
-            this.labelMsg.AutoSize = true;
-            this.labelMsg.Font = new System.Drawing.Font("宋体", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.labelMsg.Location = new System.Drawing.Point(12, 9);
+            resources.ApplyResources(this.labelMsg, "labelMsg");
             this.labelMsg.Name = "labelMsg";
-            this.labelMsg.Size = new System.Drawing.Size(64, 20);
-            this.labelMsg.TabIndex = 0;
-            this.labelMsg.Text = "label";
+            // 
+            // notifyIcon1
+            // 
+            resources.ApplyResources(this.notifyIcon1, "notifyIcon1");
+            this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon1_MouseDoubleClick);
             // 
             // mainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "mainForm";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "EHDMiner";
+            this.ShowInTaskbar = false;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -242,12 +241,12 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
+        private System.Windows.Forms.ToolStripMenuItem tsmiScan;
+        private System.Windows.Forms.ToolStripMenuItem tsmiInstall;
+        private System.Windows.Forms.ToolStripMenuItem tsmiStart;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAddPeer;
+        private System.Windows.Forms.ToolStripMenuItem tsmiShowInfo;
+        private System.Windows.Forms.ToolStripMenuItem tsmiImportKeystore;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
@@ -257,8 +256,13 @@
         private System.Windows.Forms.Button btnSaveKS;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnKSDir;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
+        private System.Windows.Forms.ToolStripMenuItem tsmiRepairFork;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ToolStripMenuItem tsmiAdvanced;
+        private System.Windows.Forms.ToolStripMenuItem tsmiLanguage;
+        private System.Windows.Forms.ToolStripMenuItem tsmiLangCN;
+        private System.Windows.Forms.ToolStripMenuItem tsmiLangEN;
     }
 }
 

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Reflection;
 
-namespace EHD_Miner
+namespace EHDMiner
 {
     internal class FileUtil
     {

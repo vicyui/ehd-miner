@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Windows.Forms;
 
-namespace EHD_Miner
+namespace EHDMiner
 {
     internal class DBHelper
     {

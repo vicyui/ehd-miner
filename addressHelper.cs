@@ -4,7 +4,7 @@ using System.Net;
 using System.Runtime.InteropServices;
 
 
-namespace EHD_Miner
+namespace EHDMiner
 {
     internal class AddressHelper
     {

@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("EHD_Miner")]
+[assembly: AssemblyTitle("EHDMiner")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("EHD Inc.")]
-[assembly: AssemblyProduct("EHD_Miner")]
+[assembly: AssemblyProduct("EHDMiner")]
 [assembly: AssemblyCopyright("Copyright © EHD Inc. 2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
