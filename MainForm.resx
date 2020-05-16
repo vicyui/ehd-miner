@@ -2802,7 +2802,7 @@
     <value>区块浏览器</value>
   </data>
   <data name="tsmiShowInfo.Text" xml:space="preserve">
-    <value>本机信息</value>
+    <value>矿机信息</value>
   </data>
   <data name="tsmiStart.Text" xml:space="preserve">
     <value>启动挖矿</value>
