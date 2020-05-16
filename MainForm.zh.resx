@@ -2388,38 +2388,8 @@
   <data name="btnSaveKS.Text" xml:space="preserve">
     <value>导入keystore至挖矿应用</value>
   </data>
-  <data name="tsmiAddPeer.Text" xml:space="preserve">
-    <value>添加节点</value>
-  </data>
-  <data name="tsmiImportKeystore.Text" xml:space="preserve">
-    <value>导入keystore文件</value>
-  </data>
-  <data name="tsmiInstall.Text" xml:space="preserve">
-    <value>安装挖矿系统</value>
-  </data>
-  <data name="tsmiLangCN.Text" xml:space="preserve">
-    <value>中文</value>
-  </data>
-  <data name="tsmiLangEN.Text" xml:space="preserve">
-    <value>英文</value>
-  </data>
-  <data name="tsmiLanguage.Text" xml:space="preserve">
-    <value>语言</value>
-  </data>
-  <data name="tsmiAdvanced.Text" xml:space="preserve">
-    <value>高级</value>
-  </data>
-  <data name="tsmiRepairFork.Text" xml:space="preserve">
-    <value>修复分叉</value>
-  </data>
-  <data name="tsmiScan.Text" xml:space="preserve">
-    <value>扫描P盘目录</value>
-  </data>
-  <data name="tsmiShowInfo.Text" xml:space="preserve">
-    <value>本机信息</value>
-  </data>
-  <data name="tsmiStart.Text" xml:space="preserve">
-    <value>启动挖矿</value>
+  <data name="copyTips" xml:space="preserve">
+    <value>点击确定复制</value>
   </data>
   <data name="error" xml:space="preserve">
     <value>错误</value>
@@ -2427,8 +2397,14 @@
   <data name="errorks" xml:space="preserve">
     <value>非法的keystore</value>
   </data>
+  <data name="exceptionTips" xml:space="preserve">
+    <value>挖矿终止,请重新启动</value>
+  </data>
   <data name="installSuccessTips" xml:space="preserve">
     <value>挖矿系统安装成功</value>
+  </data>
+  <data name="installTips" xml:space="preserve">
+    <value>(区块同步预计需要1-2小时完成)</value>
   </data>
   <data name="ksImportSucess" xml:space="preserve">
     <value>keystore导入成功</value>
@@ -2440,13 +2416,13 @@
     <value>未找到keystore</value>
   </data>
   <data name="localIp" xml:space="preserve">
-    <value>本机IP   :</value>
+    <value>本机IP:</value>
   </data>
   <data name="localMac" xml:space="preserve">
-    <value>本机MAC  :</value>
+    <value>本机MAC:</value>
   </data>
   <data name="minerName" xml:space="preserve">
-    <value>矿机名称 :</value>
+    <value>矿机名称:</value>
   </data>
   <data name="quitTips" xml:space="preserve">
     <value>确认退出吗？</value>
@@ -2469,6 +2445,45 @@
   <data name="tips" xml:space="preserve">
     <value>提示信息</value>
   </data>
+  <data name="tsmiAddPeer.Text" xml:space="preserve">
+    <value>添加节点</value>
+  </data>
+  <data name="tsmiAdvanced.Text" xml:space="preserve">
+    <value>高级</value>
+  </data>
+  <data name="tsmiImportKeystore.Text" xml:space="preserve">
+    <value>导入keystore文件</value>
+  </data>
+  <data name="tsmiInstall.Text" xml:space="preserve">
+    <value>安装挖矿系统</value>
+  </data>
+  <data name="tsmiLangCN.Text" xml:space="preserve">
+    <value>中文</value>
+  </data>
+  <data name="tsmiLangEN.Text" xml:space="preserve">
+    <value>英文</value>
+  </data>
+  <data name="tsmiLanguage.Text" xml:space="preserve">
+    <value>语言</value>
+  </data>
+  <data name="tsmiRepairFork.Text" xml:space="preserve">
+    <value>修复分叉</value>
+  </data>
+  <data name="tsmiScan.Text" xml:space="preserve">
+    <value>扫描P盘目录</value>
+  </data>
+  <data name="tsmiScanner.Text" xml:space="preserve">
+    <value>区块浏览器</value>
+  </data>
+  <data name="tsmiShowInfo.Text" xml:space="preserve">
+    <value>矿机信息</value>
+  </data>
+  <data name="tsmiStart.Text" xml:space="preserve">
+    <value>启动挖矿</value>
+  </data>
+  <data name="tsmiWebsite.Text" xml:space="preserve">
+    <value>EHD官网</value>
+  </data>
   <data name="tsslStatusScaned" xml:space="preserve">
     <value>磁盘扫描完成</value>
   </data>
@@ -2478,19 +2493,16 @@
   <data name="tsslStatusStart" xml:space="preserve">
     <value>启动成功</value>
   </data>
+  <data name="tsslStatusStop" xml:space="preserve">
+    <value>挖矿终止</value>
+  </data>
   <data name="tsslStatusSucess" xml:space="preserve">
     <value>准备就绪</value>
   </data>
   <data name="walletAddress" xml:space="preserve">
-    <value>钱包地址 :</value>
+    <value>钱包地址:</value>
   </data>
   <data name="warn" xml:space="preserve">
     <value>警告</value>
-  </data>
-  <data name="installTips" xml:space="preserve">
-    <value>(区块同步预计需要1-2小时完成)</value>
-  </data>
-  <data name="copyTips" xml:space="preserve">
-    <value>点击确定复制</value>
   </data>
 </root>

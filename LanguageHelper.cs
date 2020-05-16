@@ -17,7 +17,7 @@ namespace EHDMiner
         /// <param name="formType">the type of the form </param>
         public static ComponentResourceManager SetLang(string lang, Form form, Type formType, ComponentResourceManager resources)
         {
-           Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo(lang);
             if (form != null)
             {
                 if (resources == null)

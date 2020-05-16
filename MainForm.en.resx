@@ -118,6 +118,57 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tsmiImportKeystore.Size" type="System.Drawing.Size, System.Drawing">
+    <value>115, 21</value>
+  </data>
+  <data name="tsmiInstall.Size" type="System.Drawing.Size, System.Drawing">
+    <value>137, 21</value>
+  </data>
+  <data name="tsmiStart.Size" type="System.Drawing.Size, System.Drawing">
+    <value>91, 21</value>
+  </data>
+  <data name="tsmiAdvanced.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 21</value>
+  </data>
+  <data name="tsmiShowInfo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 21</value>
+  </data>
+  <data name="tsmiScanner.Size" type="System.Drawing.Size, System.Drawing">
+    <value>72, 21</value>
+  </data>
+  <data name="tsmiWebsite.Size" type="System.Drawing.Size, System.Drawing">
+    <value>92, 21</value>
+  </data>
+  <data name="tsmiLanguage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>77, 21</value>
+  </data>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>794, 25</value>
+  </data>
+  <data name="tsmiAddPeer.Size" type="System.Drawing.Size, System.Drawing">
+    <value>212, 22</value>
+  </data>
+  <data name="tsmiRepairFork.Size" type="System.Drawing.Size, System.Drawing">
+    <value>212, 22</value>
+  </data>
+  <data name="tsmiScan.Size" type="System.Drawing.Size, System.Drawing">
+    <value>212, 22</value>
+  </data>
+  <data name="tsmiLangCN.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 22</value>
+  </data>
+  <data name="tsmiLangEN.Size" type="System.Drawing.Size, System.Drawing">
+    <value>121, 22</value>
+  </data>
+  <data name="statusStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>794, 26</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>794, 355</value>
+  </data>
+  <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>770, 248</value>
+  </data>
   <data name="notifyIcon1.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAEAgIAAAAEAIAAoCAEAFgAAACgAAACAAAAAAAEAAAEAIAAAAAAAAAABABIXAAASFwAAAAAAAAAA
@@ -1249,6 +1300,9 @@
         //8P//////////////5/////H///////////////////////////////////////////////////////
         //////////////////////////////////8=
 </value>
+  </data>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>794, 406</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2388,14 +2442,23 @@
   <data name="btnSaveKS.Text" xml:space="preserve">
     <value>Import Keystore To Miner</value>
   </data>
+  <data name="copyTips" xml:space="preserve">
+    <value>Click OK to copy</value>
+  </data>
   <data name="error" xml:space="preserve">
     <value>Error</value>
   </data>
   <data name="errorks" xml:space="preserve">
     <value>Illegal keystore</value>
   </data>
+  <data name="exceptionTips" xml:space="preserve">
+    <value>Mining terminated, please restart</value>
+  </data>
   <data name="installSuccessTips" xml:space="preserve">
-    <value>Mining system installed successfully \r Congratulations! Your mining environment is ready, please click start mining</value>
+    <value>Mining system installed successfully</value>
+  </data>
+  <data name="installTips" xml:space="preserve">
+    <value>(block synchronization is expected to take 1-2 hours to complete)</value>
   </data>
   <data name="ksImportSucess" xml:space="preserve">
     <value>Keystore imported successfully</value>
@@ -2407,13 +2470,13 @@
     <value>Keystore not found</value>
   </data>
   <data name="localIp" xml:space="preserve">
-    <value>Local IP :</value>
+    <value>Native IP:</value>
   </data>
   <data name="localMac" xml:space="preserve">
-    <value>Local MAC :</value>
+    <value>Native MAC:</value>
   </data>
   <data name="minerName" xml:space="preserve">
-    <value>Miner Name :</value>
+    <value>Name of Miner:</value>
   </data>
   <data name="quitTips" xml:space="preserve">
     <value>Are you sure to exit?</value>
@@ -2428,7 +2491,7 @@
     <value>Congratulations! Your mining environment is ready, please click to start mining</value>
   </data>
   <data name="statusChainSync" xml:space="preserve">
-    <value>Block synchronizing</value>
+    <value>Block synchronization</value>
   </data>
   <data name="statusMining" xml:space="preserve">
     <value>Mining</value>
@@ -2463,11 +2526,17 @@
   <data name="tsmiScan.Text" xml:space="preserve">
     <value>Scan Plotdata Directory</value>
   </data>
+  <data name="tsmiScanner.Text" xml:space="preserve">
+    <value>EHDScan</value>
+  </data>
   <data name="tsmiShowInfo.Text" xml:space="preserve">
     <value>Miner Infomation</value>
   </data>
   <data name="tsmiStart.Text" xml:space="preserve">
-    <value>Start Mining</value>
+    <value>Start mining</value>
+  </data>
+  <data name="tsmiWebsite.Text" xml:space="preserve">
+    <value>EHDWebsite</value>
   </data>
   <data name="tsslStatusScaned" xml:space="preserve">
     <value>ScanDisk complete</value>
@@ -2478,19 +2547,16 @@
   <data name="tsslStatusStart" xml:space="preserve">
     <value>Start successful</value>
   </data>
+  <data name="tsslStatusStop" xml:space="preserve">
+    <value>Mining terminated</value>
+  </data>
   <data name="tsslStatusSucess" xml:space="preserve">
-    <value>Get Ready</value>
+    <value>Ready</value>
   </data>
   <data name="walletAddress" xml:space="preserve">
-    <value>Wallet Address :</value>
+    <value>Wallet address:</value>
   </data>
   <data name="warn" xml:space="preserve">
     <value>Warning</value>
-  </data>
-  <data name="installTips" xml:space="preserve">
-    <value>(block synchronization is expected to take 1-2 hours to complete)</value>
-  </data>
-  <data name="copyTips" xml:space="preserve">
-    <value>Click OK to copy </value>
   </data>
 </root>

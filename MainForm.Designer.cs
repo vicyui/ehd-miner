@@ -34,11 +34,13 @@
             this.tsmiImportKeystore = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiInstall = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiStart = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiShowInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAdvanced = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddPeer = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRepairFork = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiScan = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiShowInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiScanner = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiWebsite = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLanguage = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLangCN = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLangEN = new System.Windows.Forms.ToolStripMenuItem();
@@ -60,20 +62,22 @@
             // 
             // menuStrip1
             // 
+            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiImportKeystore,
             this.tsmiInstall,
             this.tsmiStart,
-            this.tsmiShowInfo,
             this.tsmiAdvanced,
+            this.tsmiShowInfo,
+            this.tsmiScanner,
+            this.tsmiWebsite,
             this.tsmiLanguage});
-            resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Name = "menuStrip1";
             // 
             // tsmiImportKeystore
             // 
-            this.tsmiImportKeystore.Name = "tsmiImportKeystore";
             resources.ApplyResources(this.tsmiImportKeystore, "tsmiImportKeystore");
+            this.tsmiImportKeystore.Name = "tsmiImportKeystore";
             this.tsmiImportKeystore.Click += new System.EventHandler(this.ToolStripMenuItem6_Click);
             // 
             // tsmiInstall
@@ -88,83 +92,95 @@
             this.tsmiStart.Name = "tsmiStart";
             this.tsmiStart.Click += new System.EventHandler(this.ToolStripMenuItem3_Click);
             // 
-            // tsmiShowInfo
-            // 
-            this.tsmiShowInfo.Name = "tsmiShowInfo";
-            resources.ApplyResources(this.tsmiShowInfo, "tsmiShowInfo");
-            this.tsmiShowInfo.Click += new System.EventHandler(this.ToolStripMenuItem5_Click);
-            // 
             // tsmiAdvanced
             // 
+            resources.ApplyResources(this.tsmiAdvanced, "tsmiAdvanced");
             this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAddPeer,
             this.tsmiRepairFork,
             this.tsmiScan});
             this.tsmiAdvanced.Name = "tsmiAdvanced";
-            resources.ApplyResources(this.tsmiAdvanced, "tsmiAdvanced");
             // 
             // tsmiAddPeer
             // 
-            this.tsmiAddPeer.Name = "tsmiAddPeer";
             resources.ApplyResources(this.tsmiAddPeer, "tsmiAddPeer");
+            this.tsmiAddPeer.Name = "tsmiAddPeer";
             this.tsmiAddPeer.Click += new System.EventHandler(this.ToolStripMenuItem4_Click);
             // 
             // tsmiRepairFork
             // 
-            this.tsmiRepairFork.Name = "tsmiRepairFork";
             resources.ApplyResources(this.tsmiRepairFork, "tsmiRepairFork");
+            this.tsmiRepairFork.Name = "tsmiRepairFork";
             this.tsmiRepairFork.Click += new System.EventHandler(this.ToolStripMenuItem7_Click);
             // 
             // tsmiScan
             // 
-            this.tsmiScan.Name = "tsmiScan";
             resources.ApplyResources(this.tsmiScan, "tsmiScan");
+            this.tsmiScan.Name = "tsmiScan";
             this.tsmiScan.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
+            // 
+            // tsmiShowInfo
+            // 
+            resources.ApplyResources(this.tsmiShowInfo, "tsmiShowInfo");
+            this.tsmiShowInfo.Name = "tsmiShowInfo";
+            this.tsmiShowInfo.Click += new System.EventHandler(this.ToolStripMenuItem5_Click);
+            // 
+            // tsmiScanner
+            // 
+            resources.ApplyResources(this.tsmiScanner, "tsmiScanner");
+            this.tsmiScanner.Name = "tsmiScanner";
+            this.tsmiScanner.Click += new System.EventHandler(this.toolStripMenuItem1_Click_1);
+            // 
+            // tsmiWebsite
+            // 
+            resources.ApplyResources(this.tsmiWebsite, "tsmiWebsite");
+            this.tsmiWebsite.Name = "tsmiWebsite";
+            this.tsmiWebsite.Click += new System.EventHandler(this.toolStripMenuItem2_Click_1);
             // 
             // tsmiLanguage
             // 
+            resources.ApplyResources(this.tsmiLanguage, "tsmiLanguage");
             this.tsmiLanguage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiLangCN,
             this.tsmiLangEN});
             this.tsmiLanguage.Name = "tsmiLanguage";
-            resources.ApplyResources(this.tsmiLanguage, "tsmiLanguage");
             // 
             // tsmiLangCN
             // 
-            this.tsmiLangCN.Name = "tsmiLangCN";
             resources.ApplyResources(this.tsmiLangCN, "tsmiLangCN");
+            this.tsmiLangCN.Name = "tsmiLangCN";
             this.tsmiLangCN.Click += new System.EventHandler(this.TsmiLangCN_Click);
             // 
             // tsmiLangEN
             // 
-            this.tsmiLangEN.Name = "tsmiLangEN";
             resources.ApplyResources(this.tsmiLangEN, "tsmiLangEN");
+            this.tsmiLangEN.Name = "tsmiLangEN";
             this.tsmiLangEN.Click += new System.EventHandler(this.TsmiLangEN_Click);
             // 
             // statusStrip1
             // 
+            resources.ApplyResources(this.statusStrip1, "statusStrip1");
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
             this.toolStripStatusLabel2,
             this.toolStripProgressBar1});
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
             this.statusStrip1.Name = "statusStrip1";
             // 
             // toolStripStatusLabel1
             // 
+            resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
             this.toolStripStatusLabel1.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
             // 
             // toolStripStatusLabel2
             // 
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
             resources.ApplyResources(this.toolStripStatusLabel2, "toolStripStatusLabel2");
+            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
             // 
             // toolStripProgressBar1
             // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
             resources.ApplyResources(this.toolStripProgressBar1, "toolStripProgressBar1");
+            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
             // 
             // timer1
             // 
@@ -183,16 +199,16 @@
             // 
             // btnKSDir
             // 
-            this.btnKSDir.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             resources.ApplyResources(this.btnKSDir, "btnKSDir");
+            this.btnKSDir.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnKSDir.Name = "btnKSDir";
             this.btnKSDir.UseVisualStyleBackColor = true;
             this.btnKSDir.Click += new System.EventHandler(this.BtnKSDir_Click);
             // 
             // btnSaveKS
             // 
-            this.btnSaveKS.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             resources.ApplyResources(this.btnSaveKS, "btnSaveKS");
+            this.btnSaveKS.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnSaveKS.Name = "btnSaveKS";
             this.btnSaveKS.UseVisualStyleBackColor = true;
             this.btnSaveKS.Click += new System.EventHandler(this.BtnSaveKS_Click);
@@ -263,6 +279,8 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiLanguage;
         private System.Windows.Forms.ToolStripMenuItem tsmiLangCN;
         private System.Windows.Forms.ToolStripMenuItem tsmiLangEN;
+        private System.Windows.Forms.ToolStripMenuItem tsmiScanner;
+        private System.Windows.Forms.ToolStripMenuItem tsmiWebsite;
     }
 }
 

@@ -28,13 +28,13 @@ namespace EHDMiner
         private ComponentResourceManager resource;
         private int processId;
         private Process p;
-        string[] args;
+        string[] runArgs;
         public mainForm(string[] args)
         {
             InitializeComponent();
             language = "zh";
             resource = LanguageHelper.SetLang(language, this, typeof(mainForm), resource);
-            args = args;
+            runArgs = args;
         }
 
         public List<string> GetDeviceID()
@@ -109,7 +109,7 @@ namespace EHDMiner
             InitForm();
             InitDatabase();
             toolStripStatusLabel2.Text = resource.GetString("tsslStatusSucess");
-            labelMsg.Text = resource.GetString("installSuccessTips") + "\r"+ resource.GetString("startMineTips");
+            labelMsg.Text = resource.GetString("installSuccessTips") + "\r" + resource.GetString("startMineTips");
             tsmiStart.Enabled = true;
             tsmiInstall.Visible = false;
             tsmiImportKeystore.Visible = false;
@@ -128,7 +128,7 @@ namespace EHDMiner
             p = new Process();
             p.StartInfo.FileName = Application.StartupPath + "/bin/poc.exe";
             p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (args.Length > 0 && args[0] == "showPoc")
+            if (runArgs.Length > 0 && runArgs[0] == "showPoc")
             {
                 p.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
             }
@@ -155,18 +155,29 @@ namespace EHDMiner
 
         private void MineStatus()
         {
-            p = Process.GetProcessById(processId);
+            try
+            {
+                p = Process.GetProcessById(processId);
+            }
+            catch (Exception)
+            {
+                p = null;
+                tsmiStart.Enabled = true;
+                labelMsg.Text = resource.GetString("exceptionTips");
+                toolStripStatusLabel2.Text = resource.GetString("tsslStatusStop");
+            }
+            
             if (p != null && p.ProcessName == "poc")
             {
                 long mineDirLength = FileUtil.DictoryLength(plotdataDir);
                 if (mineDirLength == 17179869184 || mineDirLength == 8589934592)
                 {
-                    labelMsg.Text = resource.GetString("statusMining") + resource.GetString("installTips");
+                    labelMsg.Text = resource.GetString("statusMining") + "\r" + resource.GetString("installTips");
                     toolStripStatusLabel2.Text = resource.GetString("statusMining");
                 }
                 else
                 {
-                    labelMsg.Text = resource.GetString("statusChainSync") + resource.GetString("installTips");
+                    labelMsg.Text = resource.GetString("statusChainSync") + "\r" + resource.GetString("installTips");
                     toolStripStatusLabel2.Text = resource.GetString("statusChainSync");
                 }
             }
@@ -210,7 +221,7 @@ namespace EHDMiner
                 minerInfo += "\r" + resource.GetString("minerName") + "EHD-miner-" + address.Substring(38);
             }
             DialogResult dr = MessageBox.Show(minerInfo, resource.GetString("copyTips") + "\r" + resource.GetString("tsmiShowInfo.Text"), MessageBoxButtons.OK);
-            if(dr == DialogResult.OK)
+            if (dr == DialogResult.OK)
             {
                 Clipboard.SetDataObject(minerInfo);
             }
@@ -243,7 +254,7 @@ namespace EHDMiner
 
         private void KeystoreCheck()
         {
-            if (!Directory.Exists(keystoreDir) 
+            if (!Directory.Exists(keystoreDir)
             || Directory.GetFiles(keystoreDir).Length == 0)
             {
                 tsmiInstall.Enabled = false;
@@ -360,7 +371,6 @@ namespace EHDMiner
             try
             {
                 jo = JsonConvert.DeserializeObject<JObject>(textBox1.Text.Trim());
-                address = jo["address"].ToString();
             }
             catch (Exception)
             {
@@ -371,6 +381,7 @@ namespace EHDMiner
                 MessageBox.Show(resource.GetString("errorks"), resource.GetString("error"), MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+            address = jo["address"].ToString();
             string fileName = "UTC--" + utcTime + "--" + address;
             fileList = Directory.GetFiles(keystoreDir);
             if (fileList.Length == 0)
@@ -500,10 +511,11 @@ namespace EHDMiner
 
         private void NotifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if(WindowState == FormWindowState.Normal)
+            if (WindowState == FormWindowState.Normal)
             {
                 WindowState = FormWindowState.Minimized;
-            }else
+            }
+            else
             {
                 WindowState = FormWindowState.Normal;
             }
@@ -519,6 +531,16 @@ namespace EHDMiner
         {
             language = "zh";
             LanguageHelper.SetLang(language, this, typeof(mainForm), resource);
+        }
+
+        private void toolStripMenuItem1_Click_1(object sender, EventArgs e)
+        {
+            Process.Start("https://scan.ehd.io");
+        }
+
+        private void toolStripMenuItem2_Click_1(object sender, EventArgs e)
+        {
+            Process.Start("https://www.ehd.io");
         }
     }
 }
