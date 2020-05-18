@@ -117,15 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="&gt;&gt;tsmiLangCN.Name" xml:space="preserve">
-    <value>tsmiLangCN</value>
+  <data name="tsmiLanguage.Text" xml:space="preserve">
+    <value>语言</value>
   </data>
-  <data name="&gt;&gt;labelMsg.Name" xml:space="preserve">
-    <value>labelMsg</value>
+  <data name="tsmiShowInfo.Text" xml:space="preserve">
+    <value>矿机信息</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>784, 406</value>
+  <data name="tsmiAdvanced.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 21</value>
   </data>
   <data name="&gt;&gt;tsmiImportKeystore.Name" xml:space="preserve">
     <value>tsmiImportKeystore</value>
@@ -134,10 +134,7 @@
     <value>118, 21</value>
   </data>
   <data name="tsmiScan.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 22</value>
-  </data>
-  <data name="&gt;&gt;labelMsg.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>148, 22</value>
   </data>
   <data name="&gt;&gt;statusStrip1.Parent" xml:space="preserve">
     <value>$this</value>
@@ -146,14 +143,17 @@
   <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
+  <data name="&gt;&gt;tsmiScan.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="labelMsg.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 20</value>
   </data>
   <data name="&gt;&gt;tsmiRepairFork.Name" xml:space="preserve">
     <value>tsmiRepairFork</value>
   </data>
-  <data name="$this.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;statusStrip1.Name" xml:space="preserve">
+    <value>statusStrip1</value>
   </data>
   <data name="tsmiAddPeer.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -161,29 +161,32 @@
   <data name="labelMsg.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 9</value>
   </data>
-  <data name="btnKSDir.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tsmiInstall.Name" xml:space="preserve">
-    <value>tsmiInstall</value>
+  <data name="tsmiStart.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>mainForm</value>
+  <data name="&gt;&gt;tsmiRepairFork.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripProgressBar1.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsmiScanner.Name" xml:space="preserve">
+    <value>tsmiScanner</value>
   </data>
   <data name="&gt;&gt;tsmiShowInfo.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;btnSaveKS.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>0</value>
   </data>
   <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tsmiShowInfo.Name" xml:space="preserve">
-    <value>tsmiShowInfo</value>
+  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
   </data>
   <data name="&gt;&gt;tsmiStart.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -191,26 +194,23 @@
   <data name="&gt;&gt;statusStrip1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="tsmiAdvanced.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 21</value>
+  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
+    <value>784, 406</value>
   </data>
-  <data name="textBox1.Multiline" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="&gt;&gt;timer1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="btnKSDir.Size" type="System.Drawing.Size, System.Drawing">
-    <value>240, 30</value>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 12</value>
   </data>
-  <data name="&gt;&gt;btnKSDir.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="tsmiAdvanced.Text" xml:space="preserve">
+    <value>高级</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>784, 355</value>
   </data>
   <data name="btnSaveKS.Location" type="System.Drawing.Point, System.Drawing">
     <value>16, 308</value>
-  </data>
-  <data name="&gt;&gt;labelMsg.Parent" xml:space="preserve">
-    <value>panel1</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -228,17 +228,20 @@
   <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
     <value>textBox1</value>
   </data>
-  <data name="&gt;&gt;btnKSDir.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="labelMsg.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="&gt;&gt;tsmiScan.Name" xml:space="preserve">
-    <value>tsmiScan</value>
+  <data name="&gt;&gt;tsmiLangCN.Name" xml:space="preserve">
+    <value>tsmiLangCN</value>
+  </data>
+  <data name="btnSaveKS.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="&gt;&gt;tsmiInstall.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tsmiLangEN.Text" xml:space="preserve">
+    <value>英文</value>
   </data>
   <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -250,7 +253,7 @@
     <value>0</value>
   </data>
   <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>1</value>
   </data>
   <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
     <value>12, 42</value>
@@ -271,7 +274,7 @@
     <value>menuStrip1</value>
   </data>
   <data name="&gt;&gt;labelMsg.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>2</value>
   </data>
   <data name="btnSaveKS.Size" type="System.Drawing.Size, System.Drawing">
     <value>240, 30</value>
@@ -279,32 +282,47 @@
   <data name="tsmiInstall.Size" type="System.Drawing.Size, System.Drawing">
     <value>92, 21</value>
   </data>
-  <data name="&gt;&gt;btnKSDir.Parent" xml:space="preserve">
-    <value>panel1</value>
+  <data name="&gt;&gt;toolStripStatusLabel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="statusStrip1.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
   </data>
-  <data name="&gt;&gt;tsmiAddPeer.Name" xml:space="preserve">
-    <value>tsmiAddPeer</value>
+  <data name="&gt;&gt;toolStripStatusLabel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tsmiLanguage.Name" xml:space="preserve">
     <value>tsmiLanguage</value>
   </data>
+  <data name="&gt;&gt;tsmiInstall.Name" xml:space="preserve">
+    <value>tsmiInstall</value>
+  </data>
   <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
     <value>panel1</value>
   </data>
-  <data name="&gt;&gt;statusStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;toolStripStatusLabel2.Name" xml:space="preserve">
+    <value>toolStripStatusLabel2</value>
   </data>
-  <data name="&gt;&gt;toolStripStatusLabel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="$this.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="tsmiImportKeystore.Text" xml:space="preserve">
+    <value>导入keystore文件</value>
+  </data>
+  <data name="tsmiScan.Text" xml:space="preserve">
+    <value>扫描P盘目录</value>
   </data>
   <data name="&gt;&gt;btnSaveKS.Name" xml:space="preserve">
     <value>btnSaveKS</value>
   </data>
+  <data name="&gt;&gt;notifyIcon1.Name" xml:space="preserve">
+    <value>notifyIcon1</value>
+  </data>
   <data name="&gt;&gt;tsmiLanguage.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsmiStart.Name" xml:space="preserve">
+    <value>tsmiStart</value>
   </data>
   <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
     <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -322,16 +340,13 @@
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="tsmiRepairFork.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 22</value>
+    <value>148, 22</value>
   </data>
   <data name="tsmiWebsite.Size" type="System.Drawing.Size, System.Drawing">
     <value>69, 21</value>
   </data>
-  <data name="tsmiLangCN.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 22</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 12</value>
+  <data name="&gt;&gt;notifyIcon1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="statusStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>784, 26</value>
@@ -342,14 +357,11 @@
   <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="&gt;&gt;notifyIcon1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NotifyIcon, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;labelMsg.Parent" xml:space="preserve">
+    <value>panel1</value>
   </data>
-  <data name="&gt;&gt;tsmiScan.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;statusStrip1.Name" xml:space="preserve">
-    <value>statusStrip1</value>
+  <data name="tsmiScan.Visible" type="System.Boolean, mscorlib">
+    <value>False</value>
   </data>
   <data name="&gt;&gt;btnSaveKS.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -357,17 +369,23 @@
   <data name="tsmiLanguage.Size" type="System.Drawing.Size, System.Drawing">
     <value>44, 21</value>
   </data>
-  <data name="&gt;&gt;tsmiWebsite.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="statusStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 380</value>
+  </data>
+  <data name="tsmiRepairFork.Text" xml:space="preserve">
+    <value>重启同步区块</value>
   </data>
   <data name="tsmiInstall.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tsmiAddPeer.Text" xml:space="preserve">
+    <value>添加节点</value>
   </data>
   <data name="panel1.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
+  </data>
+  <data name="&gt;&gt;labelMsg.Name" xml:space="preserve">
+    <value>labelMsg</value>
   </data>
   <data name="&gt;&gt;timer1.Name" xml:space="preserve">
     <value>timer1</value>
@@ -1504,35 +1522,35 @@
         //////////////////////////////////8=
 </value>
   </data>
-  <data name="&gt;&gt;tsmiScanner.Name" xml:space="preserve">
-    <value>tsmiScanner</value>
-  </data>
-  <data name="statusStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 380</value>
-  </data>
   <data name="tsmiScanner.Size" type="System.Drawing.Size, System.Drawing">
     <value>80, 21</value>
   </data>
-  <data name="textBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Bottom, Left, Right</value>
+  <data name="&gt;&gt;tsmiAddPeer.Name" xml:space="preserve">
+    <value>tsmiAddPeer</value>
   </data>
-  <data name="btnKSDir.Location" type="System.Drawing.Point, System.Drawing">
-    <value>262, 308</value>
+  <data name="tsmiScanner.Text" xml:space="preserve">
+    <value>区块浏览器</value>
   </data>
   <data name="textBox1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <data name="&gt;&gt;btnKSDir.Name" xml:space="preserve">
-    <value>btnKSDir</value>
+  <data name="textBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Bottom, Left, Right</value>
   </data>
-  <data name="btnSaveKS.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="notifyIcon1.Text" xml:space="preserve">
+    <value>EHDMiner</value>
+  </data>
+  <data name="&gt;&gt;labelMsg.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tsmiWebsite.Text" xml:space="preserve">
+    <value>EHD官网</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
     <value>EHDMiner</value>
   </data>
-  <data name="&gt;&gt;tsmiRepairFork.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tsmiLangCN.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 22</value>
   </data>
   <data name="notifyIcon1.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -2666,8 +2684,8 @@
         //////////////////////////////////8=
 </value>
   </data>
-  <data name="tsmiScan.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
     <value>784, 25</value>
@@ -2675,11 +2693,11 @@
   <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-  <data name="&gt;&gt;toolStripStatusLabel2.Name" xml:space="preserve">
-    <value>toolStripStatusLabel2</value>
+  <data name="&gt;&gt;tsmiWebsite.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="tsmiInstall.Text" xml:space="preserve">
+    <value>安装挖矿系统</value>
   </data>
   <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
@@ -2690,44 +2708,47 @@
   <data name="&gt;&gt;tsmiAddPeer.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="tsmiStart.Enabled" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;toolStripStatusLabel2.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;tsmiScan.Name" xml:space="preserve">
+    <value>tsmiScan</value>
   </data>
   <data name="toolStripStatusLabel2.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 21</value>
   </data>
-  <data name="&gt;&gt;tsmiStart.Name" xml:space="preserve">
-    <value>tsmiStart</value>
+  <data name="&gt;&gt;tsmiShowInfo.Name" xml:space="preserve">
+    <value>tsmiShowInfo</value>
   </data>
-  <data name="&gt;&gt;timer1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Timer, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;statusStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.StatusStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
   </data>
   <data name="tsmiAddPeer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>143, 22</value>
+    <value>148, 22</value>
   </data>
   <data name="&gt;&gt;tsmiLangEN.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;notifyIcon1.Name" xml:space="preserve">
-    <value>notifyIcon1</value>
+  <data name="textBox1.Multiline" type="System.Boolean, mscorlib">
+    <value>True</value>
   </data>
   <data name="toolStripProgressBar1.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 20</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>mainForm</value>
+  </data>
+  <data name="btnSaveKS.Text" xml:space="preserve">
+    <value>导入keystore至挖矿应用</value>
   </data>
   <data name="&gt;&gt;tsmiAdvanced.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tsmiLangCN.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tsmiLangCN.Text" xml:space="preserve">
+    <value>中文</value>
   </data>
   <data name="tsmiShowInfo.Size" type="System.Drawing.Size, System.Drawing">
     <value>68, 21</value>
@@ -2741,73 +2762,28 @@
   <data name="&gt;&gt;tsmiLangEN.Name" xml:space="preserve">
     <value>tsmiLangEN</value>
   </data>
-  <data name="&gt;&gt;tsmiWebsite.Name" xml:space="preserve">
-    <value>tsmiWebsite</value>
-  </data>
-  <data name="menuStrip1.Locked" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="$this.Localizable" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing">
-    <value>258, 17</value>
-  </data>
-  <data name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing">
-    <value>137, 17</value>
-  </data>
-  <data name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing">
-    <value>17, 17</value>
-  </data>
-  <data name="notifyIcon1.TrayLocation" type="System.Drawing.Point, System.Drawing">
-    <value>348, 17</value>
-  </data>
-  <data name="btnKSDir.Text" xml:space="preserve">
-    <value>打开keystore目录</value>
-  </data>
-  <data name="btnSaveKS.Text" xml:space="preserve">
-    <value>导入keystore至挖矿应用</value>
-  </data>
-  <data name="notifyIcon1.Text" xml:space="preserve">
-    <value>EHDMiner</value>
-  </data>
-  <data name="tsmiAddPeer.Text" xml:space="preserve">
-    <value>添加节点</value>
-  </data>
-  <data name="tsmiAdvanced.Text" xml:space="preserve">
-    <value>高级</value>
-  </data>
-  <data name="tsmiImportKeystore.Text" xml:space="preserve">
-    <value>导入keystore文件</value>
-  </data>
-  <data name="tsmiInstall.Text" xml:space="preserve">
-    <value>安装挖矿系统</value>
-  </data>
-  <data name="tsmiLangCN.Text" xml:space="preserve">
-    <value>中文</value>
-  </data>
-  <data name="tsmiLangEN.Text" xml:space="preserve">
-    <value>英文</value>
-  </data>
-  <data name="tsmiLanguage.Text" xml:space="preserve">
-    <value>语言</value>
-  </data>
-  <data name="tsmiRepairFork.Text" xml:space="preserve">
-    <value>修复分叉</value>
-  </data>
-  <data name="tsmiScan.Text" xml:space="preserve">
-    <value>扫描P盘目录</value>
-  </data>
-  <data name="tsmiScanner.Text" xml:space="preserve">
-    <value>区块浏览器</value>
-  </data>
-  <data name="tsmiShowInfo.Text" xml:space="preserve">
-    <value>矿机信息</value>
-  </data>
   <data name="tsmiStart.Text" xml:space="preserve">
     <value>启动挖矿</value>
   </data>
-  <data name="tsmiWebsite.Text" xml:space="preserve">
-    <value>EHD官网</value>
+  <data name="&gt;&gt;tsmiWebsite.Name" xml:space="preserve">
+    <value>tsmiWebsite</value>
   </data>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="menuStrip1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>258, 17</value>
+  </metadata>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>137, 17</value>
+  </metadata>
+  <metadata name="menuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="notifyIcon1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>348, 17</value>
+  </metadata>
 </root>

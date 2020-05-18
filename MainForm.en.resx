@@ -2521,7 +2521,7 @@
     <value>Language</value>
   </data>
   <data name="tsmiRepairFork.Text" xml:space="preserve">
-    <value>Repair Fork</value>
+    <value>Restart to Sync Fork</value>
   </data>
   <data name="tsmiScan.Text" xml:space="preserve">
     <value>Scan Plotdata Directory</value>

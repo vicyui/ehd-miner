@@ -28,7 +28,7 @@ namespace EHDMiner
         private ComponentResourceManager resource;
         private int processId;
         private Process p;
-        string[] runArgs;
+        private string[] runArgs;
         public mainForm(string[] args)
         {
             InitializeComponent();
@@ -62,7 +62,7 @@ namespace EHDMiner
             return deviceIDs;
         }
 
-        private void ToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void tsmiScan_Click(object sender, EventArgs e)
         {
             InitForm();
             InitializeBackgroundWorker();
@@ -104,7 +104,7 @@ namespace EHDMiner
             MineStatus();
         }
 
-        private void ToolStripMenuItem2_Click(object sender, EventArgs e)
+        private void tsmiInstall_Click(object sender, EventArgs e)
         {
             InitForm();
             InitDatabase();
@@ -120,7 +120,7 @@ namespace EHDMiner
         [DllImport("user32.dll ", EntryPoint = "ShowWindow")]
         public static extern int ShowWindow(IntPtr hwnd, int nCmdShow);
 
-        private void ToolStripMenuItem3_Click(object sender, EventArgs e)
+        private void tsmiStart_Click(object sender, EventArgs e)
         {
             InitForm();
             RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
@@ -169,6 +169,7 @@ namespace EHDMiner
             
             if (p != null && p.ProcessName == "poc")
             {
+                tsmiStart.Enabled = false;
                 long mineDirLength = FileUtil.DictoryLength(plotdataDir);
                 if (mineDirLength == 17179869184 || mineDirLength == 8589934592)
                 {
@@ -198,13 +199,13 @@ namespace EHDMiner
 
         private delegate void setLogTextDelegate(FileSystemEventArgs e);
 
-        private void ToolStripMenuItem4_Click(object sender, EventArgs e)
+        private void tsmiAddPeer_Click(object sender, EventArgs e)
         {
             RunProcess("cmd.exe", "curl -H \"Content - Type: application / json\" --data '{\"method\": \"admin_addPeer\", \"params\": \"enode://c789aecd75c1a346b2060b4d33b3e7ee11f591b3003c6010b44daff49d461c7d3bcae25d161bb1b8134dac2707037df102bf7f0ee763d51a04709d8a15978997@27.190.170.103:30303\"}' http://127.0.0.1:8545");
         }
 
         [Obsolete]
-        private void ToolStripMenuItem5_Click(object sender, EventArgs e)
+        private void tsmiShowInfo_Click(object sender, EventArgs e)
         {
             AddressHelper helper = new AddressHelper();
             string minerInfo = resource.GetString("localIp") + helper.GetLocalIP();
@@ -227,20 +228,20 @@ namespace EHDMiner
             }
         }
 
-        private void ToolStripMenuItem6_Click(object sender, EventArgs e)
+        private void tsmiImportKeystore_Click(object sender, EventArgs e)
         {
             InitForm();
             labelMsg.Text = resource.GetString("ksImportTips");
             textBox1.Show();
             btnSaveKS.Show();
-            btnKSDir.Show();
         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
             InitForm();
             InitDirectoryAndFile();
-            ClearKeystore();
+            KeystoreCheck();
         }
 
         private void InitForm()
@@ -248,7 +249,6 @@ namespace EHDMiner
             labelMsg.Text = string.Empty;
             textBox1.Hide();
             btnSaveKS.Hide();
-            btnKSDir.Hide();
             toolStripProgressBar1.Visible = false;
         }
 
@@ -259,6 +259,28 @@ namespace EHDMiner
             {
                 tsmiInstall.Enabled = false;
                 tsmiStart.Enabled = false;
+            }
+            else
+            {
+                textBox1.Hide();
+                btnSaveKS.Hide();
+
+                string[] fileList = Directory.GetFiles(keystoreDir);
+                string address = Path.GetFileName(fileList[0]).Substring(37);
+                string sql = "select count(1) from t_user where F_Username = @Username;";
+                int result = Convert.ToInt32(DBHelper.ExecuteScalar(sql, new Dictionary<string, object> { { "Username", "0x" + address } }));
+                if (result == 1)
+                {
+                    tsmiStart.Enabled = true;
+                    tsmiImportKeystore.Visible = false;
+                    tsmiInstall.Visible = false;
+                    labelMsg.Text = resource.GetString("startMineTips");
+                    toolStripStatusLabel2.Text = resource.GetString("tsslStatusSucess");
+                }
+                else
+                {
+                    tsmiInstall.Enabled = true;
+                }
             }
         }
 
@@ -320,6 +342,9 @@ namespace EHDMiner
             {
                 FileUtil.ExtractResFile("EHDMiner.Resources." + poc, Application.StartupPath + "\\bin\\" + poc);
             }
+            File.SetAttributes(Application.StartupPath + "\\AppData", FileAttributes.Hidden);
+            File.SetAttributes(Application.StartupPath + "\\bin", FileAttributes.Hidden);
+            File.SetAttributes(Application.StartupPath + "\\" + database, FileAttributes.Hidden);
         }
 
         private void InitDatabase()
@@ -399,7 +424,6 @@ namespace EHDMiner
                 textBox1.Text = string.Empty;
                 textBox1.Hide();
                 btnSaveKS.Hide();
-                btnKSDir.Hide();
 
                 string sql = "select count(1) from t_user where F_Username = @Username;";
                 int result = Convert.ToInt32(DBHelper.ExecuteScalar(sql, new Dictionary<string, object> { { "Username", "0x" + address } }));
@@ -452,7 +476,7 @@ namespace EHDMiner
             toolStripProgressBar1.Visible = true;
         }
 
-        private void ToolStripMenuItem7_Click(object sender, EventArgs e)
+        private void tsmiRepairFork_Click(object sender, EventArgs e)
         {
 
             DialogResult flag = MessageBox.Show(resource.GetString("repairForkWarn"), resource.GetString("warn"), MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
@@ -477,30 +501,13 @@ namespace EHDMiner
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            DialogResult result = MessageBox.Show(resource.GetString("quitTips"), resource.GetString("tips"),
-                MessageBoxButtons.OKCancel,
-                MessageBoxIcon.Question);
-            if (result == DialogResult.OK)
+            if (e.CloseReason == CloseReason.UserClosing)
             {
-                notifyIcon1.Dispose();
-                ClearKeystore();
-                Dispose();
-                e.Cancel = false;
+                e.Cancel = true;    //取消"关闭窗口"事件
+                WindowState = FormWindowState.Minimized;    //使关闭时窗口向右下角缩小的效果
+                Hide();
+                return;
             }
-            else
-            {
-                e.Cancel = true;
-            }
-        }
-
-        private void ClearKeystore()
-        {
-            fileList = Directory.GetFiles(keystoreDir);
-            if (fileList.Length > 0)
-            {
-                File.Delete(fileList[0]);
-            }
-            RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -513,10 +520,11 @@ namespace EHDMiner
         {
             if (WindowState == FormWindowState.Normal)
             {
-                WindowState = FormWindowState.Minimized;
+                return;
             }
             else
             {
+                Show();
                 WindowState = FormWindowState.Normal;
             }
         }
@@ -533,12 +541,12 @@ namespace EHDMiner
             LanguageHelper.SetLang(language, this, typeof(mainForm), resource);
         }
 
-        private void toolStripMenuItem1_Click_1(object sender, EventArgs e)
+        private void tsmiScanner_Click(object sender, EventArgs e)
         {
             Process.Start("https://scan.ehd.io");
         }
 
-        private void toolStripMenuItem2_Click_1(object sender, EventArgs e)
+        private void tsmiWebsite_Click(object sender, EventArgs e)
         {
             Process.Start("https://www.ehd.io");
         }

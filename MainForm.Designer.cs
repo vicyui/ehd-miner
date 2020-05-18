@@ -50,7 +50,6 @@
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnKSDir = new System.Windows.Forms.Button();
             this.btnSaveKS = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.labelMsg = new System.Windows.Forms.Label();
@@ -78,19 +77,19 @@
             // 
             resources.ApplyResources(this.tsmiImportKeystore, "tsmiImportKeystore");
             this.tsmiImportKeystore.Name = "tsmiImportKeystore";
-            this.tsmiImportKeystore.Click += new System.EventHandler(this.ToolStripMenuItem6_Click);
+            this.tsmiImportKeystore.Click += new System.EventHandler(this.tsmiImportKeystore_Click);
             // 
             // tsmiInstall
             // 
             resources.ApplyResources(this.tsmiInstall, "tsmiInstall");
             this.tsmiInstall.Name = "tsmiInstall";
-            this.tsmiInstall.Click += new System.EventHandler(this.ToolStripMenuItem2_Click);
+            this.tsmiInstall.Click += new System.EventHandler(this.tsmiInstall_Click);
             // 
             // tsmiStart
             // 
             resources.ApplyResources(this.tsmiStart, "tsmiStart");
             this.tsmiStart.Name = "tsmiStart";
-            this.tsmiStart.Click += new System.EventHandler(this.ToolStripMenuItem3_Click);
+            this.tsmiStart.Click += new System.EventHandler(this.tsmiStart_Click);
             // 
             // tsmiAdvanced
             // 
@@ -105,37 +104,37 @@
             // 
             resources.ApplyResources(this.tsmiAddPeer, "tsmiAddPeer");
             this.tsmiAddPeer.Name = "tsmiAddPeer";
-            this.tsmiAddPeer.Click += new System.EventHandler(this.ToolStripMenuItem4_Click);
+            this.tsmiAddPeer.Click += new System.EventHandler(this.tsmiAddPeer_Click);
             // 
             // tsmiRepairFork
             // 
             resources.ApplyResources(this.tsmiRepairFork, "tsmiRepairFork");
             this.tsmiRepairFork.Name = "tsmiRepairFork";
-            this.tsmiRepairFork.Click += new System.EventHandler(this.ToolStripMenuItem7_Click);
+            this.tsmiRepairFork.Click += new System.EventHandler(this.tsmiRepairFork_Click);
             // 
             // tsmiScan
             // 
             resources.ApplyResources(this.tsmiScan, "tsmiScan");
             this.tsmiScan.Name = "tsmiScan";
-            this.tsmiScan.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
+            this.tsmiScan.Click += new System.EventHandler(this.tsmiScan_Click);
             // 
             // tsmiShowInfo
             // 
             resources.ApplyResources(this.tsmiShowInfo, "tsmiShowInfo");
             this.tsmiShowInfo.Name = "tsmiShowInfo";
-            this.tsmiShowInfo.Click += new System.EventHandler(this.ToolStripMenuItem5_Click);
+            this.tsmiShowInfo.Click += new System.EventHandler(this.tsmiShowInfo_Click);
             // 
             // tsmiScanner
             // 
             resources.ApplyResources(this.tsmiScanner, "tsmiScanner");
             this.tsmiScanner.Name = "tsmiScanner";
-            this.tsmiScanner.Click += new System.EventHandler(this.toolStripMenuItem1_Click_1);
+            this.tsmiScanner.Click += new System.EventHandler(this.tsmiScanner_Click);
             // 
             // tsmiWebsite
             // 
             resources.ApplyResources(this.tsmiWebsite, "tsmiWebsite");
             this.tsmiWebsite.Name = "tsmiWebsite";
-            this.tsmiWebsite.Click += new System.EventHandler(this.toolStripMenuItem2_Click_1);
+            this.tsmiWebsite.Click += new System.EventHandler(this.tsmiWebsite_Click);
             // 
             // tsmiLanguage
             // 
@@ -191,19 +190,10 @@
             // panel1
             // 
             resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Controls.Add(this.btnKSDir);
             this.panel1.Controls.Add(this.btnSaveKS);
             this.panel1.Controls.Add(this.textBox1);
             this.panel1.Controls.Add(this.labelMsg);
             this.panel1.Name = "panel1";
-            // 
-            // btnKSDir
-            // 
-            resources.ApplyResources(this.btnKSDir, "btnKSDir");
-            this.btnKSDir.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnKSDir.Name = "btnKSDir";
-            this.btnKSDir.UseVisualStyleBackColor = true;
-            this.btnKSDir.Click += new System.EventHandler(this.BtnKSDir_Click);
             // 
             // btnSaveKS
             // 
@@ -232,14 +222,12 @@
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "mainForm";
-            this.ShowInTaskbar = false;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
@@ -271,7 +259,6 @@
         private System.Windows.Forms.Label labelMsg;
         private System.Windows.Forms.Button btnSaveKS;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button btnKSDir;
         private System.Windows.Forms.ToolStripMenuItem tsmiRepairFork;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;

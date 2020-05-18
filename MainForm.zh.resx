@@ -2467,7 +2467,7 @@
     <value>语言</value>
   </data>
   <data name="tsmiRepairFork.Text" xml:space="preserve">
-    <value>修复分叉</value>
+    <value>重启同步区块</value>
   </data>
   <data name="tsmiScan.Text" xml:space="preserve">
     <value>扫描P盘目录</value>
