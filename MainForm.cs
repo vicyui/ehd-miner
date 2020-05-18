@@ -274,7 +274,7 @@ namespace EHDMiner
                     tsmiStart.Enabled = true;
                     tsmiImportKeystore.Visible = false;
                     tsmiInstall.Visible = false;
-                    labelMsg.Text = resource.GetString("startMineTips");
+                    labelMsg.Text = resource.GetString("congratulations") + "\r" + resource.GetString("startMineTips");
                     toolStripStatusLabel2.Text = resource.GetString("tsslStatusSucess");
                 }
                 else
@@ -432,7 +432,7 @@ namespace EHDMiner
                     tsmiStart.Enabled = true;
                     tsmiImportKeystore.Visible = false;
                     tsmiInstall.Visible = false;
-                    labelMsg.Text = resource.GetString("startMineTips");
+                    labelMsg.Text = resource.GetString("congratulations") + "\r" + resource.GetString("startMineTips");
                     toolStripStatusLabel2.Text = resource.GetString("tsslStatusSucess");
                 }
                 else

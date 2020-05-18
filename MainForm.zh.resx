@@ -2431,10 +2431,10 @@
     <value>修复成功,请点击启动挖矿</value>
   </data>
   <data name="repairForkWarn" xml:space="preserve">
-    <value>确定要修复分叉吗?</value>
+    <value>确定要重启同步区块吗?</value>
   </data>
   <data name="startMineTips" xml:space="preserve">
-    <value>恭喜!您的挖矿环境已经准备就绪,请点击启动挖矿</value>
+    <value>您的挖矿环境已经准备就绪,请点击启动挖矿</value>
   </data>
   <data name="statusChainSync" xml:space="preserve">
     <value>区块同步中</value>
@@ -2504,5 +2504,8 @@
   </data>
   <data name="warn" xml:space="preserve">
     <value>警告</value>
+  </data>
+  <data name="congratulations" xml:space="preserve">
+    <value>恭喜!</value>
   </data>
 </root>
