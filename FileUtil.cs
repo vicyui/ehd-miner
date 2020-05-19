@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Management;
 using System.Reflection;
 
 namespace EHDMiner
@@ -92,6 +94,31 @@ namespace EHDMiner
                 filesLength += fi.Length;
             }
             return filesLength;
+        }
+
+        public static List<string> GetDeviceID()
+        {
+            List<string> deviceIDs = new List<string>();
+            ManagementObjectSearcher query = new ManagementObjectSearcher("SELECT  *  From  Win32_LogicalDisk ");
+            ManagementObjectCollection queryCollection = query.Get();
+            foreach (ManagementObject mo in queryCollection)
+            {
+
+                switch (int.Parse(mo["DriveType"].ToString()))
+                {
+                    case (int)DriveType.Fixed:   //本地磁盘     
+                        {
+                            deviceIDs.Add(mo["DeviceID"].ToString());
+                            break;
+                        }
+                    default:   //defalut   to   folder     
+                        {
+                            break;
+                        }
+                }
+
+            }
+            return deviceIDs;
         }
     }
 }

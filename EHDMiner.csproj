@@ -35,7 +35,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -112,6 +112,12 @@
   <ItemGroup>
     <Compile Include="AddressHelper.cs" />
     <Compile Include="DBHelper.cs" />
+    <Compile Include="DeviceSelectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeviceSelectForm.Designer.cs">
+      <DependentUpon>DeviceSelectForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileUtil.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -127,6 +133,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="DeviceSelectForm.resx">
+      <DependentUpon>DeviceSelectForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.en.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -149,6 +158,7 @@
     <EmbeddedResource Include="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

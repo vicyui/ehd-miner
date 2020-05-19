@@ -2431,7 +2431,7 @@
     <value>修复成功,请点击启动挖矿</value>
   </data>
   <data name="repairForkWarn" xml:space="preserve">
-    <value>确定要重启同步区块吗?</value>
+    <value>确定要重启挖矿吗?</value>
   </data>
   <data name="startMineTips" xml:space="preserve">
     <value>您的挖矿环境已经准备就绪,请点击启动挖矿</value>
@@ -2467,10 +2467,10 @@
     <value>语言</value>
   </data>
   <data name="tsmiRepairFork.Text" xml:space="preserve">
-    <value>重启同步区块</value>
+    <value>重启挖矿</value>
   </data>
-  <data name="tsmiScan.Text" xml:space="preserve">
-    <value>扫描P盘目录</value>
+  <data name="tsmiPlotDir.Text" xml:space="preserve">
+    <value>选择P盘目录</value>
   </data>
   <data name="tsmiScanner.Text" xml:space="preserve">
     <value>区块浏览器</value>

@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Management;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
@@ -17,7 +17,8 @@ namespace EHDMiner
     public partial class mainForm : Form
     {
         private BackgroundWorker backgroundWorker;
-        string[] fileList;
+        private string[] fileList;
+        private string address = string.Empty;
         private readonly string description = "description.xml";
         private readonly string database = "database.sqlite";
         private readonly string poc = "poc.exe";
@@ -29,6 +30,8 @@ namespace EHDMiner
         private int processId;
         private Process p;
         private string[] runArgs;
+        public static ArrayList checkedList = new ArrayList();
+
         public mainForm(string[] args)
         {
             InitializeComponent();
@@ -37,42 +40,36 @@ namespace EHDMiner
             runArgs = args;
         }
 
-        public List<string> GetDeviceID()
+        private void TsmiScan_Click(object sender, EventArgs e)
         {
-            List<string> deviceIDs = new List<string>();
-            ManagementObjectSearcher query = new ManagementObjectSearcher("SELECT  *  From  Win32_LogicalDisk ");
-            ManagementObjectCollection queryCollection = query.Get();
-            foreach (ManagementObject mo in queryCollection)
+            DeviceSelectForm deviceSelectForm = new DeviceSelectForm();
+            deviceSelectForm.Text = tsmiPlotDir.Text;
+            deviceSelectForm.ShowDialog();
+
+            IDbConnection conn = DBHelper.CreateConnection();
+            Dictionary<string, object> ups;
+            string sql = "REPLACE INTO t_plot(F_Name, F_Path, F_Uuid, F_PlotSeed, F_PlotDir, F_PlotSize, F_PlotParam, F_Status, F_CreateTime, F_ModifyTime) " +
+                "VALUES(@Path, @Path, '', @Address, '/plotdata', '8589934592', '{\"startNonce\":0}', 1, @CreateTime, @CreateTime);";
+            foreach (var item in checkedList)
             {
-
-                switch (int.Parse(mo["DriveType"].ToString()))
+                ups = new Dictionary<string, object>
                 {
-                    case (int)DriveType.Fixed:   //本地磁盘     
-                        {
-                            deviceIDs.Add(mo["DeviceID"].ToString());
-                            break;
-                        }
-                    default:   //defalut   to   folder     
-                        {
-                            break;
-                        }
-                }
-
+                    { "Path", item },
+                    { "Address", "0x" + address },
+                    { "CreateTime", tsslDate.Text } 
+                };
+                DBHelper.ExecuteNonQuery(conn, sql, ups);
             }
-            return deviceIDs;
-        }
-
-        private void tsmiScan_Click(object sender, EventArgs e)
-        {
-            InitForm();
-            InitializeBackgroundWorker();
-            backgroundWorker.RunWorkerAsync();
+            conn.Close();
+            //InitForm();
+            //InitializeBackgroundWorker();
+            //backgroundWorker.RunWorkerAsync();
         }
 
         private void ScanDevices(BackgroundWorker worker, DoWorkEventArgs e)
         {
             worker.ReportProgress(0);
-            List<string> devices = GetDeviceID();
+            List<string> devices = FileUtil.GetDeviceID();
             Dictionary<string, long> deviceMap = new Dictionary<string, long>();
             foreach (string device in devices)
             {
@@ -99,16 +96,16 @@ namespace EHDMiner
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            toolStripStatusLabel1.Text = DateTime.Now.ToString();
+            tsslDate.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             KeystoreCheck();
             MineStatus();
         }
 
-        private void tsmiInstall_Click(object sender, EventArgs e)
+        private void TsmiInstall_Click(object sender, EventArgs e)
         {
             InitForm();
             InitDatabase();
-            toolStripStatusLabel2.Text = resource.GetString("tsslStatusSucess");
+            tsslStatus.Text = resource.GetString("tsslStatusSucess");
             labelMsg.Text = resource.GetString("installSuccessTips") + "\r" + resource.GetString("startMineTips");
             tsmiStart.Enabled = true;
             tsmiInstall.Visible = false;
@@ -138,7 +135,7 @@ namespace EHDMiner
             Thread.Sleep(100);//加上，100如果效果没有就继续加大
             SetParent(p.MainWindowHandle, panel1.Handle); //panel1.Handle为要显示外部程序的容器
             ShowWindow(p.MainWindowHandle, 3);
-            toolStripStatusLabel2.Text = resource.GetString("tsslStatusStart");
+            tsslStatus.Text = resource.GetString("tsslStatusStart");
             tsmiStart.Enabled = false;
             labelMsg.Text = resource.GetString("installTips");
 
@@ -164,9 +161,9 @@ namespace EHDMiner
                 p = null;
                 tsmiStart.Enabled = true;
                 labelMsg.Text = resource.GetString("exceptionTips");
-                toolStripStatusLabel2.Text = resource.GetString("tsslStatusStop");
+                tsslStatus.Text = resource.GetString("tsslStatusStop");
             }
-            
+
             if (p != null && p.ProcessName == "poc")
             {
                 tsmiStart.Enabled = false;
@@ -174,12 +171,12 @@ namespace EHDMiner
                 if (mineDirLength == 17179869184 || mineDirLength == 8589934592)
                 {
                     labelMsg.Text = resource.GetString("statusMining") + "\r" + resource.GetString("installTips");
-                    toolStripStatusLabel2.Text = resource.GetString("statusMining");
+                    tsslStatus.Text = resource.GetString("statusMining");
                 }
                 else
                 {
                     labelMsg.Text = resource.GetString("statusChainSync") + "\r" + resource.GetString("installTips");
-                    toolStripStatusLabel2.Text = resource.GetString("statusChainSync");
+                    tsslStatus.Text = resource.GetString("statusChainSync");
                 }
             }
         }
@@ -194,7 +191,7 @@ namespace EHDMiner
 
         private void SetLogText(FileSystemEventArgs e)
         {
-            toolStripStatusLabel2.Text = resource.GetString("statusChainSync");
+            tsslStatus.Text = resource.GetString("statusChainSync");
         }
 
         private delegate void setLogTextDelegate(FileSystemEventArgs e);
@@ -210,16 +207,14 @@ namespace EHDMiner
             AddressHelper helper = new AddressHelper();
             string minerInfo = resource.GetString("localIp") + helper.GetLocalIP();
             minerInfo += "\r" + resource.GetString("localMac") + helper.GetLocalMac();
-            string address = string.Empty;
             fileList = Directory.GetFiles(keystoreDir);
             if (fileList.Length > 0)
             {
-                address = "0x" + Path.GetFileName(fileList[0]).Substring(37);
-                minerInfo += "\r" + resource.GetString("walletAddress") + address;
+                minerInfo += "\r" + resource.GetString("walletAddress") + "0x" + address;
             }
             if (address.Length > 0)
             {
-                minerInfo += "\r" + resource.GetString("minerName") + "EHD-miner-" + address.Substring(38);
+                minerInfo += "\r" + resource.GetString("minerName") + "EHD-miner-" + address.Substring(36);
             }
             DialogResult dr = MessageBox.Show(minerInfo, resource.GetString("copyTips") + "\r" + resource.GetString("tsmiShowInfo.Text"), MessageBoxButtons.OK);
             if (dr == DialogResult.OK)
@@ -228,7 +223,7 @@ namespace EHDMiner
             }
         }
 
-        private void tsmiImportKeystore_Click(object sender, EventArgs e)
+        private void TsmiImportKeystore_Click(object sender, EventArgs e)
         {
             InitForm();
             labelMsg.Text = resource.GetString("ksImportTips");
@@ -265,8 +260,8 @@ namespace EHDMiner
                 textBox1.Hide();
                 btnSaveKS.Hide();
 
-                string[] fileList = Directory.GetFiles(keystoreDir);
-                string address = Path.GetFileName(fileList[0]).Substring(37);
+                fileList = Directory.GetFiles(keystoreDir);
+                address = Path.GetFileName(fileList[0]).Substring(37);
                 string sql = "select count(1) from t_user where F_Username = @Username;";
                 int result = Convert.ToInt32(DBHelper.ExecuteScalar(sql, new Dictionary<string, object> { { "Username", "0x" + address } }));
                 if (result == 1)
@@ -274,8 +269,9 @@ namespace EHDMiner
                     tsmiStart.Enabled = true;
                     tsmiImportKeystore.Visible = false;
                     tsmiInstall.Visible = false;
+                    tsmiPlotDir.Enabled = true;
                     labelMsg.Text = resource.GetString("congratulations") + "\r" + resource.GetString("startMineTips");
-                    toolStripStatusLabel2.Text = resource.GetString("tsslStatusSucess");
+                    tsslStatus.Text = resource.GetString("tsslStatusSucess");
                 }
                 else
                 {
@@ -352,26 +348,27 @@ namespace EHDMiner
             fileList = Directory.GetFiles(keystoreDir);
             if (fileList.Length == 0)
             {
-                toolStripStatusLabel2.Text = resource.GetString("ksUnfind");
+                tsslStatus.Text = resource.GetString("ksUnfind");
                 return;
             }
-            string keystoreName = Path.GetFileName(fileList[0]);
             IDbConnection conn = DBHelper.CreateConnection();
-            string nowDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            string index = "CREATE UNIQUE INDEX index_path ON t_plot ( F_path );";
+            DBHelper.ExecuteNonQuery(conn, index, new Dictionary<string, object>());
+
             string sql = "REPLACE INTO t_host(F_id, F_Hostname, F_Status, F_CreateTime,F_ModifyTime) VALUES(1, @HostName, 0, @CreateTime, @CreateTime);";
             Dictionary<string, object> ups = new Dictionary<string, object>
             {
-                { "HostName", "EHD-miner-" + keystoreName.Substring(73,4) },//EHD-miner- 钱包后4位
-                { "CreateTime", nowDate }
+                { "HostName", "EHD-miner-" + address.Substring(36) },//EHD-miner- 钱包后4位
+                { "CreateTime", tsslDate.Text }
             };
             DBHelper.ExecuteNonQuery(conn, sql, ups);
 
             string sql2 = "REPLACE INTO t_user(F_id, F_Username,F_Password, F_CreateTime, F_ModifyTime) VALUES(1, @Address, @Password, @CreateTime, @CreateTime);";
             Dictionary<string, object> ups2 = new Dictionary<string, object>
             {
-                { "Address", "0x" + keystoreName.Substring(37) },//keystore文件名第37位起
+                { "Address", "0x" + address },//keystore文件名第37位起
                 { "Password", "ehd123123" },//keystore文件名第37位起
-                { "CreateTime", nowDate }
+                { "CreateTime", tsslDate.Text }
             };
             DBHelper.ExecuteNonQuery(conn, sql2, ups2);
 
@@ -380,9 +377,9 @@ namespace EHDMiner
             Dictionary<string, object> ups3 = new Dictionary<string, object>
             {
                 { "Path", Application.StartupPath },
-                { "Address", "0x" + keystoreName.Substring(37) },
+                { "Address", "0x" + address },
                 { "PlotDir", "/AppData/Roaming/Poc/plotdata" },
-                { "CreateTime", nowDate }
+                { "CreateTime", tsslDate.Text }
             };
             DBHelper.ExecuteNonQuery(conn, sql3, ups3);
             conn.Close();
@@ -392,7 +389,6 @@ namespace EHDMiner
         {
             string utcTime = DateTime.UtcNow.ToString("yyyy-MM-ddTHH-mm-ss.fffffff00Z");
             JObject jo;
-            string address = string.Empty;
             try
             {
                 jo = JsonConvert.DeserializeObject<JObject>(textBox1.Text.Trim());
@@ -419,8 +415,8 @@ namespace EHDMiner
                 sw.Close();
                 fs.Close();
 
-                toolStripStatusLabel2.Text = resource.GetString("ksImportSucess");
-                labelMsg.Text = toolStripStatusLabel2.Text;
+                tsslStatus.Text = resource.GetString("ksImportSucess");
+                labelMsg.Text = tsslStatus.Text;
                 textBox1.Text = string.Empty;
                 textBox1.Hide();
                 btnSaveKS.Hide();
@@ -433,7 +429,7 @@ namespace EHDMiner
                     tsmiImportKeystore.Visible = false;
                     tsmiInstall.Visible = false;
                     labelMsg.Text = resource.GetString("congratulations") + "\r" + resource.GetString("startMineTips");
-                    toolStripStatusLabel2.Text = resource.GetString("tsslStatusSucess");
+                    tsslStatus.Text = resource.GetString("tsslStatusSucess");
                 }
                 else
                 {
@@ -454,14 +450,14 @@ namespace EHDMiner
 
         private void BackgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            toolStripStatusLabel2.Text = resource.GetString("tsslStatusScaning");
+            tsslStatus.Text = resource.GetString("tsslStatusScaning");
             toolStripProgressBar1.Value = e.ProgressPercentage;
         }
 
         private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            toolStripStatusLabel2.Text = resource.GetString("tsslStatusScaned");
-            labelMsg.Text = toolStripStatusLabel2.Text;
+            tsslStatus.Text = resource.GetString("tsslStatusScaned");
+            labelMsg.Text = tsslStatus.Text;
         }
 
         private void InitializeBackgroundWorker()
@@ -476,7 +472,7 @@ namespace EHDMiner
             toolStripProgressBar1.Visible = true;
         }
 
-        private void tsmiRepairFork_Click(object sender, EventArgs e)
+        private void TsmiRepairFork_Click(object sender, EventArgs e)
         {
 
             DialogResult flag = MessageBox.Show(resource.GetString("repairForkWarn"), resource.GetString("warn"), MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
@@ -485,8 +481,8 @@ namespace EHDMiner
                 RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
                 Thread.Sleep(3000);
                 DeleteEthDir();
-                toolStripStatusLabel2.Text = resource.GetString("repairForkSuccess");
-                labelMsg.Text = toolStripStatusLabel2.Text;
+                tsslStatus.Text = resource.GetString("repairForkSuccess");
+                labelMsg.Text = tsslStatus.Text;
                 tsmiStart.Enabled = true;
             }
         }
@@ -541,12 +537,12 @@ namespace EHDMiner
             LanguageHelper.SetLang(language, this, typeof(mainForm), resource);
         }
 
-        private void tsmiScanner_Click(object sender, EventArgs e)
+        private void TsmiScanner_Click(object sender, EventArgs e)
         {
             Process.Start("https://scan.ehd.io");
         }
 
-        private void tsmiWebsite_Click(object sender, EventArgs e)
+        private void TsmiWebsite_Click(object sender, EventArgs e)
         {
             Process.Start("https://www.ehd.io");
         }

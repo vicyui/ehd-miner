@@ -37,7 +37,7 @@
             this.tsmiAdvanced = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddPeer = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRepairFork = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiScan = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiPlotDir = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiShowInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiScanner = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiWebsite = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,8 +45,8 @@
             this.tsmiLangCN = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLangEN = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsslDate = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsslStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
@@ -77,13 +77,13 @@
             // 
             this.tsmiImportKeystore.Name = "tsmiImportKeystore";
             resources.ApplyResources(this.tsmiImportKeystore, "tsmiImportKeystore");
-            this.tsmiImportKeystore.Click += new System.EventHandler(this.tsmiImportKeystore_Click);
+            this.tsmiImportKeystore.Click += new System.EventHandler(this.TsmiImportKeystore_Click);
             // 
             // tsmiInstall
             // 
             resources.ApplyResources(this.tsmiInstall, "tsmiInstall");
             this.tsmiInstall.Name = "tsmiInstall";
-            this.tsmiInstall.Click += new System.EventHandler(this.tsmiInstall_Click);
+            this.tsmiInstall.Click += new System.EventHandler(this.TsmiInstall_Click);
             // 
             // tsmiStart
             // 
@@ -96,7 +96,7 @@
             this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAddPeer,
             this.tsmiRepairFork,
-            this.tsmiScan});
+            this.tsmiPlotDir});
             this.tsmiAdvanced.Name = "tsmiAdvanced";
             resources.ApplyResources(this.tsmiAdvanced, "tsmiAdvanced");
             // 
@@ -110,13 +110,13 @@
             // 
             this.tsmiRepairFork.Name = "tsmiRepairFork";
             resources.ApplyResources(this.tsmiRepairFork, "tsmiRepairFork");
-            this.tsmiRepairFork.Click += new System.EventHandler(this.tsmiRepairFork_Click);
+            this.tsmiRepairFork.Click += new System.EventHandler(this.TsmiRepairFork_Click);
             // 
-            // tsmiScan
+            // tsmiPlotDir
             // 
-            this.tsmiScan.Name = "tsmiScan";
-            resources.ApplyResources(this.tsmiScan, "tsmiScan");
-            this.tsmiScan.Click += new System.EventHandler(this.tsmiScan_Click);
+            resources.ApplyResources(this.tsmiPlotDir, "tsmiPlotDir");
+            this.tsmiPlotDir.Name = "tsmiPlotDir";
+            this.tsmiPlotDir.Click += new System.EventHandler(this.TsmiScan_Click);
             // 
             // tsmiShowInfo
             // 
@@ -128,13 +128,13 @@
             // 
             this.tsmiScanner.Name = "tsmiScanner";
             resources.ApplyResources(this.tsmiScanner, "tsmiScanner");
-            this.tsmiScanner.Click += new System.EventHandler(this.tsmiScanner_Click);
+            this.tsmiScanner.Click += new System.EventHandler(this.TsmiScanner_Click);
             // 
             // tsmiWebsite
             // 
             this.tsmiWebsite.Name = "tsmiWebsite";
             resources.ApplyResources(this.tsmiWebsite, "tsmiWebsite");
-            this.tsmiWebsite.Click += new System.EventHandler(this.tsmiWebsite_Click);
+            this.tsmiWebsite.Click += new System.EventHandler(this.TsmiWebsite_Click);
             // 
             // tsmiLanguage
             // 
@@ -159,22 +159,23 @@
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
-            this.toolStripStatusLabel2,
+            this.tsslDate,
+            this.tsslStatus,
             this.toolStripProgressBar1});
             resources.ApplyResources(this.statusStrip1, "statusStrip1");
             this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.SizingGrip = false;
             // 
-            // toolStripStatusLabel1
+            // tsslDate
             // 
-            this.toolStripStatusLabel1.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            resources.ApplyResources(this.toolStripStatusLabel1, "toolStripStatusLabel1");
+            this.tsslDate.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.tsslDate.Name = "tsslDate";
+            resources.ApplyResources(this.tsslDate, "tsslDate");
             // 
-            // toolStripStatusLabel2
+            // tsslStatus
             // 
-            this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            resources.ApplyResources(this.toolStripStatusLabel2, "toolStripStatusLabel2");
+            this.tsslStatus.Name = "tsslStatus";
+            resources.ApplyResources(this.tsslStatus, "tsslStatus");
             // 
             // toolStripProgressBar1
             // 
@@ -225,6 +226,7 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "mainForm";
@@ -245,15 +247,15 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem tsmiScan;
+        private System.Windows.Forms.ToolStripMenuItem tsmiPlotDir;
         private System.Windows.Forms.ToolStripMenuItem tsmiInstall;
         private System.Windows.Forms.ToolStripMenuItem tsmiStart;
         private System.Windows.Forms.ToolStripMenuItem tsmiAddPeer;
         private System.Windows.Forms.ToolStripMenuItem tsmiShowInfo;
         private System.Windows.Forms.ToolStripMenuItem tsmiImportKeystore;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripStatusLabel tsslDate;
+        private System.Windows.Forms.ToolStripStatusLabel tsslStatus;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label labelMsg;

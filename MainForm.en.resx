@@ -2485,7 +2485,7 @@
     <value>Repair succeeded, please click to start mining</value>
   </data>
   <data name="repairForkWarn" xml:space="preserve">
-    <value>Are you sure you want to restart the synchronization block?</value>
+    <value>Are you sure you want to restart mining?</value>
   </data>
   <data name="startMineTips" xml:space="preserve">
     <value>Your mining environment is ready,please click to start mining</value>
@@ -2521,10 +2521,10 @@
     <value>Language</value>
   </data>
   <data name="tsmiRepairFork.Text" xml:space="preserve">
-    <value>Restart to Synchronization Block</value>
+    <value>Restart Mining</value>
   </data>
-  <data name="tsmiScan.Text" xml:space="preserve">
-    <value>Scan Plotdata Directory</value>
+  <data name="tsmiPlotDir.Text" xml:space="preserve">
+    <value>Select Plotdata Directory</value>
   </data>
   <data name="tsmiScanner.Text" xml:space="preserve">
     <value>EHDScan</value>

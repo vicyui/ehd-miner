@@ -189,16 +189,16 @@
     <value>180, 22</value>
   </data>
   <data name="tsmiRepairFork.Text" xml:space="preserve">
-    <value>重启同步区块</value>
+    <value>重启挖矿</value>
   </data>
-  <data name="tsmiScan.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="tsmiPlotDir.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tsmiPlotDir.Size" type="System.Drawing.Size, System.Drawing">
     <value>180, 22</value>
   </data>
-  <data name="tsmiScan.Text" xml:space="preserve">
-    <value>扫描P盘目录</value>
-  </data>
-  <data name="tsmiScan.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="tsmiPlotDir.Text" xml:space="preserve">
+    <value>选择P盘目录</value>
   </data>
   <data name="tsmiShowInfo.Size" type="System.Drawing.Size, System.Drawing">
     <value>68, 21</value>
@@ -239,6 +239,18 @@
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>137, 17</value>
   </metadata>
+  <metadata name="statusStrip1.Locked" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <data name="tsslDate.Size" type="System.Drawing.Size, System.Drawing">
+    <value>4, 21</value>
+  </data>
+  <data name="tsslStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>0, 21</value>
+  </data>
+  <data name="toolStripProgressBar1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 20</value>
+  </data>
   <data name="statusStrip1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 380</value>
   </data>
@@ -259,15 +271,6 @@
   </data>
   <data name="&gt;&gt;statusStrip1.ZOrder" xml:space="preserve">
     <value>2</value>
-  </data>
-  <data name="toolStripStatusLabel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>4, 21</value>
-  </data>
-  <data name="toolStripStatusLabel2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>0, 21</value>
-  </data>
-  <data name="toolStripProgressBar1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 20</value>
   </data>
   <metadata name="timer1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>258, 17</value>
@@ -2744,10 +2747,10 @@
   <data name="&gt;&gt;tsmiRepairFork.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;tsmiScan.Name" xml:space="preserve">
-    <value>tsmiScan</value>
+  <data name="&gt;&gt;tsmiPlotDir.Name" xml:space="preserve">
+    <value>tsmiPlotDir</value>
   </data>
-  <data name="&gt;&gt;tsmiScan.Type" xml:space="preserve">
+  <data name="&gt;&gt;tsmiPlotDir.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tsmiShowInfo.Name" xml:space="preserve">
@@ -2786,16 +2789,16 @@
   <data name="&gt;&gt;tsmiLangEN.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripStatusLabel1.Name" xml:space="preserve">
-    <value>toolStripStatusLabel1</value>
+  <data name="&gt;&gt;tsslDate.Name" xml:space="preserve">
+    <value>tsslDate</value>
   </data>
-  <data name="&gt;&gt;toolStripStatusLabel1.Type" xml:space="preserve">
+  <data name="&gt;&gt;tsslDate.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripStatusLabel2.Name" xml:space="preserve">
-    <value>toolStripStatusLabel2</value>
+  <data name="&gt;&gt;tsslStatus.Name" xml:space="preserve">
+    <value>tsslStatus</value>
   </data>
-  <data name="&gt;&gt;toolStripStatusLabel2.Type" xml:space="preserve">
+  <data name="&gt;&gt;tsslStatus.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;toolStripProgressBar1.Name" xml:space="preserve">
