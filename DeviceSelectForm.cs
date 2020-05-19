@@ -39,10 +39,5 @@ namespace EHDMiner
             mainForm.checkedList = new ArrayList(checkedListBox.CheckedItems);
             Close();
         }
-
-        private void cbSelectAll_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

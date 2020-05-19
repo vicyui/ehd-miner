@@ -49,17 +49,17 @@ namespace EHDMiner
             Dictionary<string, object> ups;
             string sql = "REPLACE INTO t_plot(F_Name, F_Path, F_Uuid, F_PlotSeed, F_PlotDir, F_PlotSize, F_PlotParam, F_Status, F_CreateTime, F_ModifyTime) " +
                 "VALUES(@Path, @Path, '', @Address, '/plotdata', '8589934592', '{\"startNonce\":0}', 1, @CreateTime, @CreateTime);";
-            foreach (var item in checkedList)
+            foreach (KeyValuePair<string,string> item in checkedList)
             {
                 ups = new Dictionary<string, object>
                 {
-                    { "Path", item },
+                    { "Path", item.Key },
                     { "Address", "0x" + address },
                     { "CreateTime", tsslDate.Text } 
                 };
-                if (!Directory.Exists(item + "/plotdata"))
+                if (!Directory.Exists(item.Key + "/plotdata"))
                 {
-                    Directory.CreateDirectory(item + "/plotdata");
+                    Directory.CreateDirectory(item.Key + "/plotdata");
                 }
                 DBHelper.ExecuteNonQuery(conn, sql, ups);
             }
