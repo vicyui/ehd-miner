@@ -47,7 +47,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tsslDate = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslStatus = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
+            this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnSaveKS = new System.Windows.Forms.Button();
@@ -116,7 +116,7 @@
             // 
             resources.ApplyResources(this.tsmiPlotDir, "tsmiPlotDir");
             this.tsmiPlotDir.Name = "tsmiPlotDir";
-            this.tsmiPlotDir.Click += new System.EventHandler(this.TsmiScan_Click);
+            this.tsmiPlotDir.Click += new System.EventHandler(this.tsmiPlotDir_Click);
             // 
             // tsmiShowInfo
             // 
@@ -161,7 +161,7 @@
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsslDate,
             this.tsslStatus,
-            this.toolStripProgressBar1});
+            this.toolStripProgressBar});
             resources.ApplyResources(this.statusStrip1, "statusStrip1");
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.SizingGrip = false;
@@ -177,10 +177,10 @@
             this.tsslStatus.Name = "tsslStatus";
             resources.ApplyResources(this.tsslStatus, "tsslStatus");
             // 
-            // toolStripProgressBar1
+            // toolStripProgressBar
             // 
-            this.toolStripProgressBar1.Name = "toolStripProgressBar1";
-            resources.ApplyResources(this.toolStripProgressBar1, "toolStripProgressBar1");
+            this.toolStripProgressBar.Name = "toolStripProgressBar";
+            resources.ApplyResources(this.toolStripProgressBar, "toolStripProgressBar");
             // 
             // timer1
             // 
@@ -262,7 +262,7 @@
         private System.Windows.Forms.Button btnSaveKS;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ToolStripMenuItem tsmiRepairFork;
-        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
+        private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ToolStripMenuItem tsmiAdvanced;
         private System.Windows.Forms.ToolStripMenuItem tsmiLanguage;

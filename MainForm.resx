@@ -177,7 +177,7 @@
     <value>高级</value>
   </data>
   <data name="tsmiAddPeer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>143, 22</value>
   </data>
   <data name="tsmiAddPeer.Text" xml:space="preserve">
     <value>添加节点</value>
@@ -186,7 +186,7 @@
     <value>False</value>
   </data>
   <data name="tsmiRepairFork.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>143, 22</value>
   </data>
   <data name="tsmiRepairFork.Text" xml:space="preserve">
     <value>重启挖矿</value>
@@ -195,7 +195,7 @@
     <value>False</value>
   </data>
   <data name="tsmiPlotDir.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>143, 22</value>
   </data>
   <data name="tsmiPlotDir.Text" xml:space="preserve">
     <value>选择P盘目录</value>
@@ -248,7 +248,7 @@
   <data name="tsslStatus.Size" type="System.Drawing.Size, System.Drawing">
     <value>0, 21</value>
   </data>
-  <data name="toolStripProgressBar1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="toolStripProgressBar.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 20</value>
   </data>
   <data name="statusStrip1.Location" type="System.Drawing.Point, System.Drawing">
@@ -2801,10 +2801,10 @@
   <data name="&gt;&gt;tsslStatus.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripStatusLabel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;toolStripProgressBar1.Name" xml:space="preserve">
-    <value>toolStripProgressBar1</value>
+  <data name="&gt;&gt;toolStripProgressBar.Name" xml:space="preserve">
+    <value>toolStripProgressBar</value>
   </data>
-  <data name="&gt;&gt;toolStripProgressBar1.Type" xml:space="preserve">
+  <data name="&gt;&gt;toolStripProgressBar.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripProgressBar, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;timer1.Name" xml:space="preserve">

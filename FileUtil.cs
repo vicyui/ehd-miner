@@ -45,13 +45,7 @@ namespace EHDMiner
             }
         }
 
-        /// <summary>
-        /// 拷贝oldlab的文件到newlab下面
-        /// </summary>
-        /// <param name="sourcePath">lab文件所在目录(@"~\labs\oldlab")</param>
-        /// <param name="savePath">保存的目标目录(@"~\labs\newlab")</param>
-        /// <returns>返回:true-拷贝成功;false:拷贝失败</returns>
-        public static void CopyOldLabFilesToNewLab(string sourcePath, string savePath)
+        public static void CopyOldFilesToNewPath(string sourcePath, string savePath)
         {
             if (!Directory.Exists(savePath))
             {
@@ -66,7 +60,7 @@ namespace EHDMiner
                 {
                     for (int i = 0; i < labFiles.Length; i++)
                     {
-                        if (Path.GetExtension(labFiles[i]) != ".lab")//排除.lab文件
+                        if (Path.GetExtension(labFiles[i]) != ".orig")//排除.orig文件
                         {
                             File.Copy(sourcePath + "\\" + Path.GetFileName(labFiles[i]), savePath + "\\" + Path.GetFileName(labFiles[i]), true);
                         }
@@ -78,7 +72,7 @@ namespace EHDMiner
                     {
                         Directory.GetDirectories(sourcePath + "\\" + Path.GetFileName(labDirs[j]));
                         //递归调用
-                        CopyOldLabFilesToNewLab(sourcePath + "\\" + Path.GetFileName(labDirs[j]), savePath + "\\" + Path.GetFileName(labDirs[j]));
+                        CopyOldFilesToNewPath(sourcePath + "\\" + Path.GetFileName(labDirs[j]), savePath + "\\" + Path.GetFileName(labDirs[j]));
                     }
                 }
             }
@@ -96,19 +90,18 @@ namespace EHDMiner
             return filesLength;
         }
 
-        public static List<string> GetDeviceID()
+        public static Dictionary<string, string> GetDeviceInfo()
         {
-            List<string> deviceIDs = new List<string>();
+            Dictionary<string,string> deviceInfo = new Dictionary< string,string> ();
             ManagementObjectSearcher query = new ManagementObjectSearcher("SELECT  *  From  Win32_LogicalDisk ");
             ManagementObjectCollection queryCollection = query.Get();
             foreach (ManagementObject mo in queryCollection)
             {
-
                 switch (int.Parse(mo["DriveType"].ToString()))
                 {
                     case (int)DriveType.Fixed:   //本地磁盘     
                         {
-                            deviceIDs.Add(mo["DeviceID"].ToString());
+                            deviceInfo.Add(mo["DeviceID"].ToString(), mo["Size"].ToString());
                             break;
                         }
                     default:   //defalut   to   folder     
@@ -116,9 +109,8 @@ namespace EHDMiner
                             break;
                         }
                 }
-
             }
-            return deviceIDs;
+            return deviceInfo;
         }
     }
 }

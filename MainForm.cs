@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
@@ -40,7 +39,7 @@ namespace EHDMiner
             runArgs = args;
         }
 
-        private void TsmiScan_Click(object sender, EventArgs e)
+        private void tsmiPlotDir_Click(object sender, EventArgs e)
         {
             DeviceSelectForm deviceSelectForm = new DeviceSelectForm();
             deviceSelectForm.Text = tsmiPlotDir.Text;
@@ -58,39 +57,39 @@ namespace EHDMiner
                     { "Address", "0x" + address },
                     { "CreateTime", tsslDate.Text } 
                 };
+                if (!Directory.Exists(item + "/plotdata"))
+                {
+                    Directory.CreateDirectory(item + "/plotdata");
+                }
                 DBHelper.ExecuteNonQuery(conn, sql, ups);
             }
             conn.Close();
-            //InitForm();
-            //InitializeBackgroundWorker();
-            //backgroundWorker.RunWorkerAsync();
+            InitializeBackgroundWorker();
+            backgroundWorker.RunWorkerAsync();
         }
 
         private void ScanDevices(BackgroundWorker worker, DoWorkEventArgs e)
         {
-            worker.ReportProgress(0);
-            List<string> devices = FileUtil.GetDeviceID();
-            Dictionary<string, long> deviceMap = new Dictionary<string, long>();
-            foreach (string device in devices)
+            Thread.Sleep(100);
+            worker.ReportProgress(1);
+            long dirLength;
+            foreach (string device in checkedList)
             {
+                Thread.Sleep(100);
+                worker.ReportProgress(checkedList.IndexOf(device) / checkedList.Count * 10 * 9);
                 if (!Directory.Exists(device + "\\plotdata"))
                 {
                     continue;
                 }
-                deviceMap.Add(device + "\\plotdata", FileUtil.DictoryLength(device + "\\plotdata"));
-                worker.ReportProgress(devices.IndexOf(device) / devices.Count * 10 * 4);
-            }
-            if (deviceMap.Count > 0)
-            {
-                long mineDirLength = FileUtil.DictoryLength(plotdataDir);
-                if (mineDirLength < 17179869184 && deviceMap.First().Value > mineDirLength)
+                dirLength = FileUtil.DictoryLength(device + "\\plotdata");
+                if(dirLength == 8589934592)
                 {
-                    Directory.Delete(plotdataDir, false);
-                    worker.ReportProgress(50);
-                    deviceMap = deviceMap.OrderByDescending(o => o.Value).ToDictionary(k => k.Key, v => v.Value);
-                    FileUtil.CopyOldLabFilesToNewLab(deviceMap.First().Key, plotdataDir);
+                    continue;
                 }
+                Directory.Delete(device + "\\plotdata", false);
+                FileUtil.CopyOldFilesToNewPath(plotdataDir, device + "\\plotdata");
             }
+            Thread.Sleep(100);
             worker.ReportProgress(100);
         }
 
@@ -99,6 +98,10 @@ namespace EHDMiner
             tsslDate.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             KeystoreCheck();
             MineStatus();
+            if(toolStripProgressBar.Value == 100)
+            {
+                toolStripProgressBar.Visible = false;
+            }
         }
 
         private void TsmiInstall_Click(object sender, EventArgs e)
@@ -244,7 +247,7 @@ namespace EHDMiner
             labelMsg.Text = string.Empty;
             textBox1.Hide();
             btnSaveKS.Hide();
-            toolStripProgressBar1.Visible = false;
+            toolStripProgressBar.Visible = false;
         }
 
         private void KeystoreCheck()
@@ -269,9 +272,13 @@ namespace EHDMiner
                     tsmiStart.Enabled = true;
                     tsmiImportKeystore.Visible = false;
                     tsmiInstall.Visible = false;
-                    tsmiPlotDir.Enabled = true;
+                    long mineDirLength = FileUtil.DictoryLength(plotdataDir);
+                    if (mineDirLength == 17179869184 || mineDirLength == 8589934592)
+                    {
+                        tsmiPlotDir.Enabled = true;
+                    }
                     labelMsg.Text = resource.GetString("congratulations") + "\r" + resource.GetString("startMineTips");
-                    tsslStatus.Text = resource.GetString("tsslStatusSucess");
+                    //tsslStatus.Text = resource.GetString("tsslStatusSucess");
                 }
                 else
                 {
@@ -443,21 +450,20 @@ namespace EHDMiner
             Process.Start("explorer.exe", keystoreDir);
         }
 
-        private void BackgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             ScanDevices(sender as BackgroundWorker, e);
         }
 
-        private void BackgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             tsslStatus.Text = resource.GetString("tsslStatusScaning");
-            toolStripProgressBar1.Value = e.ProgressPercentage;
+            toolStripProgressBar.Value = e.ProgressPercentage;
         }
 
-        private void BackgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             tsslStatus.Text = resource.GetString("tsslStatusScaned");
-            labelMsg.Text = tsslStatus.Text;
         }
 
         private void InitializeBackgroundWorker()
@@ -466,10 +472,10 @@ namespace EHDMiner
             {
                 WorkerReportsProgress = true
             };
-            backgroundWorker.DoWork += new DoWorkEventHandler(BackgroundWorker1_DoWork);
-            backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(BackgroundWorker1_RunWorkerCompleted);
-            backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(BackgroundWorker1_ProgressChanged);
-            toolStripProgressBar1.Visible = true;
+            backgroundWorker.DoWork += new DoWorkEventHandler(BackgroundWorker_DoWork);
+            backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(BackgroundWorker_RunWorkerCompleted);
+            backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(BackgroundWorker_ProgressChanged);
+            toolStripProgressBar.Visible = true;
         }
 
         private void TsmiRepairFork_Click(object sender, EventArgs e)

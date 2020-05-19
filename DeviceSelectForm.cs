@@ -15,17 +15,22 @@ namespace EHDMiner
 
         private void DeviceSelectForm_Load(object sender, EventArgs e)
         {
-            List<string> devices = FileUtil.GetDeviceID();
+            Dictionary<string,string> devices = FileUtil.GetDeviceInfo();
             string sql = "select * from t_plot where F_id != 1;";
             DataTable table = DBHelper.ExecuteQuery(sql, new Dictionary<string, object>());
-            foreach (DataRow row in table.Rows)
+            foreach (var device in devices)
             {
-                Console.WriteLine($"{row["F_id"]},{row["F_Path"]},{row["F_PlotDir"]}");
-            }
-
-            foreach (string device in devices)
-            {
-                checkedListBox.Items.Add(device);
+                foreach (DataRow row in table.Rows)
+                {
+                    if (row["F_Path"].Equals(device.Key))
+                    {
+                        checkedListBox.Items.Add(device, true);
+                    }
+                }
+                if (!checkedListBox.Items.Contains(device))
+                {
+                    checkedListBox.Items.Add(device);
+                }
             }
         }
 
@@ -33,6 +38,11 @@ namespace EHDMiner
         {
             mainForm.checkedList = new ArrayList(checkedListBox.CheckedItems);
             Close();
+        }
+
+        private void cbSelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
