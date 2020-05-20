@@ -176,7 +176,7 @@ namespace EHDMiner
                 long mineDirLength = FileUtil.DictoryLength(plotdataDir);
                 if (mineDirLength%1024 == 0)
                 {
-                    labelMsg.Text = resource.GetString("statusMining");
+                    labelMsg.Text = resource.GetString("statusMining") + "\r" + resource.GetString("installTips");
                     tsslStatus.Text = resource.GetString("statusMining");
                 }
                 else
@@ -530,7 +530,7 @@ namespace EHDMiner
             Dispose();
         }
 
-        private void NotifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
             if (WindowState == FormWindowState.Normal)
             {

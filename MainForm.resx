@@ -124,13 +124,34 @@
     <value>True</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>784, 25</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
+    <value>menuStrip1</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="tsmiImportKeystore.Size" type="System.Drawing.Size, System.Drawing">
     <value>118, 21</value>
   </data>
   <data name="tsmiImportKeystore.Text" xml:space="preserve">
     <value>导入keystore文件</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="tsmiInstall.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
@@ -148,6 +169,12 @@
   </data>
   <data name="tsmiStart.Text" xml:space="preserve">
     <value>启动挖矿</value>
+  </data>
+  <data name="tsmiAdvanced.Size" type="System.Drawing.Size, System.Drawing">
+    <value>44, 21</value>
+  </data>
+  <data name="tsmiAdvanced.Text" xml:space="preserve">
+    <value>高级</value>
   </data>
   <data name="tsmiAddPeer.Enabled" type="System.Boolean, mscorlib">
     <value>False</value>
@@ -173,12 +200,6 @@
   <data name="tsmiPlotDir.Text" xml:space="preserve">
     <value>选择P盘目录</value>
   </data>
-  <data name="tsmiAdvanced.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 21</value>
-  </data>
-  <data name="tsmiAdvanced.Text" xml:space="preserve">
-    <value>高级</value>
-  </data>
   <data name="tsmiShowInfo.Size" type="System.Drawing.Size, System.Drawing">
     <value>68, 21</value>
   </data>
@@ -202,27 +223,6 @@
   </data>
   <data name="tsmiLanguage.Text" xml:space="preserve">
     <value>语言</value>
-  </data>
-  <data name="menuStrip1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="menuStrip1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>784, 25</value>
-  </data>
-  <data name="menuStrip1.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Name" xml:space="preserve">
-    <value>menuStrip1</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.MenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;menuStrip1.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
   <data name="tsmiLangCN.Size" type="System.Drawing.Size, System.Drawing">
     <value>100, 22</value>
