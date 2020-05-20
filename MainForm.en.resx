@@ -2500,7 +2500,7 @@
     <value>Tips</value>
   </data>
   <data name="tsmiAddPeer.Text" xml:space="preserve">
-    <value>Add Peer</value>
+    <value>Select Stable Node</value>
   </data>
   <data name="tsmiAdvanced.Text" xml:space="preserve">
     <value>Advanced</value>
@@ -2561,5 +2561,8 @@
   </data>
   <data name="congratulations" xml:space="preserve">
     <value>Congratulations!</value>
+  </data>
+  <data name="addNodeMsg" xml:space="preserve">
+    <value>Add Node successfully</value>
   </data>
 </root>

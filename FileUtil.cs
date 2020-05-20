@@ -101,7 +101,9 @@ namespace EHDMiner
                 {
                     case (int)DriveType.Fixed:   //本地磁盘     
                         {
-                            deviceInfo.Add(mo["DeviceID"].ToString(), mo["Size"].ToString());
+                            decimal maxSize = Convert.ToDecimal(mo["Size"].ToString()) / 1024 / 1024 / 1024;
+                            decimal FreeSize = Convert.ToDecimal(mo["FreeSpace"].ToString()) / 1024 / 1024 / 1024;
+                            deviceInfo.Add(mo["DeviceID"].ToString(), Convert.ToInt32(FreeSize).ToString() + "/" + Convert.ToInt32(maxSize).ToString() + " GB");
                             break;
                         }
                     default:   //defalut   to   folder     

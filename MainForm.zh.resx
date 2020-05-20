@@ -2446,7 +2446,7 @@
     <value>提示信息</value>
   </data>
   <data name="tsmiAddPeer.Text" xml:space="preserve">
-    <value>添加节点</value>
+    <value>选择稳定节点</value>
   </data>
   <data name="tsmiAdvanced.Text" xml:space="preserve">
     <value>高级</value>
@@ -2507,5 +2507,8 @@
   </data>
   <data name="congratulations" xml:space="preserve">
     <value>恭喜!</value>
+  </data>
+  <data name="addNodeMsg" xml:space="preserve">
+    <value>添加节点成功</value>
   </data>
 </root>

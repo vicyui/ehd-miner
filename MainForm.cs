@@ -24,12 +24,13 @@ namespace EHDMiner
         private readonly string keystoreDir = Application.StartupPath + "\\AppData\\Roaming\\Poc\\keystore";
         private readonly string plotdataDir = Application.StartupPath + "\\AppData\\Roaming\\Poc\\plotdata";
         private readonly string ethDir = Application.StartupPath + "\\AppData\\Roaming\\Poc\\eth";
-        private string language = string.Empty;
+        public static string language = string.Empty;
         private ComponentResourceManager resource;
         private int processId;
         private Process p;
         private string[] runArgs;
         public static ArrayList checkedList = new ArrayList();
+        public static string addNodeString;
 
         public mainForm(string[] args)
         {
@@ -70,27 +71,27 @@ namespace EHDMiner
 
         private void ScanDevices(BackgroundWorker worker, DoWorkEventArgs e)
         {
-            Thread.Sleep(100);
             worker.ReportProgress(1);
+            Thread.Sleep(100);
             long dirLength;
-            foreach (string device in checkedList)
+            foreach (KeyValuePair<string, string> device in checkedList)
             {
-                Thread.Sleep(100);
                 worker.ReportProgress(checkedList.IndexOf(device) / checkedList.Count * 10 * 9);
-                if (!Directory.Exists(device + "\\plotdata"))
+                Thread.Sleep(100);
+                if (!Directory.Exists(device.Key + "\\plotdata"))
                 {
                     continue;
                 }
-                dirLength = FileUtil.DictoryLength(device + "\\plotdata");
+                dirLength = FileUtil.DictoryLength(device.Key + "\\plotdata");
                 if(dirLength == 8589934592)
                 {
                     continue;
                 }
-                Directory.Delete(device + "\\plotdata", false);
-                FileUtil.CopyOldFilesToNewPath(plotdataDir, device + "\\plotdata");
+                Directory.Delete(device.Key + "\\plotdata", false);
+                FileUtil.CopyOldFilesToNewPath(plotdataDir, device.Key + "\\plotdata");
             }
-            Thread.Sleep(100);
             worker.ReportProgress(100);
+            Thread.Sleep(100);
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -98,7 +99,7 @@ namespace EHDMiner
             tsslDate.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             KeystoreCheck();
             MineStatus();
-            if(toolStripProgressBar.Value == 100)
+            if(toolStripProgressBar.Value == 100 || toolStripProgressBar.Value == 0)
             {
                 toolStripProgressBar.Visible = false;
             }
@@ -124,7 +125,7 @@ namespace EHDMiner
         {
             InitForm();
             RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
-            DeleteEthDir();
+            //DeleteEthDir();
             p = new Process();
             p.StartInfo.FileName = Application.StartupPath + "/bin/poc.exe";
             p.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
@@ -132,7 +133,7 @@ namespace EHDMiner
             {
                 p.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
             }*/
-            p.StartInfo.Arguments = " --datadir=\"" + Application.StartupPath + "\\AppData\\Roaming\\Poc\" --mine --gcmode archive --syncmode=full --networkid 10911 --rpc --rpcaddr \"0.0.0.0\" --rpcport=\"8545\" --rpcapi \"web3,peers,net,account,personal,eth,minedev,txpool\"";
+            p.StartInfo.Arguments = " --datadir=\"" + Application.StartupPath + "\\AppData\\Roaming\\Poc\" --mine --gcmode archive --syncmode=full --networkid 10911 --rpc --rpcaddr \"0.0.0.0\" --rpcport=\"8545\" --rpcapi \"web3,peers,net,account,personal,eth,minedev,txpool,admin\"";
             p.Start();
             processId = p.Id;
             Thread.Sleep(100);//加上，100如果效果没有就继续加大
@@ -165,15 +166,17 @@ namespace EHDMiner
                 tsmiStart.Enabled = true;
                 labelMsg.Text = resource.GetString("exceptionTips");
                 tsslStatus.Text = resource.GetString("tsslStatusStop");
+                tsmiAddPeer.Enabled = false;
             }
 
             if (p != null && p.ProcessName == "poc")
             {
                 tsmiStart.Enabled = false;
+                tsmiAddPeer.Enabled = true;
                 long mineDirLength = FileUtil.DictoryLength(plotdataDir);
-                if (mineDirLength == 17179869184 || mineDirLength == 8589934592)
+                if (mineDirLength%1024 == 0)
                 {
-                    labelMsg.Text = resource.GetString("statusMining") + "\r" + resource.GetString("installTips");
+                    labelMsg.Text = resource.GetString("statusMining");
                     tsslStatus.Text = resource.GetString("statusMining");
                 }
                 else
@@ -201,7 +204,16 @@ namespace EHDMiner
 
         private void tsmiAddPeer_Click(object sender, EventArgs e)
         {
-            RunProcess("cmd.exe", "curl -H \"Content - Type: application / json\" --data '{\"method\": \"admin_addPeer\", \"params\": \"enode://c789aecd75c1a346b2060b4d33b3e7ee11f591b3003c6010b44daff49d461c7d3bcae25d161bb1b8134dac2707037df102bf7f0ee763d51a04709d8a15978997@27.190.170.103:30303\"}' http://127.0.0.1:8545");
+            AddNodeForm addNodeForm = new AddNodeForm();
+            addNodeForm.Text = tsmiAddPeer.Text;
+            addNodeForm.ShowDialog();
+            if (!addNodeString.Equals(string.Empty))
+            {
+                RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"admin_addPeer\\\",\\\"params\\\":[\\\"enode://" + addNodeString + ":30303\\\"],\\\"id\\\":1}\" http://127.0.0.1:8545");
+                MessageBox.Show(resource.GetString("addNodeMsg"));
+                Thread.Sleep(2000);
+                RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
+            }
         }
 
         [Obsolete]
