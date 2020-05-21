@@ -22,6 +22,7 @@ namespace EHDMiner
         private void AddNodeForm_Load(object sender, EventArgs e)
         {
             btnAddNode.Text = "确定";
+            btnAddNodeCancel.Text = "取消";
             ArrayList arrayList = new ArrayList();
             arrayList.Add(new Node("中国区华南节点", szNode));
             arrayList.Add(new Node("中国区华中节点", szNode));
@@ -40,6 +41,7 @@ namespace EHDMiner
             if (mainForm.language == "en")
             {
                 btnAddNode.Text = "OK";
+                btnAddNodeCancel.Text = "Cancel";
                 arrayList.Clear();
                 arrayList.Add(new Node("South China node in China", szNode));
                 arrayList.Add(new Node("China central node", szNode));
@@ -60,6 +62,11 @@ namespace EHDMiner
             comboBox.DataSource = arrayList;
             comboBox.DisplayMember = "Name";
             comboBox.ValueMember = "Address";
+        }
+
+        private void btnAddNodeCancel_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

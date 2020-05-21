@@ -30,7 +30,9 @@ namespace EHDMiner
         private Process p;
         private string[] runArgs;
         public static ArrayList checkedList = new ArrayList();
-        public static string addNodeString;
+        public static string addNodeString = string.Empty;
+        public static bool isPay = true;
+        public static string userInputAddress = string.Empty;
 
         public mainForm(string[] args)
         {
@@ -174,7 +176,7 @@ namespace EHDMiner
                 tsmiStart.Enabled = false;
                 tsmiAddPeer.Enabled = true;
                 long mineDirLength = FileUtil.DictoryLength(plotdataDir);
-                if (mineDirLength%1024 == 0)
+                if (fileList.Length >= 8 && mineDirLength % 1024 == 0)
                 {
                     labelMsg.Text = resource.GetString("statusMining") + "\r" + resource.GetString("installTips");
                     tsslStatus.Text = resource.GetString("statusMining");
@@ -207,13 +209,31 @@ namespace EHDMiner
             AddNodeForm addNodeForm = new AddNodeForm();
             addNodeForm.Text = tsmiAddPeer.Text;
             addNodeForm.ShowDialog();
-            if (!addNodeString.Equals(string.Empty))
+            if (string.Empty.Equals(addNodeString)) return;
+
+            QRCodeForm qRCodeForm = new QRCodeForm(language);
+            qRCodeForm.ShowDialog();
+            if (!isPay) return;
+
+            string token = "UFQX77MWVUBRQSBCEDHMQ8E16VJPPG6ERJ";
+            try
             {
-                RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"admin_addPeer\\\",\\\"params\\\":[\\\"enode://" + addNodeString + ":30303\\\"],\\\"id\\\":1}\" http://127.0.0.1:8545");
-                MessageBox.Show(resource.GetString("addNodeMsg"));
-                Thread.Sleep(2000);
-                RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
+                RestClient client = new RestClient("https://api.etherscan.io/");
+                string apiResult = client.Get("api?module=block&action=getblocknobytime&timestamp=" + UtcTime.GetTimeStamp() + "&closest=before&apikey=" + token);
+                JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
+                string latestBlock = json["result"].ToString();
+                if (userInputAddress.Length == 0) userInputAddress = "0x" + address;
+                apiResult = client.Get("api?module=account&action=txlistinternal&address=" + userInputAddress + "&startblock=0&endblock=" + latestBlock + "&sort=asc&apikey=" + token);
             }
+            catch (Exception)
+            {
+                return;
+            }
+            
+            RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"admin_addPeer\\\",\\\"params\\\":[\\\"enode://" + addNodeString + ":30303\\\"],\\\"id\\\":1}\" http://127.0.0.1:8545");
+            MessageBox.Show(resource.GetString("addNodeMsg"));
+            Thread.Sleep(2000);
+            RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
         }
 
         [Obsolete]
