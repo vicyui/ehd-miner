@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 
 namespace EHDMiner
@@ -23,7 +24,18 @@ namespace EHDMiner
         {
             btnAddNode.Text = "确定";
             btnAddNodeCancel.Text = "取消";
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "sys.ini");//在当前程序路径创建
+            File.Create(filePath);//创建INI文件
+            //写入节点1
+            INIHelper.Write("s1", "1", "a", filePath);
+            INIHelper.Write("s1", "2", "b", filePath);
+            INIHelper.Write("s1", "3", "c", filePath);
+            //写入节点2
+            INIHelper.Write("s2", "4", "d", filePath);
+            INIHelper.Write("s2", "5", "e", filePath);
+
             ArrayList arrayList = new ArrayList();
+            arrayList.Add(new Node("免费节点", szNode));
             arrayList.Add(new Node("中国区华南节点", szNode));
             arrayList.Add(new Node("中国区华中节点", szNode));
             arrayList.Add(new Node("中国区华北节点", szNode));
@@ -31,7 +43,7 @@ namespace EHDMiner
             arrayList.Add(new Node("中国区西南节点", szNode));
             arrayList.Add(new Node("中国区西北节点", szNode));
             arrayList.Add(new Node("亚洲区韩国节点", szNode));
-            arrayList.Add(new Node("亚洲日本节点", szNode));
+            arrayList.Add(new Node("亚洲区日本节点", szNode));
             arrayList.Add(new Node("亚洲新加坡节点", szNode));
             arrayList.Add(new Node("欧洲区英国节点", szNode));
             arrayList.Add(new Node("欧洲区德国节点", szNode));
@@ -43,6 +55,7 @@ namespace EHDMiner
                 btnAddNode.Text = "OK";
                 btnAddNodeCancel.Text = "Cancel";
                 arrayList.Clear();
+                arrayList.Add(new Node("Free node", szNode));
                 arrayList.Add(new Node("South China node in China", szNode));
                 arrayList.Add(new Node("China central node", szNode));
                 arrayList.Add(new Node("North China node in China", szNode));

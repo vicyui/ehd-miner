@@ -136,6 +136,7 @@
     </Compile>
     <Compile Include="LanguageHelper.cs" />
     <Compile Include="Node.cs" />
+    <Compile Include="INIHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QRCodeForm.cs">
