@@ -2,14 +2,26 @@
 {
     class Node
     {
-        public string Name { get; set; }
+        public int  NodeId { get; set; }
+        public string Zh_name { get; set; }
+        public string En_name { get; set; }
         public string Address { get; set; }
         public bool Access { get; set; }
-        public Node(string name,string address)
+        public Node(int id ,string zh_name, string en_name, string address)
         {
-            Name = name;
+            NodeId = id;
+            Zh_name = zh_name;
+            En_name = en_name;
             Address = address;
             Access = false;
+        }
+        public Node(int id, string zh_name, string en_name, string address,bool flag)
+        {
+            NodeId = id;
+            Zh_name = zh_name;
+            En_name = en_name;
+            Address = address;
+            Access = flag;
         }
     }
 }

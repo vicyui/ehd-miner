@@ -224,6 +224,8 @@ namespace EHDMiner
                 string latestBlock = json["result"].ToString();
                 if (userInputAddress.Length == 0) userInputAddress = "0x" + address;
                 apiResult = client.Get("api?module=account&action=txlistinternal&address=" + userInputAddress + "&startblock=0&endblock=" + latestBlock + "&sort=asc&apikey=" + token);
+                // 取付费记录
+                // 修改配置文件
             }
             catch (Exception)
             {
