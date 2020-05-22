@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,6 +17,7 @@ namespace EHDMiner
         private void btnAddNode_Click(object sender, EventArgs e)
         {
             mainForm.addNodeString = ((Node)comboBox.SelectedItem).Address;
+            mainForm.addNodeId = ((Node)comboBox.SelectedItem).NodeId;
             Close();
         }
 
@@ -26,30 +26,34 @@ namespace EHDMiner
             btnAddNode.Text = "确定";
             btnAddNodeCancel.Text = "取消";
             string filePath = Path.Combine(Application.StartupPath, "config.ini");//在当前程序路径创建
-            Dictionary<int, Node> nodes = new Dictionary<int, Node>();
-            nodes.Add(0, new Node(0, "免费节点", "Free node", szNode, true));
-            nodes.Add(1, new Node(1, "中国区华南节点", "South China node in China", szNode));
-            nodes.Add(2, new Node(2, "中国区华中节点", "China central node", szNode));
-            nodes.Add(3, new Node(3, "中国区华北节点", "North China node in China", szNode));
-            nodes.Add(4, new Node(4, "中国区东北节点", "Northeast node of China", szNode));
-            nodes.Add(5, new Node(5, "中国区西南节点", "Southwest node of China", szNode));
-            nodes.Add(6, new Node(6, "中国区西北节点", "Northwest node of China", szNode));
-            nodes.Add(7, new Node(7, "亚洲区韩国节点", "South Korea node in Asia", szNode));
-            nodes.Add(8, new Node(8, "亚洲区日本节点", "Japan node in Asia", szNode));
-            nodes.Add(9, new Node(9, "亚洲新加坡节点", "Singapore node in Asia", szNode));
-            nodes.Add(10, new Node(10, "欧洲区英国节点", "UK node in Europe", szNode));
-            nodes.Add(11, new Node(11, "欧洲区德国节点", "German node in Europe", szNode));
-            nodes.Add(12, new Node(12, "美州区美国节点", "Us node", szNode));
-            nodes.Add(13, new Node(13, "非洲区南非节点", "Africa South Africa node", szNode));
-            nodes.Add(14, new Node(14, "大洋洲区巴西节点", "Oceania Brazil node", szNode));
-                
+            Dictionary<string, Node> nodes = new Dictionary<string, Node>
+            {
+                { "00", new Node("00", "免费节点", "Free node", szNode, true) },
+                { "01", new Node("01", "中国区华南节点", "South China node in China", szNode) },
+                { "02", new Node("02", "中国区华中节点", "China central node", szNode) },
+                { "03", new Node("03", "中国区华北节点", "North China node in China", szNode) },
+                { "04", new Node("04", "中国区东北节点", "Northeast node of China", szNode) },
+                { "05", new Node("05", "中国区西南节点", "Southwest node of China", szNode) },
+                { "06", new Node("06", "中国区西北节点", "Northwest node of China", szNode) },
+                { "07", new Node("07", "亚洲区韩国节点", "South Korea node in Asia", szNode) },
+                { "08", new Node("08", "亚洲区日本节点", "Japan node in Asia", szNode) },
+                { "09", new Node("09", "亚洲新加坡节点", "Singapore node in Asia", szNode) },
+                { "10", new Node("10", "欧洲区英国节点", "UK node in Europe", szNode) },
+                { "11", new Node("11", "欧洲区德国节点", "German node in Europe", szNode) },
+                { "12", new Node("12", "美州区美国节点", "Us node", szNode) },
+                { "13", new Node("13", "非洲区南非节点", "Africa South Africa node", szNode) },
+                { "14", new Node("14", "大洋洲区巴西节点", "Oceania Brazil node", szNode) }
+            };
+
             FileStream fs;
+            StreamWriter sw;
+            StreamReader sr;
             if (!File.Exists(filePath))
             {
                 fs = new FileStream(filePath, FileMode.Create, FileAccess.Write);
-                StreamWriter sw = new StreamWriter(fs);
+                sw = new StreamWriter(fs);
                 fs.Seek(fs.Length, SeekOrigin.End);
-                foreach (KeyValuePair<int,Node> node in nodes)
+                foreach (KeyValuePair<string, Node> node in nodes)
                 {
                     sw.WriteLine(node.Key + "=" + nodes[node.Key].Access);//开始写入值
                 }
@@ -57,20 +61,22 @@ namespace EHDMiner
                 fs.Close();
             }
             fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
-            StreamReader sr = new StreamReader(fs);
+            sr = new StreamReader(fs);
             fs.Seek(0, SeekOrigin.Begin);
             string line;
             while ((line = sr.ReadLine()) != null)
             {
                 if ("true".Equals(line.Split('=')[1].ToLower()))
                 {
-                    nodes[Convert.ToInt32(line.Split('=')[0])].Access = true;
-                    nodes[Convert.ToInt32(line.Split('=')[0])].Zh_name += "[已开通]";
-                    nodes[Convert.ToInt32(line.Split('=')[0])].En_name += "[Opened]";
+                    nodes[line.Split('=')[0]].Access = true;
+                    nodes[line.Split('=')[0]].Zh_name += "[已开通]";
+                    nodes[line.Split('=')[0]].En_name += "[Opened]";
                 }
             }
+            sr.Close();
+            fs.Close();
 
-            comboBox.DataSource = nodes.Values.ToArray<Node>();
+            comboBox.DataSource = nodes.Values.ToArray();
             comboBox.DisplayMember = "Zh_name";
             comboBox.ValueMember = "Address";
             if (mainForm.language == "en")
@@ -84,6 +90,11 @@ namespace EHDMiner
         private void btnAddNodeCancel_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void AddNodeForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Dispose();
         }
     }
 }

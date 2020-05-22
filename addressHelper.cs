@@ -16,7 +16,7 @@ namespace EHDMiner
         //获取本机的IP
 
         [Obsolete]
-        public string GetLocalIP()
+        public static string GetLocalIP()
         {
             string strHostName = Dns.GetHostName(); //得到本机的主机名
 
@@ -27,7 +27,7 @@ namespace EHDMiner
         }
         //获取本机的MAC
 
-        public string GetLocalMac()
+        public static string GetLocalMac()
         {
             string mac = null;
             ManagementObjectSearcher query = new ManagementObjectSearcher("SELECT * FROM Win32_NetworkAdapterConfiguration");

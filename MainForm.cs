@@ -8,6 +8,7 @@ using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -31,6 +32,7 @@ namespace EHDMiner
         private string[] runArgs;
         public static ArrayList checkedList = new ArrayList();
         public static string addNodeString = string.Empty;
+        public static string addNodeId;
         public static bool isPay = true;
         public static string userInputAddress = string.Empty;
 
@@ -223,27 +225,35 @@ namespace EHDMiner
                 JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
                 string latestBlock = json["result"].ToString();
                 if (userInputAddress.Length == 0) userInputAddress = "0x" + address;
-                apiResult = client.Get("api?module=account&action=txlistinternal&address=" + userInputAddress + "&startblock=0&endblock=" + latestBlock + "&sort=asc&apikey=" + token);
                 // 取付费记录
+                apiResult = client.Get("api?module=account&action=txlistinternal&address=" + userInputAddress + "&startblock=0&endblock=" + latestBlock + "&sort=asc&apikey=" + token);
+                json = JsonConvert.DeserializeObject<JObject>(apiResult);
                 // 修改配置文件
+                string strFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ini");
+                if (File.Exists(strFilePath))
+                {
+                    string strContent = File.ReadAllText(strFilePath);
+                    strContent = Regex.Replace(strContent, addNodeId + "=False", addNodeId + "=True");
+                    File.WriteAllText(strFilePath, strContent);
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 return;
             }
             
             RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"admin_addPeer\\\",\\\"params\\\":[\\\"enode://" + addNodeString + ":30303\\\"],\\\"id\\\":1}\" http://127.0.0.1:8545");
             MessageBox.Show(resource.GetString("addNodeMsg"));
-            Thread.Sleep(2000);
+            Thread.Sleep(1000);
             RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
         }
 
         [Obsolete]
         private void tsmiShowInfo_Click(object sender, EventArgs e)
         {
-            AddressHelper helper = new AddressHelper();
-            string minerInfo = resource.GetString("localIp") + helper.GetLocalIP();
-            minerInfo += "\r" + resource.GetString("localMac") + helper.GetLocalMac();
+            string minerInfo = resource.GetString("localIp") + AddressHelper.GetLocalIP();
+            minerInfo += "\r" + resource.GetString("localMac") + AddressHelper.GetLocalMac();
             fileList = Directory.GetFiles(keystoreDir);
             if (fileList.Length > 0)
             {
@@ -519,7 +529,7 @@ namespace EHDMiner
             if (flag == DialogResult.OK)
             {
                 RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
-                Thread.Sleep(3000);
+                Thread.Sleep(1000);
                 DeleteEthDir();
                 tsslStatus.Text = resource.GetString("repairForkSuccess");
                 labelMsg.Text = tsslStatus.Text;

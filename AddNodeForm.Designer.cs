@@ -72,6 +72,7 @@
             this.Name = "AddNodeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AddNodeForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AddNodeForm_FormClosing);
             this.Load += new System.EventHandler(this.AddNodeForm_Load);
             this.ResumeLayout(false);
 
