@@ -16,8 +16,7 @@ namespace EHDMiner
 
         private void btnAddNode_Click(object sender, EventArgs e)
         {
-            mainForm.addNodeString = ((Node)comboBox.SelectedItem).Address;
-            mainForm.addNodeId = ((Node)comboBox.SelectedItem).NodeId;
+            mainForm.selectedNode = (Node)comboBox.SelectedItem;
             Close();
         }
 
@@ -29,20 +28,20 @@ namespace EHDMiner
             Dictionary<string, Node> nodes = new Dictionary<string, Node>
             {
                 { "00", new Node("00", "免费节点", "Free node", szNode, true) },
-                { "01", new Node("01", "中国区华南节点", "South China node in China", szNode) },
-                { "02", new Node("02", "中国区华中节点", "China central node", szNode) },
-                { "03", new Node("03", "中国区华北节点", "North China node in China", szNode) },
-                { "04", new Node("04", "中国区东北节点", "Northeast node of China", szNode) },
-                { "05", new Node("05", "中国区西南节点", "Southwest node of China", szNode) },
-                { "06", new Node("06", "中国区西北节点", "Northwest node of China", szNode) },
-                { "07", new Node("07", "亚洲区韩国节点", "South Korea node in Asia", szNode) },
-                { "08", new Node("08", "亚洲区日本节点", "Japan node in Asia", szNode) },
-                { "09", new Node("09", "亚洲新加坡节点", "Singapore node in Asia", szNode) },
-                { "10", new Node("10", "欧洲区英国节点", "UK node in Europe", szNode) },
-                { "11", new Node("11", "欧洲区德国节点", "German node in Europe", szNode) },
-                { "12", new Node("12", "美州区美国节点", "Us node", szNode) },
-                { "13", new Node("13", "非洲区南非节点", "Africa South Africa node", szNode) },
-                { "14", new Node("14", "大洋洲区巴西节点", "Oceania Brazil node", szNode) }
+                { "01", new Node("01", "01.中国区华南节点", "01.South China node in China", szNode) },
+                { "02", new Node("02", "02.中国区华中节点", "02.China central node", szNode) },
+                { "03", new Node("03", "03.中国区华北节点", "03.North China node in China", szNode) },
+                { "04", new Node("04", "04.中国区东北节点", "04.Northeast node of China", szNode) },
+                { "05", new Node("05", "05.中国区西南节点", "05.Southwest node of China", szNode) },
+                { "06", new Node("06", "06.中国区西北节点", "06.Northwest node of China", szNode) },
+                { "07", new Node("07", "07.亚洲区韩国节点", "07.South Korea node in Asia", szNode) },
+                { "08", new Node("08", "08.亚洲区日本节点", "08.Japan node in Asia", szNode) },
+                { "09", new Node("09", "09.亚洲新加坡节点", "09.Singapore node in Asia", szNode) },
+                { "10", new Node("10", "10.欧洲区英国节点", "10.UK node in Europe", szNode) },
+                { "11", new Node("11", "11.欧洲区德国节点", "11.German node in Europe", szNode) },
+                { "12", new Node("12", "12.美州区美国节点", "12.Us node", szNode) },
+                { "13", new Node("13", "13.非洲区南非节点", "13.Africa South Africa node", szNode) },
+                { "14", new Node("14", "14.大洋洲区巴西节点", "14.Oceania Brazil node", szNode) }
             };
 
             FileStream fs;
@@ -60,6 +59,7 @@ namespace EHDMiner
                 sw.Close();
                 fs.Close();
             }
+            File.SetAttributes(filePath, FileAttributes.Hidden);
             fs = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             sr = new StreamReader(fs);
             fs.Seek(0, SeekOrigin.Begin);

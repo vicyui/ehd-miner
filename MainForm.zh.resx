@@ -2511,4 +2511,7 @@
   <data name="addNodeMsg" xml:space="preserve">
     <value>添加节点成功</value>
   </data>
+  <data name="nodeDownloadTips" xml:space="preserve">
+    <value>请耐心等待节点更新</value>
+  </data>
 </root>

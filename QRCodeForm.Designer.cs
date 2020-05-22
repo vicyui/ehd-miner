@@ -87,6 +87,7 @@
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(233, 21);
             this.textBox.TabIndex = 5;
+            this.textBox.TextChanged += new System.EventHandler(this.textBox_TextChanged);
             // 
             // QRCodeForm
             // 

@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -31,8 +32,7 @@ namespace EHDMiner
         private Process p;
         private string[] runArgs;
         public static ArrayList checkedList = new ArrayList();
-        public static string addNodeString = string.Empty;
-        public static string addNodeId;
+        public static Node selectedNode;
         public static bool isPay = true;
         public static string userInputAddress = string.Empty;
 
@@ -211,42 +211,83 @@ namespace EHDMiner
             AddNodeForm addNodeForm = new AddNodeForm();
             addNodeForm.Text = tsmiAddPeer.Text;
             addNodeForm.ShowDialog();
-            if (string.Empty.Equals(addNodeString)) return;
+            if (null == selectedNode) return;
 
-            QRCodeForm qRCodeForm = new QRCodeForm(language);
-            qRCodeForm.ShowDialog();
-            if (!isPay) return;
-
-            string token = "UFQX77MWVUBRQSBCEDHMQ8E16VJPPG6ERJ";
-            try
+            if (!selectedNode.Access)
             {
-                RestClient client = new RestClient("https://api.etherscan.io/");
-                string apiResult = client.Get("api?module=block&action=getblocknobytime&timestamp=" + UtcTime.GetTimeStamp() + "&closest=before&apikey=" + token);
-                JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
-                string latestBlock = json["result"].ToString();
-                if (userInputAddress.Length == 0) userInputAddress = "0x" + address;
-                // 取付费记录
-                apiResult = client.Get("api?module=account&action=txlistinternal&address=" + userInputAddress + "&startblock=0&endblock=" + latestBlock + "&sort=asc&apikey=" + token);
-                json = JsonConvert.DeserializeObject<JObject>(apiResult);
-                // 修改配置文件
-                string strFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ini");
-                if (File.Exists(strFilePath))
+                QRCodeForm qRCodeForm = new QRCodeForm(language, "100");
+                qRCodeForm.ShowDialog();
+                if (!isPay) return;
+
+                bool paySuccess = false;
+                try
                 {
-                    string strContent = File.ReadAllText(strFilePath);
-                    strContent = Regex.Replace(strContent, addNodeId + "=False", addNodeId + "=True");
-                    File.WriteAllText(strFilePath, strContent);
+                    string token = "6275dadb8c94c201dbcfedca72f8308fafd1bb4788e1be3061ce5c3bc2e1d0be";
+                    RestClient client = new RestClient("https://api.ehd.io/");
+                    //string apiResult = client.Get("api?module=block&action=getblocknobytime&timestamp=" + UtcTime.GetTimeStamp() + "&closest=before&apikey=" + token);
+                    //JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
+                    //string latestBlock = json["result"].ToString();
+                    if (userInputAddress.Length == 0) return;
+                    // 取付费记录
+                    string apiResult = client.Get("?method=usdt.index&address=" + userInputAddress + "&token=" + token);
+                    JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
+                    Block[] blocks = JsonConvert.DeserializeObject<Block[]>(json["data"].ToString());
+                    string toAddress = "0x595C230fBfc95A168eD893089C5748Ec8e413694";
+                    foreach (Block block in blocks)
+                    {
+                        if(toAddress.ToLower().Equals(block.To) && "100000000".Equals(block.Value))
+                        {
+                            paySuccess = true;
+                        }
+                    }
+                    if (!paySuccess) return;
+                    // 修改配置文件
+                    string strFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ini");
+                    if (File.Exists(strFilePath))
+                    {
+                        string strContent = File.ReadAllText(strFilePath);
+                        strContent = Regex.Replace(strContent, selectedNode.NodeId + "=False", selectedNode.NodeId + "=True");
+                        File.WriteAllText(strFilePath, strContent);
+                    }
+                }
+                catch (WebException webEx)
+                {
+                    Console.WriteLine(webEx.ToString());
+                    return;
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                return;
-            }
-            
-            RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"admin_addPeer\\\",\\\"params\\\":[\\\"enode://" + addNodeString + ":30303\\\"],\\\"id\\\":1}\" http://127.0.0.1:8545");
-            MessageBox.Show(resource.GetString("addNodeMsg"));
-            Thread.Sleep(1000);
+
             RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
+            Thread.Sleep(1000);
+            //WebClient webClient = new WebClient();
+            //webClient.DownloadFile("", Application.StartupPath + "\\bin\\" + poc);
+            toolStripProgressBar.Visible = true;
+            FileDownloadUtil file = new FileDownloadUtil("需要下载的网络地址", "文件下载到的文件夹路径", "带后缀的文件名", "文件ID，按需求自行删除");
+            file.ProgressChanged += File_ProgressChanged;
+            file.DownloadFinish += File_DownloadFinish;
+            file.Download();
+            //RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"admin_addPeer\\\",\\\"params\\\":[\\\"enode://" + selectedNode.Address + ":30303\\\"],\\\"id\\\":1}\" http://127.0.0.1:8545");
+            MessageBox.Show(resource.GetString("nodeDownloadTips"));
+        }
+
+        private void File_DownloadFinish(bool isSuccess, string downloadPath, string fileId, string msg = null)
+        {
+            if (isSuccess)
+            {
+                //Console.WriteLine("文件 " + fileId + " 下载成功，保存位置：" + downloadPath);
+                MessageBox.Show(resource.GetString("addNodeMsg"));
+            }
+            else
+            {
+                Console.WriteLine("文件 " + fileId + " 下载失败 " + msg == null ? "" : "原因：" + msg);
+            }
+            toolStripProgressBar.Visible = false;
+        }
+
+        private void File_ProgressChanged(int progress, string fileId)
+        {
+            Console.WriteLine("文件 " + fileId + " 下载进度：" + progress);
+            toolStripProgressBar.Value = progress;
         }
 
         [Obsolete]

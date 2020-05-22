@@ -9,30 +9,33 @@ namespace EHDMiner
     public partial class QRCodeForm : Form
     {
         private string lang = string.Empty;
-        public QRCodeForm(string language)
+        private string usdtPrice = string.Empty;
+        public QRCodeForm(string language,string price)
         {
             InitializeComponent();
             lang = language;
+            usdtPrice = price;
         }
 
         private void QRCodeForm_Load(object sender, EventArgs e)
         {
             if (lang.Equals("zh"))
             {
-                Text = "支付100USDT";
+                Text = "支付" + usdtPrice + "USDT";
                 labelMsg.Text = "请输入您的转账地址:";
                 btnPay.Text = "确定";
                 btnCancel.Text = "取消";
             }
             else
             {
-                Text = "Pay 100USDT";
+                Text = "Pay " + usdtPrice + "USDT";
                 labelMsg.Text = "Please enter your transfer address :";
                 btnPay.Text = "OK";
                 btnCancel.Text = "Cancel";
             }
             pictureBox.Image = CodeImage("0x595C230fBfc95A168eD893089C5748Ec8e413694");
             labelQrCode.Text = "0x595C230fBfc95A168eD893089C5748Ec8e413694";
+            btnPay.Enabled = false;
         }
 
         private Bitmap CodeImage(string str)
@@ -61,6 +64,15 @@ namespace EHDMiner
         {
             mainForm.isPay = false;
             Close();
+        }
+
+        private void textBox_TextChanged(object sender, EventArgs e)
+        {
+            btnPay.Enabled = true;
+            if (textBox.Text.Length < 42)
+            {
+                btnPay.Enabled = false;
+            }
         }
     }
 }

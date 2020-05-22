@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Management;
+using System.Net;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace EHDMiner
 {

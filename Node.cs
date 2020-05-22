@@ -1,6 +1,6 @@
 ﻿namespace EHDMiner
 {
-    class Node
+    public class Node
     {
         public string  NodeId { get; set; }
         public string Zh_name { get; set; }

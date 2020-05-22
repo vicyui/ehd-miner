@@ -2565,4 +2565,7 @@
   <data name="addNodeMsg" xml:space="preserve">
     <value>Add Node successfully</value>
   </data>
+  <data name="nodeDownloadTips" xml:space="preserve">
+    <value>Please wait patiently for node update</value>
+  </data>
 </root>
