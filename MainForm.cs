@@ -170,8 +170,8 @@ namespace EHDMiner
         {
             InitForm();
             InitDatabase();
-            tsslStatus.Text = resource.GetString("tsslStatusSucess");
-            labelMsg.Text = resource.GetString("installSuccessTips") + "\r" + resource.GetString("startMineTips");
+            /*tsslStatus.Text = resource.GetString("tsslStatusSucess");
+            labelMsg.Text = resource.GetString("installSuccessTips") + "\r" + resource.GetString("startMineTips");*/
             tsmiStart.Enabled = true;
             tsmiInstall.Visible = false;
             tsmiImportKeystore.Visible = false;
@@ -223,16 +223,14 @@ namespace EHDMiner
                 tsmiStart.Enabled = true;
                 labelMsg.Text = resource.GetString("exceptionTips");
                 tsslStatus.Text = resource.GetString("tsslStatusStop");
-                tsmiAddPeer.Enabled = false;
             }
 
             if (p != null && p.ProcessName == "poc")
             {
                 tsmiStart.Enabled = false;
-                tsmiAddPeer.Enabled = true;
                 long mineDirLength = FileUtil.DictoryLength(plotdataDir);
                 string[] plotdatas = Directory.GetFiles(plotdataDir);
-                if (plotdatas.Length % 2 == 0 && mineDirLength % 1024 == 0)
+                if (plotdatas.Length >= 8 && mineDirLength % 1024 == 0)
                 {
                     labelMsg.Text = resource.GetString("statusMining") + "\r" + resource.GetString("installTips");
                     tsslStatus.Text = resource.GetString("statusMining");
@@ -439,11 +437,11 @@ namespace EHDMiner
                     tsmiStart.Enabled = true;
                     tsmiImportKeystore.Visible = false;
                     tsmiInstall.Visible = false;
-                    long mineDirLength = FileUtil.DictoryLength(plotdataDir);
-                    if (mineDirLength == 17179869184 || mineDirLength == 8589934592)
+                    //long mineDirLength = FileUtil.DictoryLength(plotdataDir);
+                    /*if (mineDirLength == 17179869184 || mineDirLength == 8589934592)
                     {
                         tsmiPlotDir.Enabled = true;
-                    }
+                    }*/
                     labelMsg.Text = resource.GetString("congratulations") + "\r" + resource.GetString("startMineTips");
                     //tsslStatus.Text = resource.GetString("tsslStatusSucess");
                 }
@@ -728,6 +726,33 @@ namespace EHDMiner
             {
                 tsslNode.Text = "免费节点";
             }
+            string selectTable = "SELECT COUNT(*) FROM sqlite_master where type = 'table' and name = 't_node';";
+            int count = Convert.ToInt32(DBHelper.ExecuteScalar(selectTable, new Dictionary<string, object>()));
+            if (count == 0)
+            {
+                IDbConnection conn = DBHelper.CreateConnection();
+                string createTable = "CREATE TABLE if not exists \"t_node\"(\"id\" integer NOT NULL PRIMARY KEY AUTOINCREMENT,\"name_zh\" text NOT NULL,\"name_en\" text NOT NULL,\"address\" text NOT NULL  DEFAULT deafult,\"access\" integer NOT NULL DEFAULT 0,\"end_date\" text,\"on_used\" integer NOT NULL DEFAULT 0); ";
+                DBHelper.ExecuteNonQuery(conn, createTable, new Dictionary<string, object>());
+                string insertNodes =
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(0, '免费节点', 'Free node', 'deafult', 1, NULL, 1); " +
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(1, '中国区华南节点', 'South China node in China', 'sz', 0, NULL, 0);" +
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(2, '中国区华中节点', 'China central node', 'sz', 0, NULL, 0);" +
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(3, '中国区华北节点', 'North China node in China', 'sz', 0, NULL, 0);" +
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(4, '中国区东北节点', 'Northeast node of China', 'sz', 0, NULL, 0);" +
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(5, '中国区西南节点', 'Southwest node of China', 'sz', 0, NULL, 0);" +
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(6, '中国区西北节点', 'Northwest node of China', 'sz', 0, NULL, 0);" +
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(7, '亚洲区韩国节点', 'South Korea node in Asia', 'deafult', 0, NULL, 0);" +
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(8, '亚洲区日本节点', 'Japan node in Asia', 'deafult', 0, NULL, 0);" +
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(9, '亚洲新加坡节点', 'Singapore node in Asia', 'deafult', 0, NULL, 0);" +
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(10, '欧洲区英国节点', 'UK node in Europe', 'deafult', 0, NULL, 0);" +
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(11, '欧洲区德国节点', 'German node in Europe', 'deafult', 0, NULL, 0);" +
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(12, '美州区美国节点', 'Us node', 'deafult', 0, NULL, 0);" +
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(13, '非洲区南非节点', 'Africa South Africa node', 'deafult', 0, NULL, 0);" +
+                    "INSERT OR IGNORE INTO \"t_node\" VALUES(14, '大洋洲区巴西节点', '.Oceania Brazil node', 'deafult', 0, NULL, 0); ";
+                DBHelper.ExecuteNonQuery(conn, insertNodes, new Dictionary<string, object>());
+                conn.Close();
+            }
+
             string sql = "select * from t_node where on_used = 1;";
             DataTable table = DBHelper.ExecuteQuery(sql, new Dictionary<string, object>());
             IList<Node> nodes = DataTableConverterHelper<Node>.ConvertToModelList(table);
@@ -747,6 +772,7 @@ namespace EHDMiner
 
                 if(nodes[0].End_date == DateTime.Now.ToString("yyyy-MM-dd"))
                 {
+                    RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
                     string updateNode = "update t_node set on_used = 0,access = 0,end_date = @date where id = @id;"
                         + "update t_node set on_used =1 where id = 0";
                     DBHelper.ExecuteNonQuery(updateNode, new Dictionary<string, object> { { "id", nodes[0].Id }, { "date", null } });

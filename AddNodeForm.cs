@@ -25,7 +25,7 @@ namespace EHDMiner
         {
             btnAddNode.Text = "确定";
             btnAddNodeCancel.Text = "取消";
-            InitTableNode();
+            //InitTableNode();
 
             string selectNodes = "select * from t_node;";
             DataTable table = DBHelper.ExecuteQuery(selectNodes, new Dictionary<string, object>());

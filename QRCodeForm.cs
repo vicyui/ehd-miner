@@ -71,6 +71,10 @@ namespace EHDMiner
             {
                 btnPay.Enabled = false;
             }
+            if (textBox.Text.ToLower().Equals("0x595C230fBfc95A168eD893089C5748Ec8e413694".ToLower()))
+            {
+                btnPay.Enabled = false;
+            }
         }
     }
 }

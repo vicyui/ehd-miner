@@ -103,8 +103,8 @@
             // 
             // tsmiAddPeer
             // 
-            resources.ApplyResources(this.tsmiAddPeer, "tsmiAddPeer");
             this.tsmiAddPeer.Name = "tsmiAddPeer";
+            resources.ApplyResources(this.tsmiAddPeer, "tsmiAddPeer");
             this.tsmiAddPeer.Click += new System.EventHandler(this.tsmiAddPeer_Click);
             // 
             // tsmiRepairFork
@@ -115,8 +115,8 @@
             // 
             // tsmiPlotDir
             // 
-            resources.ApplyResources(this.tsmiPlotDir, "tsmiPlotDir");
             this.tsmiPlotDir.Name = "tsmiPlotDir";
+            resources.ApplyResources(this.tsmiPlotDir, "tsmiPlotDir");
             this.tsmiPlotDir.Click += new System.EventHandler(this.tsmiPlotDir_Click);
             // 
             // tsmiShowInfo
