@@ -2520,4 +2520,10 @@
   <data name="orderNotFound" xml:space="preserve">
     <value>查无购买订单,请联系管理员</value>
   </data>
+  <data name="nodeStatusTips" xml:space="preserve">
+    <value>节点有效期:</value>
+  </data>
+  <data name="startException" xml:space="preserve">
+    <value>启动异常,请重新启动</value>
+  </data>
 </root>

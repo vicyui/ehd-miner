@@ -38,7 +38,7 @@ namespace EHDMiner
         public static int countDeviceSelect = 0;
         private readonly string token = "6275dadb8c94c201dbcfedca72f8308fafd1bb4788e1be3061ce5c3bc2e1d0be";
         private readonly string toAddress = "0x595C230fBfc95A168eD893089C5748Ec8e413694";
-        private RestClient client = new RestClient("https://api.ehd.io/");
+        private readonly RestClient client = new RestClient("https://api.ehd.io/");
 
         public mainForm(string[] args)
         {
@@ -56,7 +56,10 @@ namespace EHDMiner
             };
             deviceSelectForm.ShowDialog();
 
-            if (checkedList.Count == 0) return;
+            if (checkedList.Count == 0)
+            {
+                return;
+            }
 
             if (countDeviceSelect > 0)
             {
@@ -69,7 +72,11 @@ namespace EHDMiner
                 return;
             }
             bool paySuccess = false;
-            if (userInputAddress.Length == 0) return;
+            if (userInputAddress.Length == 0)
+            {
+                return;
+            }
+
             try
             {
                 // 取付费记录
@@ -156,6 +163,7 @@ namespace EHDMiner
             {
                 toolStripProgressBar.Visible = false;
             }
+            InitNodeStatus();
         }
 
         private void TsmiInstall_Click(object sender, EventArgs e)
@@ -179,15 +187,23 @@ namespace EHDMiner
             InitForm();
             RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
             //DeleteEthDir();
-            p = new Process();
-            p.StartInfo.FileName = Application.StartupPath + "/bin/poc.exe";
-            p.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-            /*if (runArgs.Length > 0 && runArgs[0] == "showPoc")
+            try
             {
+                p = new Process();
+                p.StartInfo.FileName = Application.StartupPath + "/bin/poc.exe";
                 p.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
-            }*/
-            p.StartInfo.Arguments = " --datadir=\"" + Application.StartupPath + "\\AppData\\Roaming\\Poc\" --mine --gcmode archive --syncmode=full --networkid 10911 --rpc --rpcaddr \"0.0.0.0\" --rpcport=\"8545\" --rpcapi \"web3,peers,net,account,personal,eth,minedev,txpool,admin\"";
-            p.Start();
+                /*if (runArgs.Length > 0 && runArgs[0] == "showPoc")
+                {
+                    p.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+                }*/
+                p.StartInfo.Arguments = " --datadir=\"" + Application.StartupPath + "\\AppData\\Roaming\\Poc\" --mine --gcmode archive --syncmode=full --networkid 10911 --rpc --rpcaddr \"0.0.0.0\" --rpcport=\"8545\" --rpcapi \"web3,peers,net,account,personal,eth,minedev,txpool,admin\"";
+                p.Start();
+            }
+            catch (Exception)
+            {
+                FileUtil.ExtractResFile("EHDMiner.Resources." + poc, Application.StartupPath + "\\bin\\" + poc);
+                return;
+            }
             processId = p.Id;
             Thread.Sleep(100);//加上，100如果效果没有就继续加大
             SetParent(p.MainWindowHandle, panel1.Handle); //panel1.Handle为要显示外部程序的容器
@@ -241,23 +257,21 @@ namespace EHDMiner
                 return;
             }
 
-            if (!selectedNode.Access)
+            if (0 == selectedNode.Access)
             {
                 QRCodeForm qRCodeForm = new QRCodeForm("100");
                 qRCodeForm.ShowDialog();
-                if (!isPay)
-                {
-                    return;
-                }
+                if (!isPay) return;
 
                 bool paySuccess = false;
                 if (userInputAddress.Length == 0) return;
+                
                 try
                 {
                     //string apiResult = client.Get("api?module=block&action=getblocknobytime&timestamp=" + UtcTime.GetTimeStamp() + "&closest=before&apikey=" + token);
                     //JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
                     //string latestBlock = json["result"].ToString();
-                    // 取付费记录
+                    // 付费记录
                     string apiResult = client.Get("?method=usdt.index&address=" + userInputAddress + "&token=" + token);
                     JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
                     Block[] blocks = JsonConvert.DeserializeObject<Block[]>(json["data"].ToString());
@@ -273,14 +287,15 @@ namespace EHDMiner
                         MessageBox.Show(resource.GetString("orderNotFound"));
                         return;
                     }
+                    
                     // 修改配置文件
-                    string strFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ini");
-                    if (File.Exists(strFilePath))
-                    {
-                        string strContent = File.ReadAllText(strFilePath);
-                        strContent = Regex.Replace(strContent, selectedNode.NodeId + "=False", selectedNode.NodeId + "=True");
-                        File.WriteAllText(strFilePath, strContent);
-                    }
+                    //string strFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config");
+                    //if (File.Exists(strFilePath))
+                    //{
+                    //    string strContent = File.ReadAllText(strFilePath);
+                    //    strContent = Regex.Replace(strContent, selectedNode.Id + "=False", selectedNode.Id + "=True");
+                    //    File.WriteAllText(strFilePath, strContent);
+                    //}
                 }
                 catch (WebException)
                 {
@@ -288,14 +303,36 @@ namespace EHDMiner
                     return;
                 }
             }
-            DialogResult dr = MessageBox.Show(resource.GetString("nodeDownloadTips"), resource.GetString("tips"), MessageBoxButtons.OK);
-            if (dr != DialogResult.OK)
+
+            IDbConnection conn = DBHelper.CreateConnection();
+            string offUsedNode = "update t_node set on_used = 0;";//取消所有已选择
+            DBHelper.ExecuteNonQuery(conn, offUsedNode, new Dictionary<string, object>());
+            if (selectedNode.Access == 0)
+            {
+                string updateNode = "update t_node set on_used = 1,access = 1 ,end_date=@date where id=@id;";
+                DBHelper.ExecuteNonQuery(conn, updateNode, new Dictionary<string, object>()
+                        {
+                            { "id", selectedNode.Id },
+                            { "date", DateTime.Now.AddDays(30).ToString("yyyy-MM-dd") }
+                        });
+            }
+            else
+            {
+                string updateNode = "update t_node set on_used = 1,access = 1 where id=@id;";
+                DBHelper.ExecuteNonQuery(conn, updateNode, new Dictionary<string, object>()
+                        {
+                            { "id", selectedNode.Id }
+                        });
+            }
+
+            DialogResult dr = MessageBox.Show(resource.GetString("nodeDownloadTips"), resource.GetString("tips"), MessageBoxButtons.OKCancel);
+            if (dr == DialogResult.Cancel)
             {
                 return;
             }
             RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
             Thread.Sleep(2000);
-            tsmiStart.Enabled = false;
+            tsmiStart.Visible = false;
             tsmiAdvanced.Enabled = false;
 
             if (selectedNode.Address == "sz")
@@ -314,22 +351,25 @@ namespace EHDMiner
             {
                 FileUtil.ExtractResFile("EHDMiner.Resources." + poc, Application.StartupPath + "\\bin\\" + poc);
                 MessageBox.Show(resource.GetString("addNodeMsg"));
-                tsmiStart.Enabled = true;
+                tsmiStart.Visible = true;
+                tsmiAdvanced.Enabled = true;
             }
             //RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"admin_addPeer\\\",\\\"params\\\":[\\\"enode://" + selectedNode.Address + ":30303\\\"],\\\"id\\\":1}\" http://127.0.0.1:8545");
         }
 
-        void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        private void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             toolStripProgressBar.Value = e.ProgressPercentage;
+            tsmiStart.Visible = false;
         }
 
-        void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        private void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
         {
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Visible = false;
             MessageBox.Show(resource.GetString("addNodeMsg"));
-            tsmiStart.Enabled = true;
+            tsmiStart.Visible = true;
+            tsmiAdvanced.Enabled = true;
         }
 
         [Obsolete]
@@ -678,6 +718,41 @@ namespace EHDMiner
         private void TsmiWebsite_Click(object sender, EventArgs e)
         {
             Process.Start("https://www.ehd.io");
+        }
+
+        private void InitNodeStatus()
+        {
+            tsslNode.Alignment = ToolStripItemAlignment.Right;
+            tsslNode.Text = "Free node";
+            if (language == "zh")
+            {
+                tsslNode.Text = "免费节点";
+            }
+            string sql = "select * from t_node where on_used = 1;";
+            DataTable table = DBHelper.ExecuteQuery(sql, new Dictionary<string, object>());
+            IList<Node> nodes = DataTableConverterHelper<Node>.ConvertToModelList(table);
+
+            if (null != nodes[0])
+            {
+                tsslNode.Text = nodes[0].Name_zh;
+                if (language == "en")
+                {
+                    tsslNode.Text = nodes[0].Name_en;
+                }
+
+                if(nodes[0].End_date != null)
+                {
+                    tsslNode.Text += "|" + resource.GetString("nodeStatusTips") + nodes[0].End_date;
+                }
+
+                if(nodes[0].End_date == DateTime.Now.ToString("yyyy-MM-dd"))
+                {
+                    string updateNode = "update t_node set on_used = 0,access = 0,end_date = @date where id = @id;"
+                        + "update t_node set on_used =1 where id = 0";
+                    DBHelper.ExecuteNonQuery(updateNode, new Dictionary<string, object> { { "id", nodes[0].Id }, { "date", null } });
+                    FileUtil.ExtractResFile("EHDMiner.Resources." + poc, Application.StartupPath + "\\bin\\" + poc);
+                }
+            }
         }
     }
 }

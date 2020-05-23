@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="AddressHelper.cs" />
     <Compile Include="Block.cs" />
+    <Compile Include="DataTableConverterHelper.cs" />
     <Compile Include="DBHelper.cs" />
     <Compile Include="DeviceSelectForm.cs">
       <SubType>Form</SubType>

@@ -48,12 +48,12 @@
             this.comboBox.FormattingEnabled = true;
             this.comboBox.Location = new System.Drawing.Point(12, 12);
             this.comboBox.Name = "comboBox";
-            this.comboBox.Size = new System.Drawing.Size(180, 20);
+            this.comboBox.Size = new System.Drawing.Size(207, 20);
             this.comboBox.TabIndex = 3;
             // 
             // btnAddNodeCancel
             // 
-            this.btnAddNodeCancel.Location = new System.Drawing.Point(117, 38);
+            this.btnAddNodeCancel.Location = new System.Drawing.Point(144, 38);
             this.btnAddNodeCancel.Name = "btnAddNodeCancel";
             this.btnAddNodeCancel.Size = new System.Drawing.Size(75, 23);
             this.btnAddNodeCancel.TabIndex = 4;
@@ -64,11 +64,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(204, 71);
+            this.ClientSize = new System.Drawing.Size(231, 71);
             this.ControlBox = false;
             this.Controls.Add(this.btnAddNodeCancel);
             this.Controls.Add(this.comboBox);
             this.Controls.Add(this.btnAddNode);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AddNodeForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "AddNodeForm";

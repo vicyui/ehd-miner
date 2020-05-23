@@ -2574,4 +2574,10 @@
   <data name="orderNotFound" xml:space="preserve">
     <value>No purchase order found, please contact administrator</value>
   </data>
+  <data name="nodeStatusTips" xml:space="preserve">
+    <value>Node validity:</value>
+  </data>
+  <data name="startException" xml:space="preserve">
+    <value>Startup exception, please restart</value>
+  </data>
 </root>

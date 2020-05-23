@@ -2,26 +2,29 @@
 {
     public class Node
     {
-        public string  NodeId { get; set; }
-        public string Zh_name { get; set; }
-        public string En_name { get; set; }
+        public int Id { get; set; }
+        public string Name_zh { get; set; }
+        public string Name_en { get; set; }
         public string Address { get; set; }
-        public bool Access { get; set; }
-        public Node(string id ,string zh_name, string en_name, string address)
+        public int Access { get; set; }
+        public int On_used { get; set; }
+        public string End_date { get; set; }
+        /*public Node(int id ,string name_zh, string name_en, string address)
         {
-            NodeId = id;
-            Zh_name = zh_name;
-            En_name = en_name;
+            Id = id;
+            Name_zh = name_zh;
+            Name_en = name_en;
             Address = address;
-            Access = false;
+            Access = 0;
         }
-        public Node(string id, string zh_name, string en_name, string address,bool flag)
+        public Node(int id, string name_zh, string name_en, string address,int flag)
         {
-            NodeId = id;
-            Zh_name = zh_name;
-            En_name = en_name;
+            Id = id;
+            Name_zh = name_zh;
+            Name_en = name_en;
             Address = address;
             Access = flag;
-        }
+            On_used = 1;
+        }*/
     }
 }

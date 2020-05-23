@@ -44,7 +44,7 @@
             this.tsmiLanguage = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLangCN = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLangEN = new System.Windows.Forms.ToolStripMenuItem();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tsslDate = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
@@ -54,8 +54,9 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.labelMsg = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.tsslNode = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
+            this.statusStrip.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -156,15 +157,17 @@
             resources.ApplyResources(this.tsmiLangEN, "tsmiLangEN");
             this.tsmiLangEN.Click += new System.EventHandler(this.TsmiLangEN_Click);
             // 
-            // statusStrip1
+            // statusStrip
             // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsslDate,
             this.tsslStatus,
-            this.toolStripProgressBar});
-            resources.ApplyResources(this.statusStrip1, "statusStrip1");
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.SizingGrip = false;
+            this.toolStripProgressBar,
+            this.tsslNode});
+            this.statusStrip.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            resources.ApplyResources(this.statusStrip, "statusStrip");
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.SizingGrip = false;
             // 
             // tsslDate
             // 
@@ -219,13 +222,19 @@
             resources.ApplyResources(this.notifyIcon1, "notifyIcon1");
             this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon1_MouseClick);
             // 
+            // tsslNode
+            // 
+            this.tsslNode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsslNode.Name = "tsslNode";
+            resources.ApplyResources(this.tsslNode, "tsslNode");
+            // 
             // mainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.menuStrip1);
-            this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.statusStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
@@ -235,8 +244,8 @@
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);
@@ -253,7 +262,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiAddPeer;
         private System.Windows.Forms.ToolStripMenuItem tsmiShowInfo;
         private System.Windows.Forms.ToolStripMenuItem tsmiImportKeystore;
-        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel tsslDate;
         private System.Windows.Forms.ToolStripStatusLabel tsslStatus;
         private System.Windows.Forms.Timer timer1;
@@ -270,6 +279,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiLangEN;
         private System.Windows.Forms.ToolStripMenuItem tsmiScanner;
         private System.Windows.Forms.ToolStripMenuItem tsmiWebsite;
+        private System.Windows.Forms.ToolStripStatusLabel tsslNode;
     }
 }
 
