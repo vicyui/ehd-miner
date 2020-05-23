@@ -8,7 +8,6 @@ namespace EHDMiner
 {
     public partial class AddNodeForm : Form
     {
-        private static string szNode = "be9a4f00f45f603edaa86168a87de0d664550d88626f49991533ab31115ad7176eaa3b24069bca65b8b12e96cf360698346287087772e42db02b915fe24e3f7f@119.23.110.73";
         public AddNodeForm()
         {
             InitializeComponent();
@@ -27,21 +26,21 @@ namespace EHDMiner
             string filePath = Path.Combine(Application.StartupPath, "config.ini");//在当前程序路径创建
             Dictionary<string, Node> nodes = new Dictionary<string, Node>
             {
-                { "00", new Node("00", "免费节点", "Free node", szNode, true) },
-                { "01", new Node("01", "01.中国区华南节点", "01.South China node in China", szNode) },
-                { "02", new Node("02", "02.中国区华中节点", "02.China central node", szNode) },
-                { "03", new Node("03", "03.中国区华北节点", "03.North China node in China", szNode) },
-                { "04", new Node("04", "04.中国区东北节点", "04.Northeast node of China", szNode) },
-                { "05", new Node("05", "05.中国区西南节点", "05.Southwest node of China", szNode) },
-                { "06", new Node("06", "06.中国区西北节点", "06.Northwest node of China", szNode) },
-                { "07", new Node("07", "07.亚洲区韩国节点", "07.South Korea node in Asia", szNode) },
-                { "08", new Node("08", "08.亚洲区日本节点", "08.Japan node in Asia", szNode) },
-                { "09", new Node("09", "09.亚洲新加坡节点", "09.Singapore node in Asia", szNode) },
-                { "10", new Node("10", "10.欧洲区英国节点", "10.UK node in Europe", szNode) },
-                { "11", new Node("11", "11.欧洲区德国节点", "11.German node in Europe", szNode) },
-                { "12", new Node("12", "12.美州区美国节点", "12.Us node", szNode) },
-                { "13", new Node("13", "13.非洲区南非节点", "13.Africa South Africa node", szNode) },
-                { "14", new Node("14", "14.大洋洲区巴西节点", "14.Oceania Brazil node", szNode) }
+                { "00", new Node("00", "免费节点", "Free node", "default", true) },
+                { "01", new Node("01", "01.中国区华南节点", "01.South China node in China", "sz") },
+                { "02", new Node("02", "02.中国区华中节点", "02.China central node", "sz") },
+                { "03", new Node("03", "03.中国区华北节点", "03.North China node in China", "sz") },
+                { "04", new Node("04", "04.中国区东北节点", "04.Northeast node of China", "sz") },
+                { "05", new Node("05", "05.中国区西南节点", "05.Southwest node of China", "sz") },
+                { "06", new Node("06", "06.中国区西北节点", "06.Northwest node of China", "sz") },
+                { "07", new Node("07", "07.亚洲区韩国节点", "07.South Korea node in Asia", "default") },
+                { "08", new Node("08", "08.亚洲区日本节点", "08.Japan node in Asia", "default") },
+                { "09", new Node("09", "09.亚洲新加坡节点", "09.Singapore node in Asia", "default") },
+                { "10", new Node("10", "10.欧洲区英国节点", "10.UK node in Europe", "default") },
+                { "11", new Node("11", "11.欧洲区德国节点", "11.German node in Europe", "default") },
+                { "12", new Node("12", "12.美州区美国节点", "12.Us node", "default") },
+                { "13", new Node("13", "13.非洲区南非节点", "13.Africa South Africa node", "default") },
+                { "14", new Node("14", "14.大洋洲区巴西节点", "14.Oceania Brazil node", "default") }
             };
 
             FileStream fs;

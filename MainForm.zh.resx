@@ -2512,6 +2512,12 @@
     <value>添加节点成功</value>
   </data>
   <data name="nodeDownloadTips" xml:space="preserve">
-    <value>请耐心等待节点更新</value>
+    <value>确定更换节点吗</value>
+  </data>
+  <data name="networkException" xml:space="preserve">
+    <value>网络异常,请联系管理员</value>
+  </data>
+  <data name="orderNotFound" xml:space="preserve">
+    <value>查无购买订单,请联系管理员</value>
   </data>
 </root>

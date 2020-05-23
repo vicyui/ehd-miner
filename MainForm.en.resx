@@ -2568,4 +2568,10 @@
   <data name="nodeDownloadTips" xml:space="preserve">
     <value>Please wait patiently for node update</value>
   </data>
+  <data name="networkException" xml:space="preserve">
+    <value>Network exception, please contact administrator</value>
+  </data>
+  <data name="orderNotFound" xml:space="preserve">
+    <value>No purchase order found, please contact administrator</value>
+  </data>
 </root>

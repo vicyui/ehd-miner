@@ -30,6 +30,7 @@
         {
             this.checkedListBox = new System.Windows.Forms.CheckedListBox();
             this.btnDeviceSelect = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // checkedListBox
@@ -44,13 +45,21 @@
             // 
             // btnDeviceSelect
             // 
-            this.btnDeviceSelect.Location = new System.Drawing.Point(70, 156);
+            this.btnDeviceSelect.Location = new System.Drawing.Point(12, 156);
             this.btnDeviceSelect.Name = "btnDeviceSelect";
             this.btnDeviceSelect.Size = new System.Drawing.Size(75, 23);
             this.btnDeviceSelect.TabIndex = 1;
-            this.btnDeviceSelect.Text = "确定";
             this.btnDeviceSelect.UseVisualStyleBackColor = true;
             this.btnDeviceSelect.Click += new System.EventHandler(this.BtnDeviceSelect_Click);
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(140, 156);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 2;
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // DeviceSelectForm
             // 
@@ -58,6 +67,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(227, 191);
             this.ControlBox = false;
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnDeviceSelect);
             this.Controls.Add(this.checkedListBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -73,5 +83,6 @@
 
         private System.Windows.Forms.CheckedListBox checkedListBox;
         private System.Windows.Forms.Button btnDeviceSelect;
+        private System.Windows.Forms.Button btnCancel;
     }
 }

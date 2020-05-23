@@ -8,18 +8,16 @@ namespace EHDMiner
 {
     public partial class QRCodeForm : Form
     {
-        private string lang = string.Empty;
         private string usdtPrice = string.Empty;
-        public QRCodeForm(string language,string price)
+        public QRCodeForm(string price)
         {
             InitializeComponent();
-            lang = language;
             usdtPrice = price;
         }
 
         private void QRCodeForm_Load(object sender, EventArgs e)
         {
-            if (lang.Equals("zh"))
+            if (mainForm.language.Equals("zh"))
             {
                 Text = "支付" + usdtPrice + "USDT";
                 labelMsg.Text = "请输入您的转账地址:";

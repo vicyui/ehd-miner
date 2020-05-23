@@ -27,14 +27,18 @@ namespace EHDMiner
         private readonly string plotdataDir = Application.StartupPath + "\\AppData\\Roaming\\Poc\\plotdata";
         private readonly string ethDir = Application.StartupPath + "\\AppData\\Roaming\\Poc\\eth";
         public static string language = string.Empty;
-        private ComponentResourceManager resource;
+        private readonly ComponentResourceManager resource;
         private int processId;
         private Process p;
-        private string[] runArgs;
+        private readonly string[] runArgs;
         public static ArrayList checkedList = new ArrayList();
         public static Node selectedNode;
         public static bool isPay = true;
         public static string userInputAddress = string.Empty;
+        public static int countDeviceSelect = 0;
+        private readonly string token = "6275dadb8c94c201dbcfedca72f8308fafd1bb4788e1be3061ce5c3bc2e1d0be";
+        private readonly string toAddress = "0x595C230fBfc95A168eD893089C5748Ec8e413694";
+        private RestClient client = new RestClient("https://api.ehd.io/");
 
         public mainForm(string[] args)
         {
@@ -46,21 +50,62 @@ namespace EHDMiner
 
         private void tsmiPlotDir_Click(object sender, EventArgs e)
         {
-            DeviceSelectForm deviceSelectForm = new DeviceSelectForm();
-            deviceSelectForm.Text = tsmiPlotDir.Text;
+            DeviceSelectForm deviceSelectForm = new DeviceSelectForm
+            {
+                Text = tsmiPlotDir.Text
+            };
             deviceSelectForm.ShowDialog();
+
+            if (checkedList.Count == 0) return;
+
+            if (countDeviceSelect > 0)
+            {
+                QRCodeForm qRCodeForm = new QRCodeForm("10");
+                qRCodeForm.ShowDialog();
+            }
+
+            if (!isPay)
+            {
+                return;
+            }
+            bool paySuccess = false;
+            if (userInputAddress.Length == 0) return;
+            try
+            {
+                // 取付费记录
+                string apiResult = client.Get("?method=usdt.index&address=" + userInputAddress + "&token=" + token);
+                JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
+                Block[] blocks = JsonConvert.DeserializeObject<Block[]>(json["data"].ToString());
+                foreach (Block block in blocks)
+                {
+                    if (toAddress.ToLower().Equals(block.To) && "10000000".Equals(block.Value))
+                    {
+                        paySuccess = true;
+                    }
+                }
+                if (!paySuccess)
+                {
+                    MessageBox.Show(resource.GetString("orderNotFound"));
+                    return;
+                }
+            }
+            catch (WebException)
+            {
+                MessageBox.Show(resource.GetString("networkException"));
+                return;
+            }
 
             IDbConnection conn = DBHelper.CreateConnection();
             Dictionary<string, object> ups;
             string sql = "REPLACE INTO t_plot(F_Name, F_Path, F_Uuid, F_PlotSeed, F_PlotDir, F_PlotSize, F_PlotParam, F_Status, F_CreateTime, F_ModifyTime) " +
                 "VALUES(@Path, @Path, '', @Address, '/plotdata', '8589934592', '{\"startNonce\":0}', 1, @CreateTime, @CreateTime);";
-            foreach (KeyValuePair<string,string> item in checkedList)
+            foreach (KeyValuePair<string, string> item in checkedList)
             {
                 ups = new Dictionary<string, object>
                 {
                     { "Path", item.Key },
                     { "Address", "0x" + address },
-                    { "CreateTime", tsslDate.Text } 
+                    { "CreateTime", tsslDate.Text }
                 };
                 if (!Directory.Exists(item.Key + "/plotdata"))
                 {
@@ -87,7 +132,7 @@ namespace EHDMiner
                     continue;
                 }
                 dirLength = FileUtil.DictoryLength(device.Key + "\\plotdata");
-                if(dirLength == 8589934592)
+                if (dirLength == 8589934592)
                 {
                     continue;
                 }
@@ -103,7 +148,11 @@ namespace EHDMiner
             tsslDate.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             KeystoreCheck();
             MineStatus();
-            if(toolStripProgressBar.Value == 100 || toolStripProgressBar.Value == 0)
+            if (toolStripProgressBar.Value > 0)
+            {
+                toolStripProgressBar.Visible = true;
+            }
+            else
             {
                 toolStripProgressBar.Visible = false;
             }
@@ -143,19 +192,7 @@ namespace EHDMiner
             Thread.Sleep(100);//加上，100如果效果没有就继续加大
             SetParent(p.MainWindowHandle, panel1.Handle); //panel1.Handle为要显示外部程序的容器
             ShowWindow(p.MainWindowHandle, 3);
-            tsslStatus.Text = resource.GetString("tsslStatusStart");
             tsmiStart.Enabled = false;
-            labelMsg.Text = resource.GetString("installTips");
-
-            FileSystemWatcher watcher = new FileSystemWatcher
-            {
-                Path = Application.StartupPath + "\\Appdata\\Roaming\\Poc\\",
-                IncludeSubdirectories = true,
-                NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.Size
-            };
-            //watcher.Changed += new FileSystemEventHandler(OnChanged);
-            watcher.Created += new FileSystemEventHandler(OnChanged);
-            watcher.EnableRaisingEvents = true;
         }
 
         private void MineStatus()
@@ -178,7 +215,8 @@ namespace EHDMiner
                 tsmiStart.Enabled = false;
                 tsmiAddPeer.Enabled = true;
                 long mineDirLength = FileUtil.DictoryLength(plotdataDir);
-                if (fileList.Length >= 8 && mineDirLength % 1024 == 0)
+                string[] plotdatas = Directory.GetFiles(plotdataDir);
+                if (plotdatas.Length % 2 == 0 && mineDirLength % 1024 == 0)
                 {
                     labelMsg.Text = resource.GetString("statusMining") + "\r" + resource.GetString("installTips");
                     tsslStatus.Text = resource.GetString("statusMining");
@@ -191,56 +229,50 @@ namespace EHDMiner
             }
         }
 
-        private void OnChanged(object sender, FileSystemEventArgs e)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new setLogTextDelegate(SetLogText), new object[] { e });
-            }
-        }
-
-        private void SetLogText(FileSystemEventArgs e)
-        {
-            tsslStatus.Text = resource.GetString("statusChainSync");
-        }
-
-        private delegate void setLogTextDelegate(FileSystemEventArgs e);
-
         private void tsmiAddPeer_Click(object sender, EventArgs e)
         {
-            AddNodeForm addNodeForm = new AddNodeForm();
-            addNodeForm.Text = tsmiAddPeer.Text;
+            AddNodeForm addNodeForm = new AddNodeForm
+            {
+                Text = tsmiAddPeer.Text
+            };
             addNodeForm.ShowDialog();
-            if (null == selectedNode) return;
+            if (null == selectedNode)
+            {
+                return;
+            }
 
             if (!selectedNode.Access)
             {
-                QRCodeForm qRCodeForm = new QRCodeForm(language, "100");
+                QRCodeForm qRCodeForm = new QRCodeForm("100");
                 qRCodeForm.ShowDialog();
-                if (!isPay) return;
+                if (!isPay)
+                {
+                    return;
+                }
 
                 bool paySuccess = false;
+                if (userInputAddress.Length == 0) return;
                 try
                 {
-                    string token = "6275dadb8c94c201dbcfedca72f8308fafd1bb4788e1be3061ce5c3bc2e1d0be";
-                    RestClient client = new RestClient("https://api.ehd.io/");
                     //string apiResult = client.Get("api?module=block&action=getblocknobytime&timestamp=" + UtcTime.GetTimeStamp() + "&closest=before&apikey=" + token);
                     //JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
                     //string latestBlock = json["result"].ToString();
-                    if (userInputAddress.Length == 0) return;
                     // 取付费记录
                     string apiResult = client.Get("?method=usdt.index&address=" + userInputAddress + "&token=" + token);
                     JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
                     Block[] blocks = JsonConvert.DeserializeObject<Block[]>(json["data"].ToString());
-                    string toAddress = "0x595C230fBfc95A168eD893089C5748Ec8e413694";
                     foreach (Block block in blocks)
                     {
-                        if(toAddress.ToLower().Equals(block.To) && "100000000".Equals(block.Value))
+                        if (toAddress.ToLower().Equals(block.To) && "100000000".Equals(block.Value))
                         {
                             paySuccess = true;
                         }
                     }
-                    if (!paySuccess) return;
+                    if (!paySuccess)
+                    {
+                        MessageBox.Show(resource.GetString("orderNotFound"));
+                        return;
+                    }
                     // 修改配置文件
                     string strFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.ini");
                     if (File.Exists(strFilePath))
@@ -250,44 +282,54 @@ namespace EHDMiner
                         File.WriteAllText(strFilePath, strContent);
                     }
                 }
-                catch (WebException webEx)
+                catch (WebException)
                 {
-                    Console.WriteLine(webEx.ToString());
+                    MessageBox.Show(resource.GetString("networkException"));
                     return;
                 }
             }
-
-            RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
-            Thread.Sleep(1000);
-            //WebClient webClient = new WebClient();
-            //webClient.DownloadFile("", Application.StartupPath + "\\bin\\" + poc);
-            toolStripProgressBar.Visible = true;
-            FileDownloadUtil file = new FileDownloadUtil("需要下载的网络地址", "文件下载到的文件夹路径", "带后缀的文件名", "文件ID，按需求自行删除");
-            file.ProgressChanged += File_ProgressChanged;
-            file.DownloadFinish += File_DownloadFinish;
-            file.Download();
-            //RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"admin_addPeer\\\",\\\"params\\\":[\\\"enode://" + selectedNode.Address + ":30303\\\"],\\\"id\\\":1}\" http://127.0.0.1:8545");
-            MessageBox.Show(resource.GetString("nodeDownloadTips"));
-        }
-
-        private void File_DownloadFinish(bool isSuccess, string downloadPath, string fileId, string msg = null)
-        {
-            if (isSuccess)
+            DialogResult dr = MessageBox.Show(resource.GetString("nodeDownloadTips"), resource.GetString("tips"), MessageBoxButtons.OK);
+            if (dr != DialogResult.OK)
             {
-                //Console.WriteLine("文件 " + fileId + " 下载成功，保存位置：" + downloadPath);
-                MessageBox.Show(resource.GetString("addNodeMsg"));
+                return;
+            }
+            RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
+            Thread.Sleep(2000);
+            tsmiStart.Enabled = false;
+            tsmiAdvanced.Enabled = false;
+
+            if (selectedNode.Address == "sz")
+            {
+                string downloadUrl = client.Get("?method=mine.version&client=EHDMiner&token=" + token);
+                JObject jsonUrl = JsonConvert.DeserializeObject<JObject>(downloadUrl);
+                string url = jsonUrl["data"]["url"].ToString();
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.DownloadFileAsync(new Uri(url), Path.Combine(Application.StartupPath + "\\bin\\", "poc.exe"));
+                    webClient.DownloadProgressChanged += client_DownloadProgressChanged;
+                    webClient.DownloadFileCompleted += client_DownloadFileCompleted;
+                }
             }
             else
             {
-                Console.WriteLine("文件 " + fileId + " 下载失败 " + msg == null ? "" : "原因：" + msg);
+                FileUtil.ExtractResFile("EHDMiner.Resources." + poc, Application.StartupPath + "\\bin\\" + poc);
+                MessageBox.Show(resource.GetString("addNodeMsg"));
+                tsmiStart.Enabled = true;
             }
-            toolStripProgressBar.Visible = false;
+            //RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"admin_addPeer\\\",\\\"params\\\":[\\\"enode://" + selectedNode.Address + ":30303\\\"],\\\"id\\\":1}\" http://127.0.0.1:8545");
         }
 
-        private void File_ProgressChanged(int progress, string fileId)
+        void client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
-            Console.WriteLine("文件 " + fileId + " 下载进度：" + progress);
-            toolStripProgressBar.Value = progress;
+            toolStripProgressBar.Value = e.ProgressPercentage;
+        }
+
+        void client_DownloadFileCompleted(object sender, AsyncCompletedEventArgs e)
+        {
+            toolStripProgressBar.Value = 0;
+            toolStripProgressBar.Visible = false;
+            MessageBox.Show(resource.GetString("addNodeMsg"));
+            tsmiStart.Enabled = true;
         }
 
         [Obsolete]
