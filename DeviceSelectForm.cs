@@ -56,5 +56,14 @@ namespace EHDMiner
             mainForm.checkedList.Clear();
             Close();
         }
+
+        private void checkedListBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+            checkedListBox.Enabled = false;
+            if(checkedListBox.CheckedItems.Count == 0)
+            {
+                checkedListBox.Enabled = true;
+            }
+        }
     }
 }

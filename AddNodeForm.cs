@@ -134,6 +134,7 @@ namespace EHDMiner
 
         private void btnAddNodeCancel_Click(object sender, EventArgs e)
         {
+            mainForm.selectedNode = null;
             Close();
         }
 

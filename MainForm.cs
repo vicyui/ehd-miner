@@ -9,7 +9,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -17,7 +16,6 @@ namespace EHDMiner
 {
     public partial class mainForm : Form
     {
-        private BackgroundWorker backgroundWorker;
         private string[] fileList;
         private string address = string.Empty;
         private readonly string description = "description.xml";
@@ -39,6 +37,7 @@ namespace EHDMiner
         private readonly string token = "6275dadb8c94c201dbcfedca72f8308fafd1bb4788e1be3061ce5c3bc2e1d0be";
         private readonly string toAddress = "0x595C230fBfc95A168eD893089C5748Ec8e413694";
         private readonly RestClient client = new RestClient("https://api.ehd.io/");
+        private int position = 0;
 
         public mainForm(string[] args)
         {
@@ -56,50 +55,41 @@ namespace EHDMiner
             };
             deviceSelectForm.ShowDialog();
 
-            if (checkedList.Count == 0)
-            {
-                return;
-            }
+            if (checkedList.Count == 0) return;
 
             if (countDeviceSelect > 0)
             {
                 QRCodeForm qRCodeForm = new QRCodeForm("10");
                 qRCodeForm.ShowDialog();
-            }
 
-            if (!isPay)
-            {
-                return;
-            }
-            bool paySuccess = false;
-            if (userInputAddress.Length == 0)
-            {
-                return;
-            }
+                if (!isPay) return;
+                bool paySuccess = false;
+                if (userInputAddress.Length == 0) return;
 
-            try
-            {
-                // 取付费记录
-                string apiResult = client.Get("?method=usdt.index&address=" + userInputAddress + "&token=" + token);
-                JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
-                Block[] blocks = JsonConvert.DeserializeObject<Block[]>(json["data"].ToString());
-                foreach (Block block in blocks)
+                try
                 {
-                    if (toAddress.ToLower().Equals(block.To) && "10000000".Equals(block.Value))
+                    // 取付费记录
+                    string apiResult = client.Get("?method=usdt.index&address=" + userInputAddress + "&token=" + token);
+                    JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
+                    Block[] blocks = JsonConvert.DeserializeObject<Block[]>(json["data"].ToString());
+                    foreach (Block block in blocks)
                     {
-                        paySuccess = true;
+                        if (toAddress.ToLower().Equals(block.To) && "10000000".Equals(block.Value))
+                        {
+                            paySuccess = true;
+                        }
+                    }
+                    if (!paySuccess)
+                    {
+                        MessageBox.Show(resource.GetString("orderNotFound"));
+                        return;
                     }
                 }
-                if (!paySuccess)
+                catch (WebException)
                 {
-                    MessageBox.Show(resource.GetString("orderNotFound"));
+                    MessageBox.Show(resource.GetString("networkException"));
                     return;
                 }
-            }
-            catch (WebException)
-            {
-                MessageBox.Show(resource.GetString("networkException"));
-                return;
             }
 
             IDbConnection conn = DBHelper.CreateConnection();
@@ -121,33 +111,38 @@ namespace EHDMiner
                 DBHelper.ExecuteNonQuery(conn, sql, ups);
             }
             conn.Close();
-            InitializeBackgroundWorker();
-            backgroundWorker.RunWorkerAsync();
+
+            tsmiPlotDir.Enabled = false;
+            Thread thread = new Thread(new ThreadStart(CopyPlotdata));
+            thread.Start();
         }
 
-        private void ScanDevices(BackgroundWorker worker, DoWorkEventArgs e)
+        private void CopyPlotdata()
         {
-            worker.ReportProgress(1);
-            Thread.Sleep(100);
-            long dirLength;
-            foreach (KeyValuePair<string, string> device in checkedList)
+            position = 1;
+            int count = 0;
+            long space;
+            try
             {
-                worker.ReportProgress(checkedList.IndexOf(device) / checkedList.Count * 10 * 9);
-                Thread.Sleep(100);
-                if (!Directory.Exists(device.Key + "\\plotdata"))
+                foreach (KeyValuePair<string, string> device in checkedList)
                 {
-                    continue;
+                    space = FileUtil.GetHardDiskSpace(device.Key);
+                    for (int i = 0; i < space - 10; i++)
+                    {
+                        File.Copy(plotdataDir + "\\" + address + "_0_4096", device.Key + "\\plotdata\\" + address + "_" + count + "_4096", true);
+                        count += 4096;
+                        //Console.WriteLine((i + 1)*1000 / (Convert.ToInt32(space)*1000));// * 100 * ((checkedList.IndexOf(device) + 1) / checkedList.Count));
+                        //position = ((i + 1) * 1000) / (Convert.ToInt32(space) * 1000) * ((checkedList.IndexOf(device) + 1) / checkedList.Count) / 10;
+                    }
+                    //position = (checkedList.IndexOf(device) + 1) / checkedList.Count * 100;
                 }
-                dirLength = FileUtil.DictoryLength(device.Key + "\\plotdata");
-                if (dirLength == 8589934592)
-                {
-                    continue;
-                }
-                Directory.Delete(device.Key + "\\plotdata", false);
-                FileUtil.CopyOldFilesToNewPath(plotdataDir, device.Key + "\\plotdata");
             }
-            worker.ReportProgress(100);
-            Thread.Sleep(100);
+            catch (Exception)
+            {
+                return;
+            }
+            MessageBox.Show(resource.GetString("plotSucess"),resource.GetString("tips"));
+            position = 2;
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
@@ -422,6 +417,7 @@ namespace EHDMiner
             {
                 tsmiInstall.Enabled = false;
                 tsmiStart.Enabled = false;
+                tsmiPlotDir.Enabled = false;
             }
             else
             {
@@ -437,11 +433,21 @@ namespace EHDMiner
                     tsmiStart.Enabled = true;
                     tsmiImportKeystore.Visible = false;
                     tsmiInstall.Visible = false;
-                    //long mineDirLength = FileUtil.DictoryLength(plotdataDir);
-                    /*if (mineDirLength == 17179869184 || mineDirLength == 8589934592)
+                    long mineDirLength = FileUtil.DictoryLength(plotdataDir);
+                    if (position == 0 && (mineDirLength == 17179869184 || mineDirLength == 8589934592))
                     {
                         tsmiPlotDir.Enabled = true;
-                    }*/
+                    }
+                    if(position == 1)
+                    {
+                        tsslStatus.Text = resource.GetString("statusPlotting");
+                        tsmiPlotDir.Enabled = false;
+                    }
+                    if(position == 2)
+                    {
+                        position = 0;
+                        tsslStatus.Text = resource.GetString("statusPlotFinish");
+                    }
                     labelMsg.Text = resource.GetString("congratulations") + "\r" + resource.GetString("startMineTips");
                     //tsslStatus.Text = resource.GetString("tsslStatusSucess");
                 }
@@ -615,34 +621,6 @@ namespace EHDMiner
             Process.Start("explorer.exe", keystoreDir);
         }
 
-        private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            ScanDevices(sender as BackgroundWorker, e);
-        }
-
-        private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            tsslStatus.Text = resource.GetString("tsslStatusScaning");
-            toolStripProgressBar.Value = e.ProgressPercentage;
-        }
-
-        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            tsslStatus.Text = resource.GetString("tsslStatusScaned");
-        }
-
-        private void InitializeBackgroundWorker()
-        {
-            backgroundWorker = new BackgroundWorker
-            {
-                WorkerReportsProgress = true
-            };
-            backgroundWorker.DoWork += new DoWorkEventHandler(BackgroundWorker_DoWork);
-            backgroundWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(BackgroundWorker_RunWorkerCompleted);
-            backgroundWorker.ProgressChanged += new ProgressChangedEventHandler(BackgroundWorker_ProgressChanged);
-            toolStripProgressBar.Visible = true;
-        }
-
         private void TsmiRepairFork_Click(object sender, EventArgs e)
         {
 
@@ -721,38 +699,38 @@ namespace EHDMiner
         private void InitNodeStatus()
         {
             tsslNode.Alignment = ToolStripItemAlignment.Right;
-            tsslNode.Text = "Free node";
+            /*tsslNode.Text = "Free node";
             if (language == "zh")
             {
                 tsslNode.Text = "免费节点";
-            }
-            string selectTable = "SELECT COUNT(*) FROM sqlite_master where type = 'table' and name = 't_node';";
-            int count = Convert.ToInt32(DBHelper.ExecuteScalar(selectTable, new Dictionary<string, object>()));
-            if (count == 0)
-            {
-                IDbConnection conn = DBHelper.CreateConnection();
-                string createTable = "CREATE TABLE if not exists \"t_node\"(\"id\" integer NOT NULL PRIMARY KEY AUTOINCREMENT,\"name_zh\" text NOT NULL,\"name_en\" text NOT NULL,\"address\" text NOT NULL  DEFAULT deafult,\"access\" integer NOT NULL DEFAULT 0,\"end_date\" text,\"on_used\" integer NOT NULL DEFAULT 0); ";
-                DBHelper.ExecuteNonQuery(conn, createTable, new Dictionary<string, object>());
-                string insertNodes =
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(0, '免费节点', 'Free node', 'deafult', 1, NULL, 1); " +
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(1, '中国区华南节点', 'South China node in China', 'sz', 0, NULL, 0);" +
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(2, '中国区华中节点', 'China central node', 'sz', 0, NULL, 0);" +
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(3, '中国区华北节点', 'North China node in China', 'sz', 0, NULL, 0);" +
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(4, '中国区东北节点', 'Northeast node of China', 'sz', 0, NULL, 0);" +
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(5, '中国区西南节点', 'Southwest node of China', 'sz', 0, NULL, 0);" +
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(6, '中国区西北节点', 'Northwest node of China', 'sz', 0, NULL, 0);" +
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(7, '亚洲区韩国节点', 'South Korea node in Asia', 'deafult', 0, NULL, 0);" +
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(8, '亚洲区日本节点', 'Japan node in Asia', 'deafult', 0, NULL, 0);" +
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(9, '亚洲新加坡节点', 'Singapore node in Asia', 'deafult', 0, NULL, 0);" +
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(10, '欧洲区英国节点', 'UK node in Europe', 'deafult', 0, NULL, 0);" +
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(11, '欧洲区德国节点', 'German node in Europe', 'deafult', 0, NULL, 0);" +
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(12, '美州区美国节点', 'Us node', 'deafult', 0, NULL, 0);" +
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(13, '非洲区南非节点', 'Africa South Africa node', 'deafult', 0, NULL, 0);" +
-                    "INSERT OR IGNORE INTO \"t_node\" VALUES(14, '大洋洲区巴西节点', '.Oceania Brazil node', 'deafult', 0, NULL, 0); ";
-                DBHelper.ExecuteNonQuery(conn, insertNodes, new Dictionary<string, object>());
-                conn.Close();
-            }
+            }*/
+            //string selectTable = "SELECT COUNT(*) FROM sqlite_master where type = 'table' and name = 't_node';";
+            //int count = Convert.ToInt32(DBHelper.ExecuteScalar(selectTable, new Dictionary<string, object>()));
 
+            IDbConnection conn = DBHelper.CreateConnection();
+            string createTable = "CREATE TABLE if not exists \"t_node\"(\"id\" integer NOT NULL PRIMARY KEY AUTOINCREMENT,\"name_zh\" text NOT NULL,\"name_en\" text NOT NULL,\"address\" text NOT NULL  DEFAULT deafult,\"access\" integer NOT NULL DEFAULT 0,\"end_date\" text,\"on_used\" integer NOT NULL DEFAULT 0); ";
+            DBHelper.ExecuteNonQuery(conn, createTable, new Dictionary<string, object>());
+            string insertNodes =
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(0, '免费节点', 'Free node', 'deafult', 1, NULL, 1); " +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(1, '中国区华南节点', 'South China node in China', 'sz', 0, NULL, 0);" +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(2, '中国区华中节点', 'China central node', 'sz', 0, NULL, 0);" +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(3, '中国区华北节点', 'North China node in China', 'sz', 0, NULL, 0);" +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(4, '中国区东北节点', 'Northeast node of China', 'sz', 0, NULL, 0);" +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(5, '中国区西南节点', 'Southwest node of China', 'sz', 0, NULL, 0);" +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(6, '中国区西北节点', 'Northwest node of China', 'sz', 0, NULL, 0);" +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(7, '亚洲区韩国节点', 'South Korea node in Asia', 'deafult', 0, NULL, 0);" +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(8, '亚洲区日本节点', 'Japan node in Asia', 'deafult', 0, NULL, 0);" +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(9, '亚洲新加坡节点', 'Singapore node in Asia', 'deafult', 0, NULL, 0);" +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(10, '欧洲区英国节点', 'UK node in Europe', 'deafult', 0, NULL, 0);" +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(11, '欧洲区德国节点', 'German node in Europe', 'deafult', 0, NULL, 0);" +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(12, '美州区美国节点', 'Us node', 'deafult', 0, NULL, 0);" +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(13, '非洲区南非节点', 'Africa South Africa node', 'deafult', 0, NULL, 0);" +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(14, '大洋洲区巴西节点', 'Oceania Brazil node', 'deafult', 0, NULL, 0); " +
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(15, '中国区华东节点', 'East China node in China', 'sz', 0, NULL, 0); " +
+                "UPDATE \"t_node\" SET name_en = 'Oceania Brazil node' where name_en = '.Oceania Brazil node'; ";
+            DBHelper.ExecuteNonQuery(conn, insertNodes, new Dictionary<string, object>());
+            conn.Close();
+            
             string sql = "select * from t_node where on_used = 1;";
             DataTable table = DBHelper.ExecuteQuery(sql, new Dictionary<string, object>());
             IList<Node> nodes = DataTableConverterHelper<Node>.ConvertToModelList(table);
@@ -778,6 +756,55 @@ namespace EHDMiner
                     DBHelper.ExecuteNonQuery(updateNode, new Dictionary<string, object> { { "id", nodes[0].Id }, { "date", null } });
                     FileUtil.ExtractResFile("EHDMiner.Resources." + poc, Application.StartupPath + "\\bin\\" + poc);
                 }
+            }
+        }
+
+        private void tsmiChangeKeystore_Click(object sender, EventArgs e)
+        {
+            QRCodeForm qRCodeForm = new QRCodeForm("50");
+            qRCodeForm.ShowDialog();
+            if (!isPay) return;
+
+            bool paySuccess = false;
+            if (userInputAddress.Length == 0) return;
+
+            try
+            {
+                // 付费记录
+                string apiResult = client.Get("?method=usdt.index&address=" + userInputAddress + "&token=" + token);
+                JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
+                Block[] blocks = JsonConvert.DeserializeObject<Block[]>(json["data"].ToString());
+                foreach (Block block in blocks)
+                {
+                    if (toAddress.ToLower().Equals(block.To) && "50000000".Equals(block.Value))
+                    {
+                        paySuccess = true;
+                    }
+                }
+                if (!paySuccess)
+                {
+                    MessageBox.Show(resource.GetString("orderNotFound"));
+                    return;
+                }
+
+                Directory.Delete(keystoreDir, true);
+                Directory.CreateDirectory(keystoreDir);
+                MessageBox.Show(resource.GetString("changeKSSuccess"));
+            }
+            catch (WebException)
+            {
+                MessageBox.Show(resource.GetString("networkException"));
+                return;
+            }
+        }
+
+        private void tsmiExit_Click(object sender, EventArgs e)
+        {
+            //控件弹出菜单来自于NotifyIconMenu
+            DialogResult flag = MessageBox.Show(resource.GetString("quitTips"), resource.GetString("tips"), MessageBoxButtons.OKCancel);
+            if (flag == DialogResult.OK)
+            {
+                Application.Exit();
             }
         }
     }

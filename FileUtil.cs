@@ -116,5 +116,20 @@ namespace EHDMiner
             }
             return deviceInfo;
         }
+
+        public static long GetHardDiskSpace(string str_HardDiskName)
+        {
+            long totalSize = 0;
+            str_HardDiskName = str_HardDiskName + "\\";
+            System.IO.DriveInfo[] drives = DriveInfo.GetDrives();
+            foreach (System.IO.DriveInfo drive in drives)
+            {
+                if (drive.Name == str_HardDiskName)
+                {
+                    totalSize = drive.TotalFreeSpace / (1024 * 1024 * 1024);
+                }
+            }
+            return totalSize;
+        }
     }
 }

@@ -2580,4 +2580,22 @@
   <data name="startException" xml:space="preserve">
     <value>Startup exception, please restart</value>
   </data>
+  <data name="tsmiChangeKeystore.Text" xml:space="preserve">
+    <value>Change keystore</value>
+  </data>
+  <data name="changeKSSuccess" xml:space="preserve">
+    <value>Keystore reset succeeded, please re import</value>
+  </data>
+  <data name="plotSucess" xml:space="preserve">
+    <value>Plot data finish</value>
+  </data>
+  <data name="tsmiExit.Text" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="statusPlotFinish" xml:space="preserve">
+    <value>Plot Finish</value>
+  </data>
+  <data name="statusPlotting" xml:space="preserve">
+    <value>Plotting</value>
+  </data>
 </root>

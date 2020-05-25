@@ -9,6 +9,8 @@ namespace EHDMiner
     public partial class QRCodeForm : Form
     {
         private string usdtPrice = string.Empty;
+        private string tips = string.Empty;
+        private string tips_en = string.Empty;
         public QRCodeForm(string price)
         {
             InitializeComponent();
@@ -17,17 +19,31 @@ namespace EHDMiner
 
         private void QRCodeForm_Load(object sender, EventArgs e)
         {
+            switch (usdtPrice)
+            {
+                case "100":
+                    tips = "有效期1个月";
+                    tips_en = "Valid for 1 month";
+                    break;
+                case "10":
+                    tips = "有效期1个次";
+                    tips_en = "Validity period 1 time";
+                    break;
+                default:
+                    break;
+            }
+
             if (mainForm.language.Equals("zh"))
             {
-                Text = "支付" + usdtPrice + "USDT";
-                labelMsg.Text = "请输入您的转账地址:";
+                Text = "支付" + usdtPrice + "USDT " + tips;
+                labelMsg.Text = "请输入您的USDT转账或充币地址：";
                 btnPay.Text = "确定";
                 btnCancel.Text = "取消";
             }
             else
             {
-                Text = "Pay " + usdtPrice + "USDT";
-                labelMsg.Text = "Please enter your transfer address :";
+                Text = "Pay " + usdtPrice + "USDT " + tips_en;
+                labelMsg.Text = "Please enter your usdt transfer or charge address :";
                 btnPay.Text = "OK";
                 btnCancel.Text = "Cancel";
             }
@@ -54,7 +70,7 @@ namespace EHDMiner
         private void btnPay_Click(object sender, EventArgs e)
         {
             mainForm.userInputAddress = textBox.Text;
-            Clipboard.SetText("0x595C230fBfc95A168eD893089C5748Ec8e413694");
+            mainForm.isPay = true;
             Close();
         }
 
@@ -75,6 +91,16 @@ namespace EHDMiner
             {
                 btnPay.Enabled = false;
             }
+        }
+
+        private void labelQrCode_DoubleClick(object sender, EventArgs e)
+        {
+            Clipboard.SetText(labelQrCode.Text);
+        }
+
+        private void labelQrCode_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

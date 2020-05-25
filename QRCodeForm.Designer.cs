@@ -53,10 +53,12 @@
             this.labelQrCode.Size = new System.Drawing.Size(230, 36);
             this.labelQrCode.TabIndex = 1;
             this.labelQrCode.Text = "labelQrCode";
+            this.labelQrCode.Click += new System.EventHandler(this.labelQrCode_Click);
+            this.labelQrCode.DoubleClick += new System.EventHandler(this.labelQrCode_DoubleClick);
             // 
             // btnPay
             // 
-            this.btnPay.Location = new System.Drawing.Point(12, 326);
+            this.btnPay.Location = new System.Drawing.Point(12, 343);
             this.btnPay.Name = "btnPay";
             this.btnPay.Size = new System.Drawing.Size(75, 23);
             this.btnPay.TabIndex = 2;
@@ -65,7 +67,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(172, 326);
+            this.btnCancel.Location = new System.Drawing.Point(172, 343);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
@@ -74,16 +76,16 @@
             // 
             // labelMsg
             // 
-            this.labelMsg.AutoSize = true;
-            this.labelMsg.Location = new System.Drawing.Point(10, 284);
+            this.labelMsg.Location = new System.Drawing.Point(12, 284);
             this.labelMsg.Name = "labelMsg";
-            this.labelMsg.Size = new System.Drawing.Size(53, 12);
+            this.labelMsg.Size = new System.Drawing.Size(233, 29);
             this.labelMsg.TabIndex = 4;
             this.labelMsg.Text = "labelMsg";
+            this.labelMsg.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // textBox
             // 
-            this.textBox.Location = new System.Drawing.Point(12, 299);
+            this.textBox.Location = new System.Drawing.Point(12, 316);
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(233, 21);
             this.textBox.TabIndex = 5;
@@ -93,7 +95,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(259, 359);
+            this.ClientSize = new System.Drawing.Size(259, 375);
             this.ControlBox = false;
             this.Controls.Add(this.textBox);
             this.Controls.Add(this.labelMsg);

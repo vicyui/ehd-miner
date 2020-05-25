@@ -42,6 +42,7 @@
             this.checkedListBox.Name = "checkedListBox";
             this.checkedListBox.Size = new System.Drawing.Size(203, 132);
             this.checkedListBox.TabIndex = 0;
+            this.checkedListBox.SelectedValueChanged += new System.EventHandler(this.checkedListBox_SelectedValueChanged);
             // 
             // btnDeviceSelect
             // 

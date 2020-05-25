@@ -48,16 +48,20 @@
             this.tsslDate = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
+            this.tsslNode = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnSaveKS = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.labelMsg = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.tsslNode = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tsmiChangeKeystore = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -97,7 +101,8 @@
             this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAddPeer,
             this.tsmiRepairFork,
-            this.tsmiPlotDir});
+            this.tsmiPlotDir,
+            this.tsmiChangeKeystore});
             this.tsmiAdvanced.Name = "tsmiAdvanced";
             resources.ApplyResources(this.tsmiAdvanced, "tsmiAdvanced");
             // 
@@ -185,6 +190,12 @@
             this.toolStripProgressBar.Name = "toolStripProgressBar";
             resources.ApplyResources(this.toolStripProgressBar, "toolStripProgressBar");
             // 
+            // tsslNode
+            // 
+            this.tsslNode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsslNode.Name = "tsslNode";
+            resources.ApplyResources(this.tsslNode, "tsslNode");
+            // 
             // timer1
             // 
             this.timer1.Enabled = true;
@@ -219,14 +230,28 @@
             // 
             // notifyIcon1
             // 
+            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip;
             resources.ApplyResources(this.notifyIcon1, "notifyIcon1");
             this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon1_MouseClick);
             // 
-            // tsslNode
+            // tsmiChangeKeystore
             // 
-            this.tsslNode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.tsslNode.Name = "tsslNode";
-            resources.ApplyResources(this.tsslNode, "tsslNode");
+            this.tsmiChangeKeystore.Name = "tsmiChangeKeystore";
+            resources.ApplyResources(this.tsmiChangeKeystore, "tsmiChangeKeystore");
+            this.tsmiChangeKeystore.Click += new System.EventHandler(this.tsmiChangeKeystore_Click);
+            // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsmiExit});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            resources.ApplyResources(this.contextMenuStrip, "contextMenuStrip");
+            // 
+            // tsmiExit
+            // 
+            this.tsmiExit.Name = "tsmiExit";
+            resources.ApplyResources(this.tsmiExit, "tsmiExit");
+            this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
             // mainForm
             // 
@@ -248,6 +273,7 @@
             this.statusStrip.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -280,6 +306,9 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiScanner;
         private System.Windows.Forms.ToolStripMenuItem tsmiWebsite;
         private System.Windows.Forms.ToolStripStatusLabel tsslNode;
+        private System.Windows.Forms.ToolStripMenuItem tsmiChangeKeystore;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem tsmiExit;
     }
 }
 
