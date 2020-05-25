@@ -100,9 +100,9 @@
             // 
             this.tsmiAdvanced.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiAddPeer,
-            this.tsmiRepairFork,
             this.tsmiPlotDir,
-            this.tsmiChangeKeystore});
+            this.tsmiChangeKeystore,
+            this.tsmiRepairFork});
             this.tsmiAdvanced.Name = "tsmiAdvanced";
             resources.ApplyResources(this.tsmiAdvanced, "tsmiAdvanced");
             // 

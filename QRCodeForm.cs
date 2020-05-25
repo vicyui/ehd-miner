@@ -36,14 +36,14 @@ namespace EHDMiner
             if (mainForm.language.Equals("zh"))
             {
                 Text = "支付" + usdtPrice + "USDT " + tips;
-                labelMsg.Text = "请输入您的USDT转账或充币地址：";
+                labelMsg.Text = "请输入您的USDT转账或充币的Hash地址：";
                 btnPay.Text = "确定";
                 btnCancel.Text = "取消";
             }
             else
             {
                 Text = "Pay " + usdtPrice + "USDT " + tips_en;
-                labelMsg.Text = "Please enter your usdt transfer or charge address :";
+                labelMsg.Text = "Please enter the hash address of your usdt transfer or recharging :";
                 btnPay.Text = "OK";
                 btnCancel.Text = "Cancel";
             }
@@ -69,7 +69,7 @@ namespace EHDMiner
 
         private void btnPay_Click(object sender, EventArgs e)
         {
-            mainForm.userInputAddress = textBox.Text;
+            mainForm.userInput = textBox.Text;
             mainForm.isPay = true;
             Close();
         }
@@ -83,7 +83,7 @@ namespace EHDMiner
         private void textBox_TextChanged(object sender, EventArgs e)
         {
             btnPay.Enabled = true;
-            if (textBox.Text.Length < 42)
+            if (textBox.Text.Length < 66)
             {
                 btnPay.Enabled = false;
             }
@@ -96,11 +96,6 @@ namespace EHDMiner
         private void labelQrCode_DoubleClick(object sender, EventArgs e)
         {
             Clipboard.SetText(labelQrCode.Text);
-        }
-
-        private void labelQrCode_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

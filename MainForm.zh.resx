@@ -2538,6 +2538,9 @@
   <data name="tsmiExit.Text" xml:space="preserve">
     <value>退出</value>
   </data>
+  <data name="keystoreTips" xml:space="preserve">
+    <value>请导入keystore</value>
+  </data>
   <data name="statusPlotFinish" xml:space="preserve">
     <value>P盘完成</value>
   </data>

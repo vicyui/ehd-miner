@@ -32,7 +32,7 @@ namespace EHDMiner
         public static ArrayList checkedList = new ArrayList();
         public static Node selectedNode;
         public static bool isPay = true;
-        public static string userInputAddress = string.Empty;
+        public static string userInput = string.Empty;
         public static int countDeviceSelect = 0;
         private readonly string token = "6275dadb8c94c201dbcfedca72f8308fafd1bb4788e1be3061ce5c3bc2e1d0be";
         private readonly string toAddress = "0x595C230fBfc95A168eD893089C5748Ec8e413694";
@@ -64,17 +64,17 @@ namespace EHDMiner
 
                 if (!isPay) return;
                 bool paySuccess = false;
-                if (userInputAddress.Length == 0) return;
+                if (userInput.Length == 0) return;
 
                 try
                 {
                     // 取付费记录
-                    string apiResult = client.Get("?method=usdt.index&address=" + userInputAddress + "&token=" + token);
+                    string apiResult = client.Get("?method=usdt.index&hash=" + userInput + "&token=" + token);
                     JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
                     Block[] blocks = JsonConvert.DeserializeObject<Block[]>(json["data"].ToString());
                     foreach (Block block in blocks)
                     {
-                        if (toAddress.ToLower().Equals(block.To) && "10000000".Equals(block.Value))
+                        if (toAddress.ToLower().Equals(block.To.ToLower()) && "10000000".Equals(block.Value))
                         {
                             paySuccess = true;
                         }
@@ -88,6 +88,10 @@ namespace EHDMiner
                 catch (WebException)
                 {
                     MessageBox.Show(resource.GetString("networkException"));
+                    return;
+                }
+                catch (Exception)
+                {
                     return;
                 }
             }
@@ -240,6 +244,7 @@ namespace EHDMiner
 
         private void tsmiAddPeer_Click(object sender, EventArgs e)
         {
+            tsmiAddPeer.Enabled = false;
             AddNodeForm addNodeForm = new AddNodeForm
             {
                 Text = tsmiAddPeer.Text
@@ -247,6 +252,7 @@ namespace EHDMiner
             addNodeForm.ShowDialog();
             if (null == selectedNode)
             {
+                tsmiAddPeer.Enabled = true;
                 return;
             }
 
@@ -254,10 +260,13 @@ namespace EHDMiner
             {
                 QRCodeForm qRCodeForm = new QRCodeForm("100");
                 qRCodeForm.ShowDialog();
-                if (!isPay) return;
-
+                if (!isPay)
+                {
+                    tsmiAddPeer.Enabled = true;
+                    return;
+                }
                 bool paySuccess = false;
-                if (userInputAddress.Length == 0) return;
+                if (userInput.Length == 0) return;
                 
                 try
                 {
@@ -265,12 +274,12 @@ namespace EHDMiner
                     //JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
                     //string latestBlock = json["result"].ToString();
                     // 付费记录
-                    string apiResult = client.Get("?method=usdt.index&address=" + userInputAddress + "&token=" + token);
+                    string apiResult = client.Get("?method=usdt.index&hash=" + userInput + "&token=" + token);
                     JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
                     Block[] blocks = JsonConvert.DeserializeObject<Block[]>(json["data"].ToString());
                     foreach (Block block in blocks)
                     {
-                        if (toAddress.ToLower().Equals(block.To) && "100000000".Equals(block.Value))
+                        if (toAddress.ToLower().Equals(block.To.ToLower()) && "100000000".Equals(block.Value))
                         {
                             paySuccess = true;
                         }
@@ -295,7 +304,12 @@ namespace EHDMiner
                     MessageBox.Show(resource.GetString("networkException"));
                     return;
                 }
+                catch (Exception)
+                {
+                    return;
+                }
             }
+            tsmiAddPeer.Enabled = true;
 
             IDbConnection conn = DBHelper.CreateConnection();
             string offUsedNode = "update t_node set on_used = 0;";//取消所有已选择
@@ -418,6 +432,7 @@ namespace EHDMiner
                 tsmiInstall.Enabled = false;
                 tsmiStart.Enabled = false;
                 tsmiPlotDir.Enabled = false;
+                tsslStatus.Text = resource.GetString("keystoreTips");
             }
             else
             {
@@ -766,17 +781,17 @@ namespace EHDMiner
             if (!isPay) return;
 
             bool paySuccess = false;
-            if (userInputAddress.Length == 0) return;
+            if (userInput.Length == 0) return;
 
             try
             {
                 // 付费记录
-                string apiResult = client.Get("?method=usdt.index&address=" + userInputAddress + "&token=" + token);
+                string apiResult = client.Get("?method=usdt.index&hash=" + userInput + "&token=" + token);
                 JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
                 Block[] blocks = JsonConvert.DeserializeObject<Block[]>(json["data"].ToString());
                 foreach (Block block in blocks)
                 {
-                    if (toAddress.ToLower().Equals(block.To) && "50000000".Equals(block.Value))
+                    if (toAddress.ToLower().Equals(block.To.ToLower()) && "50000000".Equals(block.Value))
                     {
                         paySuccess = true;
                     }
@@ -790,10 +805,17 @@ namespace EHDMiner
                 Directory.Delete(keystoreDir, true);
                 Directory.CreateDirectory(keystoreDir);
                 MessageBox.Show(resource.GetString("changeKSSuccess"));
+                tsmiImportKeystore.Visible = true;
+                tsmiInstall.Visible = true;
+                labelMsg.Text = string.Empty;
             }
             catch (WebException)
             {
                 MessageBox.Show(resource.GetString("networkException"));
+                return;
+            }
+            catch (Exception)
+            {
                 return;
             }
         }

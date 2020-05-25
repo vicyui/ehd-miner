@@ -2592,6 +2592,9 @@
   <data name="tsmiExit.Text" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="keystoreTips" xml:space="preserve">
+    <value>Please import keystore</value>
+  </data>
   <data name="statusPlotFinish" xml:space="preserve">
     <value>Plot Finish</value>
   </data>

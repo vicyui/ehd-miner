@@ -53,7 +53,6 @@
             this.labelQrCode.Size = new System.Drawing.Size(230, 36);
             this.labelQrCode.TabIndex = 1;
             this.labelQrCode.Text = "labelQrCode";
-            this.labelQrCode.Click += new System.EventHandler(this.labelQrCode_Click);
             this.labelQrCode.DoubleClick += new System.EventHandler(this.labelQrCode_DoubleClick);
             // 
             // btnPay

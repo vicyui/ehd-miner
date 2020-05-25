@@ -127,7 +127,7 @@ namespace EHDMiner
                 "INSERT OR IGNORE INTO \"t_node\" VALUES(11, '欧洲区德国节点', 'German node in Europe', 'deafult', 0, NULL, 0);" +
                 "INSERT OR IGNORE INTO \"t_node\" VALUES(12, '美州区美国节点', 'Us node', 'deafult', 0, NULL, 0);" +
                 "INSERT OR IGNORE INTO \"t_node\" VALUES(13, '非洲区南非节点', 'Africa South Africa node', 'deafult', 0, NULL, 0);" +
-                "INSERT OR IGNORE INTO \"t_node\" VALUES(14, '大洋洲区巴西节点', '.Oceania Brazil node', 'deafult', 0, NULL, 0); ";
+                "INSERT OR IGNORE INTO \"t_node\" VALUES(14, '大洋洲区巴西节点', 'Oceania Brazil node', 'deafult', 0, NULL, 0); ";
             DBHelper.ExecuteNonQuery(conn, insertNodes, new Dictionary<string, object>());
             conn.Close();
         }
