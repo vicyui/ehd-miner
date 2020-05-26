@@ -69,16 +69,16 @@ namespace EHDMiner
                 try
                 {
                     // 取付费记录
-                    string apiResult = client.Get("?method=usdt.index&hash=" + userInput + "&token=" + token);
+                    string apiResult = client.Get("?method=usdt.verify&hash=" + userInput + "&token=" + token);
                     JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
-                    Block[] blocks = JsonConvert.DeserializeObject<Block[]>(json["data"].ToString());
-                    foreach (Block block in blocks)
+                    Block block = JsonConvert.DeserializeObject<Block>(json["data"].ToString());
+                    //foreach (Block block in blocks)
+                    //{
+                    if (toAddress.ToLower().Equals(block.To.ToLower()) && "10000000".Equals(block.Value))
                     {
-                        if (toAddress.ToLower().Equals(block.To.ToLower()) && "10000000".Equals(block.Value))
-                        {
-                            paySuccess = true;
-                        }
+                        paySuccess = true;
                     }
+                    //}
                     if (!paySuccess)
                     {
                         MessageBox.Show(resource.GetString("orderNotFound"));
@@ -274,16 +274,16 @@ namespace EHDMiner
                     //JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
                     //string latestBlock = json["result"].ToString();
                     // 付费记录
-                    string apiResult = client.Get("?method=usdt.index&hash=" + userInput + "&token=" + token);
+                    string apiResult = client.Get("?method=usdt.verify&hash=" + userInput + "&token=" + token);
                     JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
-                    Block[] blocks = JsonConvert.DeserializeObject<Block[]>(json["data"].ToString());
-                    foreach (Block block in blocks)
+                    Block block = JsonConvert.DeserializeObject<Block>(json["data"].ToString());
+                    // foreach (Block block in blocks)
+                    //{
+                    if (toAddress.ToLower().Equals(block.To.ToLower()) && "100000000".Equals(block.Value))
                     {
-                        if (toAddress.ToLower().Equals(block.To.ToLower()) && "100000000".Equals(block.Value))
-                        {
-                            paySuccess = true;
-                        }
+                        paySuccess = true;
                     }
+                    //}
                     if (!paySuccess)
                     {
                         MessageBox.Show(resource.GetString("orderNotFound"));
@@ -307,6 +307,10 @@ namespace EHDMiner
                 catch (Exception)
                 {
                     return;
+                }
+                finally
+                {
+                    tsmiAddPeer.Enabled = true;
                 }
             }
             tsmiAddPeer.Enabled = true;
@@ -786,16 +790,16 @@ namespace EHDMiner
             try
             {
                 // 付费记录
-                string apiResult = client.Get("?method=usdt.index&hash=" + userInput + "&token=" + token);
+                string apiResult = client.Get("?method=usdt.verify&hash=" + userInput + "&token=" + token);
                 JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
-                Block[] blocks = JsonConvert.DeserializeObject<Block[]>(json["data"].ToString());
-                foreach (Block block in blocks)
+                Block block = JsonConvert.DeserializeObject<Block>(json["data"].ToString());
+                //foreach (Block block in blocks)
+                //{
+                if (toAddress.ToLower().Equals(block.To.ToLower()) && "50000000".Equals(block.Value))
                 {
-                    if (toAddress.ToLower().Equals(block.To.ToLower()) && "50000000".Equals(block.Value))
-                    {
-                        paySuccess = true;
-                    }
+                    paySuccess = true;
                 }
+                //}
                 if (!paySuccess)
                 {
                     MessageBox.Show(resource.GetString("orderNotFound"));
