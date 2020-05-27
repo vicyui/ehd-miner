@@ -1,4 +1,6 @@
-﻿namespace EHDMiner
+﻿using System;
+
+namespace EHDMiner
 {
     class Block
     {
@@ -21,5 +23,6 @@
         public string CumulativeGasUsed { get; set; }
         public string Input { get; set; }
         public string Confirmations { get; set; }
+        public DateTime Used_at { get; set; }
     }
 }

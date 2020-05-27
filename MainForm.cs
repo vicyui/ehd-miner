@@ -74,6 +74,11 @@ namespace EHDMiner
                     Block block = JsonConvert.DeserializeObject<Block>(json["data"].ToString());
                     //foreach (Block block in blocks)
                     //{
+                    if (DateTime.Compare(DateTime.Now, block.Used_at.AddHours(3)) > 0)
+                    {
+                        MessageBox.Show(resource.GetString("orderNotFound"));
+                        return;
+                    }
                     if (toAddress.ToLower().Equals(block.To.ToLower()) && "10000000".Equals(block.Value))
                     {
                         paySuccess = true;
@@ -279,6 +284,11 @@ namespace EHDMiner
                     Block block = JsonConvert.DeserializeObject<Block>(json["data"].ToString());
                     // foreach (Block block in blocks)
                     //{
+                    if (DateTime.Compare(DateTime.Now, block.Used_at.AddHours(3)) > 0)
+                    {
+                        MessageBox.Show(resource.GetString("orderNotFound"));
+                        return;
+                    }
                     if (toAddress.ToLower().Equals(block.To.ToLower()) && "100000000".Equals(block.Value))
                     {
                         paySuccess = true;
@@ -318,9 +328,10 @@ namespace EHDMiner
             IDbConnection conn = DBHelper.CreateConnection();
             string offUsedNode = "update t_node set on_used = 0;";//取消所有已选择
             DBHelper.ExecuteNonQuery(conn, offUsedNode, new Dictionary<string, object>());
+            string updateNode = string.Empty;
             if (selectedNode.Access == 0)
             {
-                string updateNode = "update t_node set on_used = 1,access = 1 ,end_date=@date where id=@id;";
+                updateNode = "update t_node set on_used = 1,access = 1 ,end_date=@date where id=@id;";
                 DBHelper.ExecuteNonQuery(conn, updateNode, new Dictionary<string, object>()
                         {
                             { "id", selectedNode.Id },
@@ -329,7 +340,7 @@ namespace EHDMiner
             }
             else
             {
-                string updateNode = "update t_node set on_used = 1,access = 1 where id=@id;";
+                updateNode = "update t_node set on_used = 1,access = 1 where id=@id;";
                 DBHelper.ExecuteNonQuery(conn, updateNode, new Dictionary<string, object>()
                         {
                             { "id", selectedNode.Id }
@@ -795,6 +806,11 @@ namespace EHDMiner
                 Block block = JsonConvert.DeserializeObject<Block>(json["data"].ToString());
                 //foreach (Block block in blocks)
                 //{
+                if (DateTime.Compare(DateTime.Now, block.Used_at.AddHours(3)) > 0)
+                {
+                    MessageBox.Show(resource.GetString("orderNotFound"));
+                    return;
+                }
                 if (toAddress.ToLower().Equals(block.To.ToLower()) && "50000000".Equals(block.Value))
                 {
                     paySuccess = true;

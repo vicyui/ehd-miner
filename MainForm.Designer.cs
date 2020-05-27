@@ -36,8 +36,9 @@
             this.tsmiStart = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAdvanced = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiAddPeer = new System.Windows.Forms.ToolStripMenuItem();
-            this.tsmiRepairFork = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPlotDir = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiChangeKeystore = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiRepairFork = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiShowInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiScanner = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiWebsite = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,7 +56,6 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.labelMsg = new System.Windows.Forms.Label();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
-            this.tsmiChangeKeystore = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
@@ -112,17 +112,23 @@
             resources.ApplyResources(this.tsmiAddPeer, "tsmiAddPeer");
             this.tsmiAddPeer.Click += new System.EventHandler(this.tsmiAddPeer_Click);
             // 
+            // tsmiPlotDir
+            // 
+            resources.ApplyResources(this.tsmiPlotDir, "tsmiPlotDir");
+            this.tsmiPlotDir.Name = "tsmiPlotDir";
+            this.tsmiPlotDir.Click += new System.EventHandler(this.tsmiPlotDir_Click);
+            // 
+            // tsmiChangeKeystore
+            // 
+            this.tsmiChangeKeystore.Name = "tsmiChangeKeystore";
+            resources.ApplyResources(this.tsmiChangeKeystore, "tsmiChangeKeystore");
+            this.tsmiChangeKeystore.Click += new System.EventHandler(this.tsmiChangeKeystore_Click);
+            // 
             // tsmiRepairFork
             // 
             this.tsmiRepairFork.Name = "tsmiRepairFork";
             resources.ApplyResources(this.tsmiRepairFork, "tsmiRepairFork");
             this.tsmiRepairFork.Click += new System.EventHandler(this.TsmiRepairFork_Click);
-            // 
-            // tsmiPlotDir
-            // 
-            this.tsmiPlotDir.Name = "tsmiPlotDir";
-            resources.ApplyResources(this.tsmiPlotDir, "tsmiPlotDir");
-            this.tsmiPlotDir.Click += new System.EventHandler(this.tsmiPlotDir_Click);
             // 
             // tsmiShowInfo
             // 
@@ -233,12 +239,6 @@
             this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip;
             resources.ApplyResources(this.notifyIcon1, "notifyIcon1");
             this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon1_MouseClick);
-            // 
-            // tsmiChangeKeystore
-            // 
-            this.tsmiChangeKeystore.Name = "tsmiChangeKeystore";
-            resources.ApplyResources(this.tsmiChangeKeystore, "tsmiChangeKeystore");
-            this.tsmiChangeKeystore.Click += new System.EventHandler(this.tsmiChangeKeystore_Click);
             // 
             // contextMenuStrip
             // 
