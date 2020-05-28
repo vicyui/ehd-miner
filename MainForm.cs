@@ -216,6 +216,7 @@ namespace EHDMiner
             ShowWindow(p.MainWindowHandle, 3);
             tsmiStart.Enabled = false;
             updateMinerInfo();
+            timerUpdate.Enabled = true;
         }
 
         private void MineStatus()
@@ -230,6 +231,7 @@ namespace EHDMiner
                 tsmiStart.Enabled = true;
                 labelMsg.Text = resource.GetString("exceptionTips");
                 tsslStatus.Text = resource.GetString("tsslStatusStop");
+                timerUpdate.Enabled = false;
             }
 
             if (p != null && p.ProcessName == "poc")
@@ -690,11 +692,13 @@ namespace EHDMiner
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            notifyIcon1.Dispose();
+            notifyIcon.Dispose();
+            RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
             Dispose();
+            Application.Exit();
         }
 
-        private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e)
+        private void NotifyIcon_MouseClick(object sender, MouseEventArgs e)
         {
             if (WindowState == FormWindowState.Normal)
             {
@@ -849,6 +853,8 @@ namespace EHDMiner
             DialogResult flag = MessageBox.Show(resource.GetString("quitTips"), resource.GetString("tips"), MessageBoxButtons.OKCancel);
             if (flag == DialogResult.OK)
             {
+                RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
+                Dispose();
                 Application.Exit();
             }
         }
@@ -894,6 +900,17 @@ namespace EHDMiner
             param.Add("is_syncing", JsonConvert.DeserializeObject<JObject>(is_syncing)["result"]);
             Console.WriteLine(JsonConvert.SerializeObject(param));
             string apiResult = client.Post(param.ToString(), "");
+        }
+
+        private void tsmiClose_Click(object sender, EventArgs e)
+        {
+            DialogResult flag = MessageBox.Show(resource.GetString("quitTips"), resource.GetString("tips"), MessageBoxButtons.OKCancel);
+            if (flag == DialogResult.OK)
+            {
+                RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
+                Dispose();
+                Application.Exit();
+            }
         }
     }
 }

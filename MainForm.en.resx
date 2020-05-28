@@ -2479,7 +2479,7 @@
     <value>Name of Miner:</value>
   </data>
   <data name="quitTips" xml:space="preserve">
-    <value>Are you sure to exit?</value>
+    <value>Are you sure to close Miner?</value>
   </data>
   <data name="repairForkSuccess" xml:space="preserve">
     <value>Repair succeeded, please click to start mining</value>
@@ -2590,7 +2590,7 @@
     <value>Plot data finish</value>
   </data>
   <data name="tsmiExit.Text" xml:space="preserve">
-    <value>Exit</value>
+    <value>Close Miner</value>
   </data>
   <data name="keystoreTips" xml:space="preserve">
     <value>Please import keystore</value>
@@ -2600,5 +2600,8 @@
   </data>
   <data name="statusPlotting" xml:space="preserve">
     <value>Plotting</value>
+  </data>
+  <data name="tsmiClose.Text" xml:space="preserve">
+    <value>Close Miner</value>
   </data>
 </root>

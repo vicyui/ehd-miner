@@ -45,6 +45,7 @@
             this.tsmiLanguage = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLangCN = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiLangEN = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiClose = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tsslDate = new System.Windows.Forms.ToolStripStatusLabel();
             this.tsslStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -55,7 +56,7 @@
             this.btnSaveKS = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.labelMsg = new System.Windows.Forms.Label();
-            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
             this.timerUpdate = new System.Windows.Forms.Timer(this.components);
@@ -75,7 +76,8 @@
             this.tsmiShowInfo,
             this.tsmiScanner,
             this.tsmiWebsite,
-            this.tsmiLanguage});
+            this.tsmiLanguage,
+            this.tsmiClose});
             resources.ApplyResources(this.menuStrip1, "menuStrip1");
             this.menuStrip1.Name = "menuStrip1";
             // 
@@ -169,6 +171,12 @@
             resources.ApplyResources(this.tsmiLangEN, "tsmiLangEN");
             this.tsmiLangEN.Click += new System.EventHandler(this.TsmiLangEN_Click);
             // 
+            // tsmiClose
+            // 
+            this.tsmiClose.Name = "tsmiClose";
+            resources.ApplyResources(this.tsmiClose, "tsmiClose");
+            this.tsmiClose.Click += new System.EventHandler(this.tsmiClose_Click);
+            // 
             // statusStrip
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -235,11 +243,11 @@
             resources.ApplyResources(this.labelMsg, "labelMsg");
             this.labelMsg.Name = "labelMsg";
             // 
-            // notifyIcon1
+            // notifyIcon
             // 
-            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip;
-            resources.ApplyResources(this.notifyIcon1, "notifyIcon1");
-            this.notifyIcon1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon1_MouseClick);
+            this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
+            resources.ApplyResources(this.notifyIcon, "notifyIcon");
+            this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.NotifyIcon_MouseClick);
             // 
             // contextMenuStrip
             // 
@@ -304,7 +312,7 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ToolStripMenuItem tsmiRepairFork;
         private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar;
-        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
         private System.Windows.Forms.ToolStripMenuItem tsmiAdvanced;
         private System.Windows.Forms.ToolStripMenuItem tsmiLanguage;
         private System.Windows.Forms.ToolStripMenuItem tsmiLangCN;
@@ -316,6 +324,7 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem tsmiExit;
         private System.Windows.Forms.Timer timerUpdate;
+        private System.Windows.Forms.ToolStripMenuItem tsmiClose;
     }
 }
 

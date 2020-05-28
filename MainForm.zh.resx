@@ -2425,7 +2425,7 @@
     <value>矿机名称:</value>
   </data>
   <data name="quitTips" xml:space="preserve">
-    <value>确认退出吗？</value>
+    <value>确认关闭挖矿吗？</value>
   </data>
   <data name="repairForkSuccess" xml:space="preserve">
     <value>修复成功,请点击启动挖矿</value>
@@ -2536,7 +2536,7 @@
     <value>P盘完成</value>
   </data>
   <data name="tsmiExit.Text" xml:space="preserve">
-    <value>退出</value>
+    <value>关闭挖矿</value>
   </data>
   <data name="keystoreTips" xml:space="preserve">
     <value>请导入keystore</value>
@@ -2546,5 +2546,8 @@
   </data>
   <data name="statusPlotting" xml:space="preserve">
     <value>P盘中</value>
+  </data>
+  <data name="tsmiClose.Text" xml:space="preserve">
+    <value>关闭挖矿</value>
   </data>
 </root>
