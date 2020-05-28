@@ -50,7 +50,7 @@
             this.tsslStatus = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.tsslNode = new System.Windows.Forms.ToolStripStatusLabel();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timerMain = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnSaveKS = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -58,6 +58,7 @@
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.tsmiExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.timerUpdate = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -202,11 +203,11 @@
             this.tsslNode.Name = "tsslNode";
             resources.ApplyResources(this.tsslNode, "tsslNode");
             // 
-            // timer1
+            // timerMain
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.Timer1_Tick);
+            this.timerMain.Enabled = true;
+            this.timerMain.Interval = 1000;
+            this.timerMain.Tick += new System.EventHandler(this.TimerMain_Tick);
             // 
             // panel1
             // 
@@ -253,6 +254,11 @@
             resources.ApplyResources(this.tsmiExit, "tsmiExit");
             this.tsmiExit.Click += new System.EventHandler(this.tsmiExit_Click);
             // 
+            // timerUpdate
+            // 
+            this.timerUpdate.Interval = 1800000;
+            this.timerUpdate.Tick += new System.EventHandler(this.timerUpdate_Tick);
+            // 
             // mainForm
             // 
             resources.ApplyResources(this, "$this");
@@ -291,7 +297,7 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel tsslDate;
         private System.Windows.Forms.ToolStripStatusLabel tsslStatus;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timerMain;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label labelMsg;
         private System.Windows.Forms.Button btnSaveKS;
@@ -309,6 +315,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiChangeKeystore;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem tsmiExit;
+        private System.Windows.Forms.Timer timerUpdate;
     }
 }
 

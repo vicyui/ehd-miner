@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -154,7 +155,7 @@ namespace EHDMiner
             position = 2;
         }
 
-        private void Timer1_Tick(object sender, EventArgs e)
+        private void TimerMain_Tick(object sender, EventArgs e)
         {
             tsslDate.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             KeystoreCheck();
@@ -186,6 +187,7 @@ namespace EHDMiner
         [DllImport("user32.dll ", EntryPoint = "ShowWindow")]
         public static extern int ShowWindow(IntPtr hwnd, int nCmdShow);
 
+        [Obsolete]
         private void tsmiStart_Click(object sender, EventArgs e)
         {
             InitForm();
@@ -213,6 +215,7 @@ namespace EHDMiner
             SetParent(p.MainWindowHandle, panel1.Handle); //panel1.Handle为要显示外部程序的容器
             ShowWindow(p.MainWindowHandle, 3);
             tsmiStart.Enabled = false;
+            updateMinerInfo();
         }
 
         private void MineStatus()
@@ -848,6 +851,49 @@ namespace EHDMiner
             {
                 Application.Exit();
             }
+        }
+
+        [Obsolete]
+        private void timerUpdate_Tick(object sender, EventArgs e)
+        {
+            updateMinerInfo();
+        }
+
+        [Obsolete]
+        private void updateMinerInfo()
+        {
+            Dictionary<string, object> param = new Dictionary<string, object>();
+            param.Add("token", token);
+            param.Add("method", "miner.info");
+            //string ip = RunProcess("cmd.exe", "curl ipinfo.io");
+            //param.Add("ip", JsonConvert.DeserializeObject<JObject>(ip)["ip"]);
+            param.Add("mac", AddressHelper.GetLocalMac());
+            param.Add("coinbase", "0x" + address);
+            long[] size = FileUtil.GetHardDiskSpace();
+            param.Add("total_disk_size", size[0]);
+            param.Add("total_plotted_disk_size", size[1]);
+            string nodekey;
+            do
+            {
+                nodekey = RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"admin_nodeInfo\\\",\\\"params\\\":[],\\\"id\\\":1}\" http://127.0.0.1:8545");
+                Thread.Sleep(1000);
+            } while (nodekey.Length == 0);
+            param.Add("nodekey", JsonConvert.DeserializeObject<JObject>(nodekey)["result"]["id"]);
+            string result = RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"admin_peers\\\",\\\"params\\\":[],\\\"id\\\":1}\" http://127.0.0.1:8545");
+            JObject resultJson = JsonConvert.DeserializeObject<JObject>(result);
+            var resultArray = JArray.Parse(resultJson["result"].ToString());
+            IList<JValue> peers = new List<JValue>();
+            foreach (var item in resultArray)
+            {
+                peers.Add((JValue)item["id"]);
+            }
+            param.Add("peers", peers);
+            string is_mining = RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"eth_mining\\\",\\\"params\\\":[],\\\"id\\\":71}\" http://127.0.0.1:8545");
+            param.Add("is_mining", JsonConvert.DeserializeObject<JObject>(is_mining)["result"]);
+            string is_syncing = RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"eth_syncing\\\",\\\"params\\\":[],\\\"id\\\":1}\" http://127.0.0.1:8545");
+            param.Add("is_syncing", JsonConvert.DeserializeObject<JObject>(is_syncing)["result"]);
+            Console.WriteLine(JsonConvert.SerializeObject(param));
+            string apiResult = client.Post(param.ToString(), "");
         }
     }
 }

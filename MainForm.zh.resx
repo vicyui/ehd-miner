@@ -2440,7 +2440,7 @@
     <value>区块同步中</value>
   </data>
   <data name="statusMining" xml:space="preserve">
-    <value>挖矿中</value>
+    <value>挖矿中（请确保矿机一直运行，屏幕不能息屏、睡眠或断网）</value>
   </data>
   <data name="tips" xml:space="preserve">
     <value>提示信息</value>

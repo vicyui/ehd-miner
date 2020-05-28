@@ -120,9 +120,9 @@ namespace EHDMiner
         public static long GetHardDiskSpace(string str_HardDiskName)
         {
             long totalSize = 0;
-            str_HardDiskName = str_HardDiskName + "\\";
-            System.IO.DriveInfo[] drives = DriveInfo.GetDrives();
-            foreach (System.IO.DriveInfo drive in drives)
+            str_HardDiskName += "\\";
+            DriveInfo[] drives = DriveInfo.GetDrives();
+            foreach (DriveInfo drive in drives)
             {
                 if (drive.Name == str_HardDiskName)
                 {
@@ -130,6 +130,25 @@ namespace EHDMiner
                 }
             }
             return totalSize;
+        }
+
+        public static long[] GetHardDiskSpace()
+        {
+            long totalSize = 0;
+            long plotSize = 0;
+            DriveInfo[] drives = DriveInfo.GetDrives();
+            foreach (DriveInfo drive in drives)
+            {
+                if (drive.DriveType == DriveType.Fixed)
+                {
+                    totalSize += drive.TotalSize;
+                }
+                if(Directory.Exists(drive.Name + "\\plotdata"))
+                {
+                    plotSize += DictoryLength(drive.Name + "\\plotdata");
+                }
+            }
+            return new long[] { totalSize, plotSize };
         }
     }
 }

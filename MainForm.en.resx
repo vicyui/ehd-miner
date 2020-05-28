@@ -2494,7 +2494,7 @@
     <value>Block synchronization</value>
   </data>
   <data name="statusMining" xml:space="preserve">
-    <value>Mining</value>
+    <value>Mining (please make sure the miner is running all the time and the screen cannot rest, sleep or cut off)</value>
   </data>
   <data name="tips" xml:space="preserve">
     <value>Tips</value>
