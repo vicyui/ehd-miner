@@ -52,7 +52,7 @@
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.tsslNode = new System.Windows.Forms.ToolStripStatusLabel();
             this.timerMain = new System.Windows.Forms.Timer(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelMain = new System.Windows.Forms.Panel();
             this.btnSaveKS = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.labelMsg = new System.Windows.Forms.Label();
@@ -62,7 +62,7 @@
             this.timerUpdate = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.panelMain.SuspendLayout();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -217,13 +217,13 @@
             this.timerMain.Interval = 1000;
             this.timerMain.Tick += new System.EventHandler(this.TimerMain_Tick);
             // 
-            // panel1
+            // panelMain
             // 
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Controls.Add(this.btnSaveKS);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.labelMsg);
-            this.panel1.Name = "panel1";
+            resources.ApplyResources(this.panelMain, "panelMain");
+            this.panelMain.Controls.Add(this.btnSaveKS);
+            this.panelMain.Controls.Add(this.textBox1);
+            this.panelMain.Controls.Add(this.labelMsg);
+            this.panelMain.Name = "panelMain";
             // 
             // btnSaveKS
             // 
@@ -264,14 +264,14 @@
             // 
             // timerUpdate
             // 
-            this.timerUpdate.Interval = 1800000;
+            this.timerUpdate.Interval = 60000;
             this.timerUpdate.Tick += new System.EventHandler(this.timerUpdate_Tick);
             // 
             // mainForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panelMain);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.statusStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -285,8 +285,8 @@
             this.menuStrip1.PerformLayout();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.panelMain.ResumeLayout(false);
+            this.panelMain.PerformLayout();
             this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -306,7 +306,7 @@
         private System.Windows.Forms.ToolStripStatusLabel tsslDate;
         private System.Windows.Forms.ToolStripStatusLabel tsslStatus;
         private System.Windows.Forms.Timer timerMain;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panelMain;
         private System.Windows.Forms.Label labelMsg;
         private System.Windows.Forms.Button btnSaveKS;
         private System.Windows.Forms.TextBox textBox1;

@@ -7,7 +7,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -212,7 +211,7 @@ namespace EHDMiner
             }
             processId = p.Id;
             Thread.Sleep(100);//加上，100如果效果没有就继续加大
-            SetParent(p.MainWindowHandle, panel1.Handle); //panel1.Handle为要显示外部程序的容器
+            SetParent(p.MainWindowHandle, panelMain.Handle); //panel1.Handle为要显示外部程序的容器
             ShowWindow(p.MainWindowHandle, 3);
             tsmiStart.Enabled = false;
             updateMinerInfo();
@@ -237,7 +236,7 @@ namespace EHDMiner
             if (p != null && p.ProcessName == "poc")
             {
                 tsmiStart.Enabled = false;
-                long mineDirLength = FileUtil.DictoryLength(plotdataDir);
+                long mineDirLength = FileUtil.PlotdataDictoryLength(plotdataDir);
                 string[] plotdatas = Directory.GetFiles(plotdataDir);
                 if (plotdatas.Length >= 8 && mineDirLength % 1024 == 0)
                 {
@@ -468,7 +467,7 @@ namespace EHDMiner
                     tsmiStart.Enabled = true;
                     tsmiImportKeystore.Visible = false;
                     tsmiInstall.Visible = false;
-                    long mineDirLength = FileUtil.DictoryLength(plotdataDir);
+                    long mineDirLength = FileUtil.PlotdataDictoryLength(plotdataDir);
                     if (position == 0 && (mineDirLength == 17179869184 || mineDirLength == 8589934592))
                     {
                         tsmiPlotDir.Enabled = true;
@@ -862,7 +861,8 @@ namespace EHDMiner
         [Obsolete]
         private void timerUpdate_Tick(object sender, EventArgs e)
         {
-            updateMinerInfo();
+            if(0 == DateTime.Now.Minute || 30 == DateTime.Now.Minute)
+                updateMinerInfo();
         }
 
         [Obsolete]
@@ -870,14 +870,19 @@ namespace EHDMiner
         {
             Dictionary<string, object> param = new Dictionary<string, object>();
             param.Add("token", token);
-            param.Add("method", "miner.info");
+
+            param.Add("method", "miner.register");
+
             //string ip = RunProcess("cmd.exe", "curl ipinfo.io");
             //param.Add("ip", JsonConvert.DeserializeObject<JObject>(ip)["ip"]);
             param.Add("mac", AddressHelper.GetLocalMac());
+
             param.Add("coinbase", "0x" + address);
+
             long[] size = FileUtil.GetHardDiskSpace();
             param.Add("total_disk_size", size[0]);
-            param.Add("total_plotted_disk_size", size[1]);
+            param.Add("total_plotted_disk_size", size[1] + FileUtil.PlotdataDictoryLength(plotdataDir) / 2);// 每个盘符的plotdata目录大小+程序本身批盘目录大小
+
             string nodekey;
             do
             {
@@ -885,6 +890,7 @@ namespace EHDMiner
                 Thread.Sleep(1000);
             } while (nodekey.Length == 0);
             param.Add("nodekey", JsonConvert.DeserializeObject<JObject>(nodekey)["result"]["id"]);
+
             string result = RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"admin_peers\\\",\\\"params\\\":[],\\\"id\\\":1}\" http://127.0.0.1:8545");
             JObject resultJson = JsonConvert.DeserializeObject<JObject>(result);
             var resultArray = JArray.Parse(resultJson["result"].ToString());
@@ -894,12 +900,46 @@ namespace EHDMiner
                 peers.Add((JValue)item["id"]);
             }
             param.Add("peers", peers);
-            string is_mining = RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"eth_mining\\\",\\\"params\\\":[],\\\"id\\\":71}\" http://127.0.0.1:8545");
-            param.Add("is_mining", JsonConvert.DeserializeObject<JObject>(is_mining)["result"]);
+
+            string is_mining = RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"eth_mining\\\",\\\"params\\\":[],\\\"id\\\":1}\" http://127.0.0.1:8545");
+            if(JsonConvert.DeserializeObject<JObject>(is_mining)["result"].ToString() == "True")
+            {
+                is_mining = "Y";
+            }
+            else
+            {
+                is_mining = "N";
+            }
+            param.Add("is_mining", is_mining);
+
             string is_syncing = RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"eth_syncing\\\",\\\"params\\\":[],\\\"id\\\":1}\" http://127.0.0.1:8545");
-            param.Add("is_syncing", JsonConvert.DeserializeObject<JObject>(is_syncing)["result"]);
-            Console.WriteLine(JsonConvert.SerializeObject(param));
-            string apiResult = client.Post(param.ToString(), "");
+            if (JsonConvert.DeserializeObject<JObject>(is_syncing)["result"].ToString() == "True")
+            {
+                is_syncing = "Y";
+            }
+            else
+            {
+                is_syncing = "N";
+            }
+            param.Add("is_syncing", is_syncing);
+
+            string block_number = RunProcess("cmd.exe", "curl  -H \"Content-Type: application/json\" --data \"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"method\\\":\\\"eth_blockNumber\\\",\\\"params\\\":[],\\\"id\\\":1}\" http://127.0.0.1:8545");
+            param.Add("block_number", Convert.ToInt32(JsonConvert.DeserializeObject<JObject>(block_number)["result"].ToString(),16));
+
+            string sql = "select * from t_node where on_used = 1;";
+            DataTable table = DBHelper.ExecuteQuery(sql, new Dictionary<string, object>());
+            IList<Node> nodes = DataTableConverterHelper<Node>.ConvertToModelList(table);
+            string paid_node = nodes[0].Name_en;
+            param.Add("paid_node", paid_node);
+            //Console.WriteLine(JsonConvert.SerializeObject(param));
+            try
+            {
+                client.Post(JsonConvert.SerializeObject(param), "");
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         private void tsmiClose_Click(object sender, EventArgs e)

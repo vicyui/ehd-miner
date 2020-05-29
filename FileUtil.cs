@@ -81,12 +81,16 @@ namespace EHDMiner
             catch (Exception) { }
         }
 
-        public static long DictoryLength(string path)
+        public static long PlotdataDictoryLength(string path)
         {
             long filesLength = 0L;
             FileInfo[] files = new DirectoryInfo(path).GetFiles();
             foreach (FileInfo fi in files)
             {
+                if(fi.Extension == ".orig" || fi.Extension == ".dest")
+                {
+                    continue;
+                }
                 filesLength += fi.Length;
             }
             return filesLength;
@@ -145,7 +149,7 @@ namespace EHDMiner
                 }
                 if(Directory.Exists(drive.Name + "\\plotdata"))
                 {
-                    plotSize += DictoryLength(drive.Name + "\\plotdata");
+                    plotSize += PlotdataDictoryLength(drive.Name + "\\plotdata");
                 }
             }
             return new long[] { totalSize, plotSize };
