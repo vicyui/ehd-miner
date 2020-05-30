@@ -28,7 +28,6 @@ namespace EHDMiner
         private readonly ComponentResourceManager resource;
         private int processId;
         private Process p;
-        private readonly string[] runArgs;
         public static ArrayList checkedList = new ArrayList();
         public static Node selectedNode;
         public static bool isPay = true;
@@ -39,12 +38,11 @@ namespace EHDMiner
         private readonly RestClient client = new RestClient("https://api.ehd.io/");
         private int position = 0;
 
-        public mainForm(string[] args)
+        public mainForm()
         {
             InitializeComponent();
             language = "zh";
             resource = LanguageHelper.SetLang(language, this, typeof(mainForm), resource);
-            runArgs = args;
         }
 
         private void tsmiPlotDir_Click(object sender, EventArgs e)
@@ -412,11 +410,8 @@ namespace EHDMiner
             {
                 minerInfo += "\r" + resource.GetString("minerName") + "EHD-miner-" + address.Substring(36);
             }
-            DialogResult dr = MessageBox.Show(minerInfo, resource.GetString("copyTips") + "\r" + resource.GetString("tsmiShowInfo.Text"), MessageBoxButtons.OK);
-            if (dr == DialogResult.OK)
-            {
-                Clipboard.SetDataObject(minerInfo);
-            }
+            MessageBox.Show(minerInfo, resource.GetString("copyTips") + "\r" + resource.GetString("tsmiShowInfo.Text"));
+            Clipboard.SetDataObject(minerInfo);
         }
 
         private void TsmiImportKeystore_Click(object sender, EventArgs e)
