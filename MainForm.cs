@@ -66,7 +66,7 @@ namespace EHDMiner
 
                 try
                 {
-                    // 取付费记录
+                    // 付费记录
                     string apiResult = client.Get("?method=usdt.verify&hash=" + userInput + "&token=" + token);
                     JObject json = JsonConvert.DeserializeObject<JObject>(apiResult);
                     Block block = JsonConvert.DeserializeObject<Block>(json["data"].ToString());
@@ -77,7 +77,7 @@ namespace EHDMiner
                         MessageBox.Show(resource.GetString("orderNotFound"));
                         return;
                     }
-                    if (toAddress.ToLower().Equals(block.To.ToLower()) && "10000000".Equals(block.Value))
+                    if (toAddress.ToLower().Equals(block.To.ToLower()) && Convert.ToInt32(block.Value) - 10000000 >= -5000000)//"10000000".Equals(block.Value))
                     {
                         paySuccess = true;
                     }
@@ -291,7 +291,7 @@ namespace EHDMiner
                         MessageBox.Show(resource.GetString("orderNotFound"));
                         return;
                     }
-                    if (toAddress.ToLower().Equals(block.To.ToLower()) && "100000000".Equals(block.Value))
+                    if (toAddress.ToLower().Equals(block.To.ToLower()) && Convert.ToInt32(block.Value) - 100000000 >= -5000000) //"100000000".Equals(block.Value)
                     {
                         paySuccess = true;
                     }
@@ -812,7 +812,7 @@ namespace EHDMiner
                     MessageBox.Show(resource.GetString("orderNotFound"));
                     return;
                 }
-                if (toAddress.ToLower().Equals(block.To.ToLower()) && "50000000".Equals(block.Value))
+                if (toAddress.ToLower().Equals(block.To.ToLower()) && Convert.ToInt32(block.Value) - 50000000 >= -5000000)//"50000000".Equals(block.Value))
                 {
                     paySuccess = true;
                 }

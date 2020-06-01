@@ -36,14 +36,15 @@ namespace EHDMiner
             if (mainForm.language.Equals("zh"))
             {
                 Text = "捐赠 " + usdtPrice + "USDT " + tips;
-                labelMsg.Text = "请输入ERC20通道转账USDT交易ID或Hash地址校验：";
+                labelMsg.Text = "请输入ERC20通道转账USDT交易ID或Hash地址校验：(低于" + usdtPrice + "或超过" + usdtPrice + "有可能无法到账)";
                 btnPay.Text = "确定";
                 btnCancel.Text = "取消";
             }
             else
             {
                 Text = "Donate " + usdtPrice + "USDT " + tips_en;
-                labelMsg.Text = "Please enter the transaction ID or hash address verification of usdt of erc20 channel transfer :";
+                labelMsg.Text = "Please enter the transaction ID or hash address verification of usdt of ERC20 channel transfer :";
+                labelMsg.Text += "\r (Less than " + usdtPrice + " or more than " + usdtPrice + " may not arrive)";
                 btnPay.Text = "OK";
                 btnCancel.Text = "Cancel";
             }

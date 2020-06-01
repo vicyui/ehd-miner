@@ -57,7 +57,7 @@
             // 
             // btnPay
             // 
-            this.btnPay.Location = new System.Drawing.Point(12, 343);
+            this.btnPay.Location = new System.Drawing.Point(12, 372);
             this.btnPay.Name = "btnPay";
             this.btnPay.Size = new System.Drawing.Size(75, 23);
             this.btnPay.TabIndex = 2;
@@ -66,7 +66,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(172, 343);
+            this.btnCancel.Location = new System.Drawing.Point(172, 372);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 3;
@@ -75,16 +75,16 @@
             // 
             // labelMsg
             // 
-            this.labelMsg.Location = new System.Drawing.Point(12, 284);
+            this.labelMsg.Location = new System.Drawing.Point(12, 276);
             this.labelMsg.Name = "labelMsg";
-            this.labelMsg.Size = new System.Drawing.Size(233, 29);
+            this.labelMsg.Size = new System.Drawing.Size(233, 66);
             this.labelMsg.TabIndex = 4;
             this.labelMsg.Text = "labelMsg";
             this.labelMsg.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
             // 
             // textBox
             // 
-            this.textBox.Location = new System.Drawing.Point(12, 316);
+            this.textBox.Location = new System.Drawing.Point(12, 345);
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(233, 21);
             this.textBox.TabIndex = 5;
@@ -94,7 +94,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(259, 375);
+            this.ClientSize = new System.Drawing.Size(259, 407);
             this.ControlBox = false;
             this.Controls.Add(this.textBox);
             this.Controls.Add(this.labelMsg);
