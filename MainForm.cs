@@ -826,6 +826,7 @@ namespace EHDMiner
                 Directory.Delete(keystoreDir, true);
                 Directory.CreateDirectory(keystoreDir);
                 MessageBox.Show(resource.GetString("changeKSSuccess"));
+                RunProcess("cmd.exe", "taskkill /F /IM poc.exe");
                 tsmiImportKeystore.Visible = true;
                 tsmiInstall.Visible = true;
                 labelMsg.Text = string.Empty;
@@ -857,7 +858,14 @@ namespace EHDMiner
         private void timerUpdate_Tick(object sender, EventArgs e)
         {
             if(0 == DateTime.Now.Minute || 30 == DateTime.Now.Minute)
-                updateMinerInfo();
+            {
+                p = Process.GetProcessById(processId);
+                if (p.Responding)
+                    updateMinerInfo();
+                else
+                    p.Kill();
+            }
+
         }
 
         [Obsolete]
