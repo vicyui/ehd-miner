@@ -150,7 +150,7 @@
     <value>启动挖矿</value>
   </data>
   <data name="tsmiAddPeer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>150, 22</value>
   </data>
   <data name="tsmiAddPeer.Text" xml:space="preserve">
     <value>选择稳定节点</value>
@@ -159,19 +159,19 @@
     <value>False</value>
   </data>
   <data name="tsmiPlotDir.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>150, 22</value>
   </data>
   <data name="tsmiPlotDir.Text" xml:space="preserve">
     <value>选择P盘目录</value>
   </data>
   <data name="tsmiChangeKeystore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>150, 22</value>
   </data>
   <data name="tsmiChangeKeystore.Text" xml:space="preserve">
     <value>更换keystore</value>
   </data>
   <data name="tsmiRepairFork.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 22</value>
+    <value>150, 22</value>
   </data>
   <data name="tsmiRepairFork.Text" xml:space="preserve">
     <value>重启挖矿</value>
@@ -2703,7 +2703,7 @@
     <value>CenterScreen</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>EHDMiner 1.1.6</value>
+    <value>EHDMiner 1.1.7</value>
   </data>
   <data name="&gt;&gt;tsmiImportKeystore.Name" xml:space="preserve">
     <value>tsmiImportKeystore</value>

@@ -876,7 +876,7 @@ namespace EHDMiner
 
             long[] size = FileUtil.GetHardDiskSpace();
             param.Add("total_disk_size", size[0]);
-            param.Add("total_plotted_disk_size", size[1] + FileUtil.PlotdataDictoryLength(plotdataDir) / 2);// 每个盘符的plotdata目录大小+程序本身批盘目录大小
+            param.Add("total_plotted_disk_size", size[1] + FileUtil.PlotdataDictoryLength(plotdataDir));// 每个盘符的plotdata目录大小+程序本身批盘目录大小
 
             string nodekey;
             do
