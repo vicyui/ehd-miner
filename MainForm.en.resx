@@ -2530,7 +2530,7 @@
     <value>EHDScan</value>
   </data>
   <data name="tsmiShowInfo.Text" xml:space="preserve">
-    <value>Miner Infomation</value>
+    <value>Miner Info</value>
   </data>
   <data name="tsmiStart.Text" xml:space="preserve">
     <value>Start mining</value>
@@ -2603,5 +2603,8 @@
   </data>
   <data name="tsmiClose.Text" xml:space="preserve">
     <value>Close Miner</value>
+  </data>
+  <data name="tsmiCooperative.Text" xml:space="preserve">
+    <value>Cooperative Mining</value>
   </data>
 </root>

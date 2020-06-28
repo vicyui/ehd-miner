@@ -32,6 +32,7 @@ namespace EHDMiner
         public static Node selectedNode;
         public static bool isPay = true;
         public static string userInput = string.Empty;
+        public static string userPIN = string.Empty;
         public static int countDeviceSelect = 0;
         private readonly string token = "6275dadb8c94c201dbcfedca72f8308fafd1bb4788e1be3061ce5c3bc2e1d0be";
         private readonly string toAddress = "0x595C230fBfc95A168eD893089C5748Ec8e413694";
@@ -954,6 +955,15 @@ namespace EHDMiner
                 Dispose();
                 Application.Exit();
             }
+        }
+
+        private void tsmiCooperative_Click(object sender, EventArgs e)
+        {
+            CooperativeForm cooperativeForm = new CooperativeForm
+            {
+                Text = tsmiCooperative.Text
+            };
+            cooperativeForm.ShowDialog();
         }
     }
 }

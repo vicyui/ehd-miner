@@ -125,7 +125,7 @@
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="tsmiImportKeystore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>118, 21</value>
+    <value>110, 21</value>
   </data>
   <data name="tsmiImportKeystore.Text" xml:space="preserve">
     <value>导入keystore文件</value>
@@ -135,7 +135,7 @@
     <value>False</value>
   </data>
   <data name="tsmiInstall.Size" type="System.Drawing.Size, System.Drawing">
-    <value>92, 21</value>
+    <value>84, 21</value>
   </data>
   <data name="tsmiInstall.Text" xml:space="preserve">
     <value>安装挖矿系统</value>
@@ -144,13 +144,13 @@
     <value>False</value>
   </data>
   <data name="tsmiStart.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 21</value>
+    <value>60, 21</value>
   </data>
   <data name="tsmiStart.Text" xml:space="preserve">
     <value>启动挖矿</value>
   </data>
   <data name="tsmiAddPeer.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="tsmiAddPeer.Text" xml:space="preserve">
     <value>选择稳定节点</value>
@@ -159,43 +159,49 @@
     <value>False</value>
   </data>
   <data name="tsmiPlotDir.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="tsmiPlotDir.Text" xml:space="preserve">
     <value>选择P盘目录</value>
   </data>
   <data name="tsmiChangeKeystore.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="tsmiChangeKeystore.Text" xml:space="preserve">
     <value>更换keystore</value>
   </data>
+  <data name="tsmiCooperative.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 22</value>
+  </data>
+  <data name="tsmiCooperative.Text" xml:space="preserve">
+    <value>合作挖矿</value>
+  </data>
   <data name="tsmiRepairFork.Size" type="System.Drawing.Size, System.Drawing">
-    <value>150, 22</value>
+    <value>180, 22</value>
   </data>
   <data name="tsmiRepairFork.Text" xml:space="preserve">
     <value>重启挖矿</value>
   </data>
   <data name="tsmiAdvanced.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 21</value>
+    <value>36, 21</value>
   </data>
   <data name="tsmiAdvanced.Text" xml:space="preserve">
     <value>高级</value>
   </data>
   <data name="tsmiShowInfo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 21</value>
+    <value>60, 21</value>
   </data>
   <data name="tsmiShowInfo.Text" xml:space="preserve">
     <value>矿机信息</value>
   </data>
   <data name="tsmiScanner.Size" type="System.Drawing.Size, System.Drawing">
-    <value>80, 21</value>
+    <value>72, 21</value>
   </data>
   <data name="tsmiScanner.Text" xml:space="preserve">
     <value>区块浏览器</value>
   </data>
   <data name="tsmiWebsite.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 21</value>
+    <value>61, 21</value>
   </data>
   <data name="tsmiWebsite.Text" xml:space="preserve">
     <value>EHD官网</value>
@@ -213,13 +219,13 @@
     <value>英文</value>
   </data>
   <data name="tsmiLanguage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>44, 21</value>
+    <value>36, 21</value>
   </data>
   <data name="tsmiLanguage.Text" xml:space="preserve">
     <value>语言</value>
   </data>
   <data name="tsmiClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 21</value>
+    <value>60, 21</value>
   </data>
   <data name="tsmiClose.Text" xml:space="preserve">
     <value>关闭挖矿</value>
@@ -2703,7 +2709,7 @@
     <value>CenterScreen</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>EHDMiner 1.1.7</value>
+    <value>EHDMiner 1.1.8</value>
   </data>
   <data name="&gt;&gt;tsmiImportKeystore.Name" xml:space="preserve">
     <value>tsmiImportKeystore</value>
@@ -2745,6 +2751,12 @@
     <value>tsmiChangeKeystore</value>
   </data>
   <data name="&gt;&gt;tsmiChangeKeystore.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsmiCooperative.Name" xml:space="preserve">
+    <value>tsmiCooperative</value>
+  </data>
+  <data name="&gt;&gt;tsmiCooperative.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;tsmiRepairFork.Name" xml:space="preserve">

@@ -121,6 +121,12 @@
     </Compile>
     <Compile Include="AddressHelper.cs" />
     <Compile Include="Block.cs" />
+    <Compile Include="CooperativeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CooperativeForm.Designer.cs">
+      <DependentUpon>CooperativeForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataTableConverterHelper.cs" />
     <Compile Include="DBHelper.cs" />
     <Compile Include="DeviceSelectForm.cs">
@@ -155,6 +161,9 @@
     <Compile Include="UTCtime.cs" />
     <EmbeddedResource Include="AddNodeForm.resx">
       <DependentUpon>AddNodeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CooperativeForm.resx">
+      <DependentUpon>CooperativeForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DeviceSelectForm.resx">
       <DependentUpon>DeviceSelectForm.cs</DependentUpon>

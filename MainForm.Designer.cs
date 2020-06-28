@@ -38,6 +38,7 @@
             this.tsmiAddPeer = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiPlotDir = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiChangeKeystore = new System.Windows.Forms.ToolStripMenuItem();
+            this.tsmiCooperative = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiRepairFork = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiShowInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmiScanner = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +69,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.GripMargin = new System.Windows.Forms.Padding(0);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsmiImportKeystore,
             this.tsmiInstall,
@@ -84,6 +86,7 @@
             // tsmiImportKeystore
             // 
             this.tsmiImportKeystore.Name = "tsmiImportKeystore";
+            this.tsmiImportKeystore.Padding = new System.Windows.Forms.Padding(0);
             resources.ApplyResources(this.tsmiImportKeystore, "tsmiImportKeystore");
             this.tsmiImportKeystore.Click += new System.EventHandler(this.TsmiImportKeystore_Click);
             // 
@@ -91,12 +94,14 @@
             // 
             resources.ApplyResources(this.tsmiInstall, "tsmiInstall");
             this.tsmiInstall.Name = "tsmiInstall";
+            this.tsmiInstall.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiInstall.Click += new System.EventHandler(this.TsmiInstall_Click);
             // 
             // tsmiStart
             // 
             resources.ApplyResources(this.tsmiStart, "tsmiStart");
             this.tsmiStart.Name = "tsmiStart";
+            this.tsmiStart.Padding = new System.Windows.Forms.Padding(0);
             this.tsmiStart.Click += new System.EventHandler(this.tsmiStart_Click);
             // 
             // tsmiAdvanced
@@ -105,8 +110,10 @@
             this.tsmiAddPeer,
             this.tsmiPlotDir,
             this.tsmiChangeKeystore,
+            this.tsmiCooperative,
             this.tsmiRepairFork});
             this.tsmiAdvanced.Name = "tsmiAdvanced";
+            this.tsmiAdvanced.Padding = new System.Windows.Forms.Padding(0);
             resources.ApplyResources(this.tsmiAdvanced, "tsmiAdvanced");
             // 
             // tsmiAddPeer
@@ -127,6 +134,12 @@
             resources.ApplyResources(this.tsmiChangeKeystore, "tsmiChangeKeystore");
             this.tsmiChangeKeystore.Click += new System.EventHandler(this.tsmiChangeKeystore_Click);
             // 
+            // tsmiCooperative
+            // 
+            this.tsmiCooperative.Name = "tsmiCooperative";
+            resources.ApplyResources(this.tsmiCooperative, "tsmiCooperative");
+            this.tsmiCooperative.Click += new System.EventHandler(this.tsmiCooperative_Click);
+            // 
             // tsmiRepairFork
             // 
             this.tsmiRepairFork.Name = "tsmiRepairFork";
@@ -136,18 +149,21 @@
             // tsmiShowInfo
             // 
             this.tsmiShowInfo.Name = "tsmiShowInfo";
+            this.tsmiShowInfo.Padding = new System.Windows.Forms.Padding(0);
             resources.ApplyResources(this.tsmiShowInfo, "tsmiShowInfo");
             this.tsmiShowInfo.Click += new System.EventHandler(this.tsmiShowInfo_Click);
             // 
             // tsmiScanner
             // 
             this.tsmiScanner.Name = "tsmiScanner";
+            this.tsmiScanner.Padding = new System.Windows.Forms.Padding(0);
             resources.ApplyResources(this.tsmiScanner, "tsmiScanner");
             this.tsmiScanner.Click += new System.EventHandler(this.TsmiScanner_Click);
             // 
             // tsmiWebsite
             // 
             this.tsmiWebsite.Name = "tsmiWebsite";
+            this.tsmiWebsite.Padding = new System.Windows.Forms.Padding(0);
             resources.ApplyResources(this.tsmiWebsite, "tsmiWebsite");
             this.tsmiWebsite.Click += new System.EventHandler(this.TsmiWebsite_Click);
             // 
@@ -157,6 +173,7 @@
             this.tsmiLangCN,
             this.tsmiLangEN});
             this.tsmiLanguage.Name = "tsmiLanguage";
+            this.tsmiLanguage.Padding = new System.Windows.Forms.Padding(0);
             resources.ApplyResources(this.tsmiLanguage, "tsmiLanguage");
             // 
             // tsmiLangCN
@@ -174,6 +191,7 @@
             // tsmiClose
             // 
             this.tsmiClose.Name = "tsmiClose";
+            this.tsmiClose.Padding = new System.Windows.Forms.Padding(0);
             resources.ApplyResources(this.tsmiClose, "tsmiClose");
             this.tsmiClose.Click += new System.EventHandler(this.tsmiClose_Click);
             // 
@@ -325,6 +343,7 @@
         private System.Windows.Forms.ToolStripMenuItem tsmiExit;
         private System.Windows.Forms.Timer timerUpdate;
         private System.Windows.Forms.ToolStripMenuItem tsmiClose;
+        private System.Windows.Forms.ToolStripMenuItem tsmiCooperative;
     }
 }
 
