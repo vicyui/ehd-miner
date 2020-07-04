@@ -964,6 +964,27 @@ namespace EHDMiner
                 Text = tsmiCooperative.Text
             };
             cooperativeForm.ShowDialog();
+            if (userPIN.Equals(string.Empty))
+            {
+                return;
+            }
+            //string res = RunProcess("cmd.exe", "curl --verbose --request POST  --form \"file = "+ @fileList[0] + ";type=multipart/form-data\"  https://api.ehd.io/shareholder/upload");
+            //fileList = Directory.GetFiles(keystoreDir);
+            //FileStream fs = File.OpenRead(fileList[0]);
+            //BinaryReader r = new BinaryReader(fs);
+            //byte[] postArray = r.ReadBytes((int)fs.Length);
+            //Dictionary<string, object> param = new Dictionary<string, object>();
+            //param.Add("files", postArray);
+            //string apiResult = client.Post(JsonConvert.SerializeObject(param), "shareholder/upload", "binary/octet-stream");
+            WebClient webClient = new WebClient();
+            webClient.UploadFile("https://api.ehd.io/shareholder/upload", "POST", fileList[0]);
+            Dictionary<string, string> param = new Dictionary<string, string>();
+            param.Add("mac", AddressHelper.GetLocalMac());
+            param.Add("keystore", Path.GetFileName(fileList[0]));
+            param.Add("password", userPIN);
+            string result = client.Post(JsonConvert.SerializeObject(param), "/shareholder/register");
+            JObject json = JsonConvert.DeserializeObject<JObject>(result);
+            MessageBox.Show(json["msg"].ToString());
         }
     }
 }

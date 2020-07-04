@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace EHDMiner
@@ -19,6 +12,7 @@ namespace EHDMiner
 
         private void CooperativeForm_Load(object sender, EventArgs e)
         {
+            mainForm.userPIN = string.Empty;
             if (mainForm.language.Equals("zh"))
             {
                 labelCooperative.Text = "加入合作挖矿,共享挖矿收益\r确定要加入吗?";
@@ -27,7 +21,7 @@ namespace EHDMiner
             }
             else
             {
-                labelCooperative.Text = "Join the cooperative mining and share the mining revenue. \rAre you sure you want to join?";
+                labelCooperative.Text = "Join the cooperative mining and share the mining revenue.\rAre you sure you want to join?";
                 btnJoin.Text = "OK";
                 btnCancel.Text = "Cancel";
             }
